@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "index": {
+      "knn": true
+    }
+  },
+  "mappings": {
+    "properties": {
+      "salesforceId": { "type": "keyword" },
+      "name": { "type": "text" },
+      "title": { "type": "text" },
+      "company": { "type": "text" },
+      "location": { "type": "text" },
+      "salary": { "type": "float" },
+      "languages": {
+        "type": "nested",
+        "properties": {
+          "code": { "type": "keyword" },
+          "level": { "type": "keyword" }
+        }
+      },
+      "skills": { "type": "text" },
+      "skillCategories": { "type": "text" },
+      "systems": { "type": "text" },
+      "jobFunctions": { "type": "text" },
+      "industries": { "type": "text" },
+      "subIndustries": { "type": "text" },
+      "profile": { "type": "text" },
+      "embedding": {
+        "type": "knn_vector",
+        "dimension": 768,
+        "method": {
+          "name": "hnsw",
+          "engine": "lucene",
+          "space_type": "cosinesimil"
+        }
+      }
+    }
+  }
+}

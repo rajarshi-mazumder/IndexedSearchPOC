@@ -1,0 +1,13 @@
+{
+  "description": "Combines lexical and vector candidate search results with reciprocal rank fusion",
+  "phase_results_processors": [
+    {
+      "score-ranker-processor": {
+        "combination": {
+          "technique": "rrf",
+          "rank_constant": 60
+        }
+      }
+    }
+  ]
+}
