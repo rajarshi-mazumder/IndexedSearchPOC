@@ -1,10 +1,13 @@
 node_modules/
+/Indexed search-20261023T023156Z-1-001/
 dist/
 .env
 .env.*
 !.env.example
 local_cache/
 .cache/
+__pycache__/
+*.pyc
 *.db
 *.db-shm
 *.db-wal

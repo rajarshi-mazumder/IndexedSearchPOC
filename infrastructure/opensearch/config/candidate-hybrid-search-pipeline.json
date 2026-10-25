@@ -1,11 +1,19 @@
 {
-  "description": "Combines lexical and vector candidate search results with reciprocal rank fusion",
+  "description": "Combine lexical evidence (25%) with semantic similarity (75%)",
   "phase_results_processors": [
     {
-      "score-ranker-processor": {
+      "normalization-processor": {
+        "normalization": {
+          "technique": "min_max"
+        },
         "combination": {
-          "technique": "rrf",
-          "rank_constant": 60
+          "technique": "arithmetic_mean",
+          "parameters": {
+            "weights": [
+              0.25,
+              0.75
+            ]
+          }
         }
       }
     }

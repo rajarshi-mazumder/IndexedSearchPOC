@@ -2,28 +2,34 @@
   "name": "indexed-search",
   "version": "0.0.0-recovered",
   "private": true,
-  "description": "Candidate search source recovered from photographs. Build metadata is reconstructed.",
+  "description": "Salesforce candidate indexing and hybrid search with Amazon OpenSearch Serverless and Bedrock",
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "tsc",
-    "test": "tsx --test tests/*.test.ts",
-    "full-index": "tsx presentation/cli/full-index.ts",
-    "index-candidates": "tsx presentation/cli/index-candidates.ts",
-    "partial-index": "tsx presentation/cli/partial-index.ts",
-    "search": "tsx presentation/cli/search.ts"
+    "typecheck": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/typescript/bin/tsc --noEmit -p tsconfig.tests.json",
+    "build": "node node_modules/typescript/bin/tsc",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "full-index": "node --import tsx presentation/cli/index-candidates.ts --source salesforce",
+    "index-candidates": "node --import tsx presentation/cli/index-candidates.ts",
+    "search": "node --import tsx presentation/cli/search.ts",
+    "setup-opensearch": "node --import tsx presentation/cli/setup-opensearch.ts",
+    "index-demo": "node --import tsx presentation/cli/index-candidates.ts --source dummy",
+    "node-version": "node --version",
+    "verify-demo": "node --import tsx tests/demo-search.integration.ts",
+    "test:e2e": "node --import tsx tests/demo-search.integration.ts --reindex"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.19.0"
   },
   "dependencies": {
+    "@aws-sdk/credential-provider-node": "3.972.88",
+    "@aws-sdk/types": "3.975.0",
     "@opensearch-project/opensearch": "3.9.0",
     "dotenv": "16.6.1",
-    "fastembed": "1.14.5",
-    "jsforce": "3.6.6",
-    "zod": "3.25.76"
+    "jsforce": "3.12.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "node": "24.22.1",
     "tsx": "^4.20.0",
     "typescript": "5.9.3"
   }

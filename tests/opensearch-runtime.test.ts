@@ -1,0 +1,83 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { Client } from "@opensearch-project/opensearch";
+import { OpenSearchCandidateDocumentIndex } from "../infrastructure/opensearch/open-search-candidate-document-index";
+import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
+import { OpenSearchHybridSearch } from "../infrastructure/opensearch/open-search-hybrid-search";
+import { config, documentFixture } from "./candidate-fixtures";
+
+function acceptedBulk(body: unknown[]) {
+  return { body: { errors: false, items: Array.from({ length: body.length / 2 }, () => ({ index: { status: 200 } })) } };
+}
+
+test("bulk indexing uses stable IDs and the embedding pipeline, without refreshing or setting up", async () => {
+  const requests: any[] = [];
+  const client = { bulk: async (input: any) => { requests.push(input); return acceptedBulk(input.body); } } as unknown as Client;
+  const documents = Array.from({ length: 201 }, (_, i) => ({ ...documentFixture(), salesforceId: String(i) }));
+  await new OpenSearchCandidateDocumentIndex(client, config).indexMany(documents);
+  assert.deepEqual(requests.map((request) => request.body.length), [200, 200, 2]);
+  assert.equal(requests[2].body[0].index._id, "200");
+  assert.ok(requests.every((request) => request.pipeline === config.OPENSEARCH_INGEST_PIPELINE && !("refresh" in request)));
+  assert.equal(requests[0].body[1].searchText, "Skills: TypeScript");
+  assert.equal("embedding" in requests[0].body[1], false);
+  await new OpenSearchCandidateDocumentIndex(client, config).indexMany([]);
+  assert.equal(requests.length, 3);
+});
+
+test("bulk retries only throttled documents, not previously successful ones", async () => {
+  const requests: any[] = [];
+  const waits: number[] = [];
+  const client = { bulk: async (input: any) => {
+    requests.push(input);
+    return requests.length === 1 ? { body: { errors: true, items: [
+      { index: { status: 200 } }, { index: { status: 429, error: { reason: "throttled" } } },
+    ] } } : acceptedBulk(input.body);
+  } } as unknown as Client;
+  await new OpenSearchCandidateDocumentIndex(client, config, async (ms) => { waits.push(ms); }).indexMany([
+    documentFixture(), { ...documentFixture(), salesforceId: "second" },
+  ]);
+  assert.equal(requests.length, 2);
+  assert.equal(requests[1].body.length, 2);
+  assert.equal(requests[1].body[0].index._id, "second");
+  assert.deepEqual(waits, [1000]);
+});
+
+test("permanent embedding failures and exhausted throttling fail indexing", async () => {
+  for (const status of [400, 429]) {
+    let calls = 0;
+    const client = { bulk: async () => {
+      calls++;
+      return { body: { errors: true, items: [{ index: { status, error: { reason: "model failed" } } }] } };
+    } } as unknown as Client;
+    await assert.rejects(new OpenSearchCandidateDocumentIndex(client, config, async () => {}).indexMany([documentFixture()]), /model failed/);
+    assert.equal(calls, status === 400 ? 1 : 4);
+  }
+});
+
+test("missing bulk acknowledgements fail indexing", async () => {
+  const client = { bulk: async () => ({ body: { errors: false, items: [] } }) } as unknown as Client;
+  await assert.rejects(new OpenSearchCandidateDocumentIndex(client, config).indexMany([documentFixture()]), /incomplete bulk/);
+});
+
+test("hybrid search sends keyword and neural queries with the configured model and restores results", async () => {
+  let request: any;
+  const document = documentFixture();
+  const client = { search: async (input: any) => {
+    request = input;
+    return { body: { timed_out: false, hits: { hits: [{ _score: 0.8, _source: OpenSearchCandidateDocumentMapper.toDocument(document) }] } } };
+  } } as unknown as Client;
+  const results = await new OpenSearchHybridSearch(client, config).search("TypeScript engineer", 10);
+  assert.equal(request.search_pipeline, config.OPENSEARCH_SEARCH_PIPELINE);
+  assert.equal(request.body.query.hybrid.queries[0].multi_match.query, "TypeScript engineer");
+  assert.deepEqual(request.body.query.hybrid.queries[1].neural.embedding, {
+    query_text: "TypeScript engineer", model_id: config.OPENSEARCH_MODEL_ID, k: 50,
+  });
+  assert.deepEqual(results, [{ score: 0.8, document }]);
+});
+
+test("search refuses timed out or partially failed results", async () => {
+  for (const failure of [{ timed_out: true }, { _shards: { failed: 1 } }]) {
+    const client = { search: async () => ({ body: { ...failure, hits: { hits: [] } } }) } as unknown as Client;
+    await assert.rejects(new OpenSearchHybridSearch(client, config).search("engineer", 10), /partial results/);
+  }
+});

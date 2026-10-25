@@ -1,8 +1,7 @@
 {
   "settings": {
-    "index": {
-      "knn": true
-    }
+    "index.knn": true,
+    "index.knn.remote_index_build.enabled": false
   },
   "mappings": {
     "properties": {
@@ -26,14 +25,12 @@
       "industries": { "type": "text" },
       "subIndustries": { "type": "text" },
       "profile": { "type": "text" },
+      "searchText": { "type": "text", "index": false },
+      "indexedAt": { "type": "date" },
       "embedding": {
         "type": "knn_vector",
-        "dimension": 768,
-        "method": {
-          "name": "hnsw",
-          "engine": "lucene",
-          "space_type": "cosinesimil"
-        }
+        "dimension": 1024,
+        "space_type": "cosinesimil"
       }
     }
   }

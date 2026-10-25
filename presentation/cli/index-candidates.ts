@@ -1,30 +1,28 @@
-import { SalesforceClient } from "../../infrastructure/salesforce/SalesforceClient";
-import { SalesforceCandidateRepository } from "../../infrastructure/salesforce/SalesforceCandidateRepository";
-import { TemplateProfileGenerator } from "../../domain/services/TemplateProfileGenerator";
-import { LocalEmbeddingProvider } from "../../infrastructure/embeddings/local/LocalEmbeddingProvider";
-import { OpenSearchDocumentIndex } from "../../infrastructure/opensearch/OpenSearchDocumentIndex";
-import { IndexCandidates } from "../../application/usecases/IndexCandidates";
+import { parseArgs } from "node:util";
+import { z } from "zod";
+import { createDemoIndexingContext, createIndexingContext } from "../../bootstrap";
+
+const argumentsSchema = z.discriminatedUnion("source", [
+  z.object({ source: z.literal("salesforce"), ids: z.array(z.string().regex(/^[a-zA-Z0-9]{15}(?:[a-zA-Z0-9]{3})?$/)) }),
+  z.object({ source: z.literal("dummy"), ids: z.array(z.string().regex(/^demo-[a-z0-9-]+$/)) }),
+]);
 
 async function main() {
-  const ids = process.argv.slice(2);
-  if (ids.length === 0) {
-    throw new Error("Provide at least one Salesforce Contact ID");
+  const { values, positionals } = parseArgs({
+    options: { source: { type: "string", default: "salesforce" } },
+    allowPositionals: true,
+  });
+  const { source, ids } = argumentsSchema.parse({ source: values.source, ids: positionals });
+  const context = source === "dummy" ? createDemoIndexingContext() : createIndexingContext();
+  try {
+    console.log("Indexing accepted (" + source + "):", await context.indexCandidates.execute(ids.length ? ids : undefined));
+    console.log("Allow approximately 10-15 seconds for updates to become searchable.");
+  } finally {
+    await context.close();
   }
-  const client = new SalesforceClient();
-  const repository = new SalesforceCandidateRepository(client);
-  const profileGenerator = new TemplateProfileGenerator();
-  const embeddingProvider = new LocalEmbeddingProvider();
-  const documentIndex = new OpenSearchDocumentIndex();
-  const indexCandidates = new IndexCandidates(
-    repository,
-    profileGenerator,
-    embeddingProvider,
-    documentIndex,
-  );
-  await indexCandidates.execute(ids);
 }
 
 main().catch((error) => {
-  console.error(error);
-  process.exit(1);
+  console.error(error instanceof Error ? error.message : "Indexing failed");
+  process.exitCode = 1;
 });
