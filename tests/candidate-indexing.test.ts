@@ -14,17 +14,27 @@ const factory = new CandidateDocumentFactory(generator);
 test("Salesforce candidate fields survive the document round trip without vectors", () => {
   const candidate = SalesforceCandidateMapper.fromContact({
     Id: "003000000000001", Name: "Recovered Candidate", Title: "Engineer",
-    Current_Company__c: "Example", Current_Salary__c: 100,
+    Account: { Name: "Example" }, currentSalary__c: 100,
     TagConnector__r: { SkillCode1__c: "TypeScript", SkillCode2__c: " ", Systems1__c: "OpenSearch" },
   });
   const document = { ...documentFixture(), candidate };
   const source = OpenSearchCandidateDocumentMapper.toDocument(document);
   assert.deepEqual(candidate.skills, ["TypeScript"]);
   assert.equal(candidate.title, "Engineer");
+  assert.equal(candidate.company, "Example");
+  assert.equal(candidate.salary, 100);
   assert.match(factory.create(candidate)!.searchText, /^Role: Engineer/m);
   assert.equal("embedding" in source, false);
   assert.deepEqual(OpenSearchCandidateDocumentMapper.fromDocument(source), document);
   assert.deepEqual(OpenSearchCandidateDocumentMapper.fromDocument({ ...source, embedding: [1, 2] }), document);
+});
+
+test("Salesforce contacts without an Account retain their zero salary", () => {
+  const candidate = SalesforceCandidateMapper.fromContact({
+    Id: "003000000000001", Name: "Candidate", Account: null, currentSalary__c: 0,
+  });
+  assert.equal(candidate.company, undefined);
+  assert.equal(candidate.salary, 0);
 });
 
 test("search text contains expertise and excludes identity, salary and location", () => {

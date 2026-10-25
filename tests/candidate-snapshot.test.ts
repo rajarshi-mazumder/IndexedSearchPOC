@@ -34,10 +34,12 @@ test("fresh Salesforce retrieval persists DTOs before indexing; cached indexing 
   let queries = 0;
   const client = { query: async (query: string) => {
     assert.match(query, /\bTitle,/);
+    assert.match(query, /\bAccount\.Name,/);
+    assert.match(query, /\bcurrentSalary__c,/);
     assert.doesNotMatch(query, /Current_Position__c/);
     queries++;
     return [{ Id: "003000000000001", Name: "Snapshot Candidate", Title: "Engineer",
-      Current_Company__c: "Example", Current_Salary__c: 7000000,
+      Account: { Name: "Example" }, currentSalary__c: 7000000,
       TagConnector__r: { SkillCode1__c: "TypeScript", Systems1__c: "OpenSearch" } }];
   } } as unknown as SalesforceQueryClient;
   const source = new SalesforceCandidateRepository(client);
@@ -52,6 +54,8 @@ test("fresh Salesforce retrieval persists DTOs before indexing; cached indexing 
   const savedJson = await readFile(file, "utf8");
   const saved = JSON.parse(savedJson);
   assert.equal(saved.version, 1);
+  assert.equal(saved.candidates[0].company, "Example");
+  assert.equal(saved.candidates[0].salary, 7000000);
   assert.ok(Number.isFinite(Date.parse(saved.exportedAt)));
   assert.equal("embedding" in saved.candidates[0], false);
   const cachedIndex = recordingDocumentIndex();

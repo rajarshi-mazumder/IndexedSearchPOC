@@ -6,8 +6,8 @@ export class SalesforceCandidateMapper {
       id: contact.Id,
       name: contact.Name,
       title: contact.Title,
-      company: contact.Current_Company__c,
-      salary: contact.Current_Salary__c,
+      company: contact.Account?.Name,
+      salary: contact.currentSalary__c,
       skills: compact(
         contact.TagConnector__r?.SkillCode1__c,
         contact.TagConnector__r?.SkillCode2__c,

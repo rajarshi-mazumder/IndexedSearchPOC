@@ -2,8 +2,8 @@ export const CONTACT_FIELDS = `
   Id,
   Name,
   Title,
-  Current_Company__c,
-  Current_Salary__c,
+  Account.Name,
+  currentSalary__c,
 
   TagConnector__r.SkillCode1__c,
   TagConnector__r.SkillCode2__c,
