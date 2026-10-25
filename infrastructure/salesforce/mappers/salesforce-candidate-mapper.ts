@@ -5,7 +5,7 @@ export class SalesforceCandidateMapper {
     return {
       id: contact.Id,
       name: contact.Name,
-      title: contact.Current_Position__c,
+      title: contact.Title,
       company: contact.Current_Company__c,
       salary: contact.Current_Salary__c,
       skills: compact(

@@ -13,13 +13,15 @@ const factory = new CandidateDocumentFactory(generator);
 
 test("Salesforce candidate fields survive the document round trip without vectors", () => {
   const candidate = SalesforceCandidateMapper.fromContact({
-    Id: "003000000000001", Name: "Recovered Candidate", Current_Position__c: "Engineer",
+    Id: "003000000000001", Name: "Recovered Candidate", Title: "Engineer",
     Current_Company__c: "Example", Current_Salary__c: 100,
     TagConnector__r: { SkillCode1__c: "TypeScript", SkillCode2__c: " ", Systems1__c: "OpenSearch" },
   });
   const document = { ...documentFixture(), candidate };
   const source = OpenSearchCandidateDocumentMapper.toDocument(document);
   assert.deepEqual(candidate.skills, ["TypeScript"]);
+  assert.equal(candidate.title, "Engineer");
+  assert.match(factory.create(candidate)!.searchText, /^Role: Engineer/m);
   assert.equal("embedding" in source, false);
   assert.deepEqual(OpenSearchCandidateDocumentMapper.fromDocument(source), document);
   assert.deepEqual(OpenSearchCandidateDocumentMapper.fromDocument({ ...source, embedding: [1, 2] }), document);

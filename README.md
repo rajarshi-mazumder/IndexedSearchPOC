@@ -71,7 +71,7 @@ provisioned Amazon OpenSearch Ingestion service.
 
 ## Code responsibilities
 
-The project has 32 source TypeScript files, including the composition root.
+Source files are organized by responsibility, with wiring in the composition root.
 Each primary class/interface has a matching, descriptive kebab-case filename.
 
 | Location | Responsibility |
@@ -81,8 +81,10 @@ Each primary class/interface has a matching, descriptive kebab-case filename.
 | `application/usecases/index-candidates.ts` | Retrieve all or selected candidates, prepare bounded batches, submit documents |
 | `application/usecases/search-candidates.ts` | Validate a search request and delegate through the search port |
 | `application/services/` | Prepare candidate documents and generate readable profile/embedding text |
+| `application/services/snapshotting-candidate-repository.ts` | Save successfully retrieved candidates before indexing or export completes |
 | `infrastructure/salesforce/` | CLI authentication, paginated queries, and Salesforce-to-candidate mapping |
 | `infrastructure/dummy/` | Fictional candidates and an interchangeable read repository |
+| `infrastructure/json/` | Validate, atomically save, and read local candidate snapshots |
 | `infrastructure/opensearch/` | Signed client, bulk writes, document mapping, hybrid search, and separate setup |
 | `presentation/cli/` | Parse command-line arguments, call use cases, and display results |
 | `bootstrap.ts` | Construct and inject adapters; own connection lifetimes |
@@ -154,6 +156,70 @@ create the AWS collection, IAM roles, budgets, or other account infrastructure.
 
 ## Index and search
 
+### Fetch once, inspect, and embed later
+
+The Salesforce query now selects the standard Contact `Title` field and maps it
+to `candidate.title`. Other custom fields and the `TagConnector__r` relationship
+still need to match the connected org's schema.
+
+```powershell
+# Salesforce -> local JSON only. Requires SF_TARGET_ORG and a Salesforce login;
+# no AWS configuration or embedding requests are needed.
+npm run fetch-candidates
+
+# Read the saved JSON and embed/index it using the configured AWS account.
+npm run index-json
+
+# Fetch fresh Salesforce data, replace the JSON, then embed/index that data.
+npm run full-index
+```
+
+The default snapshot is `.cache/candidates/salesforce-candidates.json`, which is
+ignored by Git. It contains the mapped candidate DTOs before embedding:
+
+```json
+{
+  "version": 1,
+  "exportedAt": "2026-10-26T00:00:00.000Z",
+  "candidates": []
+}
+```
+
+The actual `candidates` array contains the retrieved records: ID, name, title,
+company, salary, skills, systems, industries, job functions, and other DTO fields.
+There are no embedding vectors or Salesforce access tokens in the snapshot.
+You can inspect or edit the candidate fields before indexing; keep the versioned
+envelope and valid DTO field types intact.
+
+Explicit source flags and custom files are supported by the same indexing CLI:
+
+```powershell
+npm run index-candidates -- --source=json --file=.cache/candidates/reviewed.json
+npm run index-candidates -- --source=salesforce --file=.cache/candidates/fresh.json
+npm run fetch-candidates -- --file=.cache/candidates/reviewed.json
+
+# Export a selected contact, or select contacts from an existing snapshot.
+npm run fetch-candidates -- --file=.cache/candidates/selected.json 003000000000001
+npm run index-json -- 003000000000001
+```
+
+On Windows PowerShell, if its `npm` wrapper drops forwarded flags, use `npm.cmd`
+in these examples. `index-json`, `full-index`, and `fetch-candidates` without
+additional flags work without argument forwarding.
+
+Fresh Salesforce indexing always saves the successful retrieval before any bulk
+write. If indexing fails, that snapshot remains available to retry with
+`index-json`. If fetching or saving fails, indexing does not start. Snapshot
+replacement uses a temporary file and rename, so a failed fetch does not replace
+an existing file. JSON mode validates the entire file and never logs in to
+Salesforce or automatically refreshes a missing/invalid snapshot.
+
+Each successful fresh fetch replaces its output file with exactly the returned
+records. A selected-ID fetch therefore creates a snapshot of that selection;
+use a separate `--file` when preserving an earlier full export. Reindexing JSON
+generates embeddings again using the current AWS configuration. To switch AWS
+accounts, use that account's profile, endpoint, role, index/pipelines, and model ID.
+
 ```powershell
 # Retrieve all Salesforce query pages and upsert searchable contacts.
 npm run full-index
@@ -172,7 +238,8 @@ npm run search -- "Business analysis experience"
 ```
 
 `full-index` and `index-demo` are aliases for the same `index-candidates.ts` CLI.
-The default source is Salesforce. Omitting IDs indexes all candidates from the
+The default source is Salesforce; `--source json` uses the snapshot instead.
+Omitting IDs indexes all candidates from the
 chosen source; providing IDs indexes only that selection. The internal use case
 treats an explicit empty ID array as no work.
 
@@ -224,7 +291,7 @@ npm audit --omit=dev
 ```
 
 Tests cover pagination, auth argument selection, document serialization, indexing
-and selective retries, hybrid requests/results, setup compatibility, and real
+and selective retries, local snapshot export/reuse/failure handling, hybrid requests/results, setup compatibility, and real
 AWS SigV4 signing against a local HTTP server. Other external calls use doubles.
 Neither the tests nor the build access Salesforce, Bedrock, or a live collection.
 

@@ -1,7 +1,7 @@
 export const CONTACT_FIELDS = `
   Id,
   Name,
-  Current_Position__c,
+  Title,
   Current_Company__c,
   Current_Salary__c,
 

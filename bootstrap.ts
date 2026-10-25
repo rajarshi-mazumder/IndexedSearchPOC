@@ -4,6 +4,9 @@ import { CandidateReadRepository } from "./application/ports/candidate-read-repo
 import { DummyCandidateRepository } from "./infrastructure/dummy/dummy-candidate-repository";
 import { DUMMY_CANDIDATES } from "./infrastructure/dummy/dummy-candidates";
 import { IndexCandidates } from "./application/usecases/index-candidates";
+import { ExportCandidateSnapshot } from "./application/usecases/export-candidate-snapshot";
+import { SnapshottingCandidateRepository } from "./application/services/snapshotting-candidate-repository";
+import { JsonCandidateSnapshotStore } from "./infrastructure/json/json-candidate-snapshot-store";
 import { SearchCandidates } from "./application/usecases/search-candidates";
 import { CandidateDocumentFactory } from "./application/services/candidate-document-factory";
 import { TemplateCandidateProfileGenerator } from "./application/services/template-candidate-profile-generator";
@@ -19,12 +22,26 @@ import { SalesforceQueryClient } from "./infrastructure/salesforce/salesforce-qu
 import { SalesforceCliAuthentication } from "./infrastructure/salesforce/salesforce-cli-authentication";
 import { SalesforceCliCommand } from "./infrastructure/salesforce/salesforce-cli-command";
 
-export function createIndexingContext() {
+export const DEFAULT_CANDIDATE_SNAPSHOT_FILE = ".cache/candidates/salesforce-candidates.json";
+
+function createSalesforceSnapshotRepository(snapshotFile: string) {
   const sfConfig = loadSalesforceConfig(process.env);
   const cli = new SalesforceCliCommand();
   const auth = new SalesforceCliAuthentication(sfConfig.SF_TARGET_ORG, (args) => cli.execute(args));
   const repository = new SalesforceCandidateRepository(new SalesforceQueryClient(auth.createConnection()));
-  return createCandidateIndexingContext(repository);
+  return new SnapshottingCandidateRepository(repository, new JsonCandidateSnapshotStore(snapshotFile));
+}
+
+export function createIndexingContext(snapshotFile = DEFAULT_CANDIDATE_SNAPSHOT_FILE) {
+  return createCandidateIndexingContext(createSalesforceSnapshotRepository(snapshotFile));
+}
+
+export function createJsonIndexingContext(snapshotFile = DEFAULT_CANDIDATE_SNAPSHOT_FILE) {
+  return createCandidateIndexingContext(new JsonCandidateSnapshotStore(snapshotFile));
+}
+
+export function createCandidateSnapshotExportContext(snapshotFile = DEFAULT_CANDIDATE_SNAPSHOT_FILE) {
+  return { exportCandidateSnapshot: new ExportCandidateSnapshot(createSalesforceSnapshotRepository(snapshotFile)) };
 }
 
 export function createDemoIndexingContext() {

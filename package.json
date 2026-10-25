@@ -9,6 +9,8 @@
     "test": "node --import tsx --test tests/*.test.ts",
     "full-index": "node --import tsx presentation/cli/index-candidates.ts --source salesforce",
     "index-candidates": "node --import tsx presentation/cli/index-candidates.ts",
+    "fetch-candidates": "node --import tsx presentation/cli/fetch-candidates.ts",
+    "index-json": "node --import tsx presentation/cli/index-candidates.ts --source json",
     "search": "node --import tsx presentation/cli/search.ts",
     "setup-opensearch": "node --import tsx presentation/cli/setup-opensearch.ts",
     "index-demo": "node --import tsx presentation/cli/index-candidates.ts --source dummy",
