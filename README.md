@@ -11,6 +11,11 @@ embeddings, builds the indexes, and returns hybrid lexical/semantic results.
 Use the [Angular console](#angular-console) for buttons, progress, batch previews,
 and search tables, or use [the FSB commands below](#full-sandbox-fsb-fetch-embed-and-search).
 
+To validate richer candidate data before changing extraction, use the
+[Salesforce candidate discovery query README](docs/salesforce-candidate-discovery/README.md).
+Start with its metadata commands and share the results before running the
+schema-dependent candidate, tag, and history queries.
+
 ## Angular console
 
 From the repository folder:
