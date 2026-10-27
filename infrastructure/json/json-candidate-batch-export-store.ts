@@ -1,5 +1,6 @@
+import { LocalCandidateDatasetLock } from "./local-candidate-dataset-lock";
 import { randomUUID } from "node:crypto";
-import { mkdir, open, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
+import { readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { z } from "zod";
 import { Candidate } from "../../domain/entities/candidate";
@@ -21,19 +22,7 @@ export class JsonCandidateBatchExportStore implements CandidateBatchExportStore 
   constructor(private readonly directory: string) {}
 
   async withLock<T>(operation: () => Promise<T>): Promise<T> {
-    await mkdir(this.directory, { recursive: true });
-    const lockPath = join(this.directory, ".export.lock");
-    const lock = await open(lockPath, "wx", 0o600).catch((error: NodeJS.ErrnoException) => {
-      if (error.code === "EEXIST") throw new Error(`Export directory is locked: ${lockPath}. If a previous process was killed, confirm it has stopped before removing this lock file.`);
-      throw error;
-    });
-    try {
-      await lock.writeFile(JSON.stringify({ pid: process.pid }));
-      return await operation();
-    } finally {
-      await lock.close();
-      await rm(lockPath, { force: true });
-    }
+    return new LocalCandidateDatasetLock(this.directory).withLock(operation);
   }
 
   async loadCheckpoint(): Promise<CandidateBatchCheckpoint | undefined> {

@@ -115,6 +115,10 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
   assert.equal(checkpoint.org, "full");
   const setup = await command("setup-opensearch", ["--index", "candidates-fsb"]);
   assert.match(setup.stdout, /OpenSearch candidate setup complete/);
+  await writeFile(join(output, ".export.lock"), JSON.stringify({ pid: process.pid }));
+  await assert.rejects(command("index-candidates", ["--source", "json", "--file", join(output, "batch-000001.json"), "--index", "candidates-fsb"]),
+    (error: any) => /Dataset is locked/.test(error.stderr));
+  await rm(join(output, ".export.lock"));
   for (const file of ["batch-000001.json", "batch-000002.json", "batch-000001.json"]) {
     const result = await command("index-candidates", ["--source", "json", "--file", join(output, file), "--index", "candidates-fsb"]);
     assert.match(result.stdout, /Index candidates-fsb: \d+\/\d+ processed/);

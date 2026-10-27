@@ -141,7 +141,7 @@ test("worker process receives an isolated configuration and handles stop over IP
 test("embedding executor runs files sequentially and never records a changed file as successful", async () => {
   const events: WorkerEvent[] = []; const files: string[] = []; let fingerprintCalls = 0;
   const unavailable = async (): Promise<never> => { throw new Error("Unexpected operation"); };
-  const operations: CandidateConsoleOperations = { fetch: unavailable, setup: unavailable, search: unavailable,
+  const operations: CandidateConsoleOperations = { enrich: unavailable, fetch: unavailable, setup: unavailable, search: unavailable,
     index: async (file, report) => { files.push(file); report({ processed: 1, total: 1, indexed: 1, skipped: 0 }); return { indexed: 1, skipped: 0 }; } };
   const executor = new CandidateConsoleOperationExecutor(operations, { validate: async () => {}, fingerprint: async () => ({
     hash: ++fingerprintCalls === 4 ? "changed" : "original", size: 100, modifiedAt: "2026-10-27T00:00:00.000Z",

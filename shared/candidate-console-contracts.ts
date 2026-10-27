@@ -7,19 +7,23 @@ export interface ConsoleConfiguration {
   sfRecordTypes?: string; sfTagTypes?: string;
 }
 export type OperationRequest =
+  | { kind: "enrich"; configuration: ConsoleConfiguration; files: string[]; action: "preview" | "add" | "regenerate" | "remove"; seed: string }
   | { kind: "fetch"; configuration: ConsoleConfiguration; batchSize: number; maxBatches: number; resume: boolean }
   | { kind: "setup"; configuration: ConsoleConfiguration }
   | { kind: "embed"; configuration: ConsoleConfiguration; files: string[] }
   | { kind: "search"; configuration: ConsoleConfiguration; query: string; limit: number };
 export interface OperationProgress {
+  changed?: number;
   message: string; processed?: number; total?: number; indexed?: number; skipped?: number;
   fetched?: number; batchNumber?: number; file?: string; fileNumber?: number; fileTotal?: number;
 }
 export interface FileEmbeddingResult {
+  deleted?: number;
   file: string; indexed: number; skipped: number; hash: string; size: number; modifiedAt: string;
 }
 export interface ConsoleSearchResult { rank: number; score: number; candidate: Candidate; profile: string }
 export interface OperationResult {
+  enrichment?: { changed: number; skipped: number; completedFiles: number };
   modelId?: string; fetched?: number; batchNumber?: number; complete?: boolean;
   files?: FileEmbeddingResult[]; candidates?: ConsoleSearchResult[];
 }

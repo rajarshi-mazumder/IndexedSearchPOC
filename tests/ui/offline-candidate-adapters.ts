@@ -48,9 +48,14 @@ require.cache[awsModule]!.exports = { OpenSearchServerlessClient: class {
         getMapping: async () => ({ body: { [config.OPENSEARCH_INDEX]: { mappings: { _meta: { schema_version: 3 }, properties: { enrichment: { type: "object", enabled: false } } } } } }) },
       bulk: async (request: { body: any[] }) => {
         await delay(100); const documents = await read();
-        for (let index = 0; index < request.body.length; index += 2) documents[request.body[index].index._id] = request.body[index + 1];
+        const items: object[] = [];
+        for (let index = 0; index < request.body.length;) {
+          const action = request.body[index];
+          if (action.delete) { delete documents[action.delete._id]; items.push({ delete: { status: 200 } }); index++; }
+          else { documents[action.index._id] = request.body[index + 1]; items.push({ index: { status: 200 } }); index += 2; }
+        }
         await mkdir(directory, { recursive: true }); await writeFile(path, JSON.stringify(documents));
-        return { body: { errors: false, items: Array.from({ length: request.body.length / 2 }, () => ({ index: { status: 200 } })) } };
+        return { body: { errors: false, items } };
       },
       search: async (request: { body: any }) => {
         await delay(250);

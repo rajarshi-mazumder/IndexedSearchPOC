@@ -7,6 +7,11 @@ export class CandidateConsoleOperationExecutor {
   constructor(private readonly operations: CandidateConsoleOperations, private readonly files: CandidateBatchFileInspector) {}
   async execute(request: OperationRequest, report: (event: WorkerEvent) => void, signal: AbortSignal): Promise<OperationResult> {
     const settings = request.configuration;
+    if (request.kind === "enrich") {
+      const result = await this.operations.enrich(request, (progress) => report({ type: "progress", progress }), signal);
+      const { preview, ...enrichment } = result;
+      return { enrichment, candidates: preview.map((candidate) => ({ rank: 0, score: 0, candidate, profile: "" })) };
+    }
     if (request.kind === "fetch") {
       report({ type: "progress", progress: { message: `Authenticating to Salesforce org ${settings.sfOrg}` } });
       const result = await this.operations.fetch(request, (progress) => {

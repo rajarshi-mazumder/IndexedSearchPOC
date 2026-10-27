@@ -73,6 +73,7 @@ test("bounded Salesforce exports resume across runs; files embed independently i
     const file = join(path, `batch-${String(batchNumber).padStart(6, "0")}.json`);
     const indexer = new IndexCandidates(new JsonCandidateSnapshotStore(file), factory, {
       indexMany: async (documents) => { sizes.push(documents.length); documents.forEach((document) => indexed.set(document.salesforceId, document)); },
+      removeMany: async (ids) => { ids.forEach((id) => indexed.delete(id)); },
     });
     const result = await indexer.execute(undefined, (event) => reports.push(event));
     assert.equal(result.indexed, batchNumber === 3 ? 505 : 1000);

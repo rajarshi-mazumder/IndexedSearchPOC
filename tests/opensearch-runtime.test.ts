@@ -25,6 +25,21 @@ function acceptedBulk(body: unknown[]) {
   return { body: { errors: false, items: Array.from({ length: body.length / 2 }, () => ({ index: { status: 200 } })) } };
 }
 
+test("stale CV deletion is idempotent, retries throttling and fails on missing acknowledgements", async () => {
+  const requests: any[] = [];
+  const client = { bulk: async (request: any) => {
+    requests.push(request);
+    return { body: { items: requests.length === 1 ? [{ delete: { status: 404 } }, { delete: { status: 429 } }]
+      : [{ delete: { status: 200 } }] } };
+  } } as unknown as Client;
+  await new OpenSearchCandidateDocumentIndex(client, config, async () => {}).removeMany(["missing", "retry"]);
+  assert.equal(requests.length, 2); assert.equal(requests[1].body[0].delete._id, "retry");
+  assert.equal(requests[1].pipeline, undefined);
+  assert.equal(requests[1].body[0].delete._index, config.OPENSEARCH_INDEX);
+  await assert.rejects(new OpenSearchCandidateDocumentIndex({ bulk: async () => ({ body: { items: [] } }) } as unknown as Client, config).removeMany(["a"]), /incomplete/);
+  await assert.rejects(new OpenSearchCandidateDocumentIndex({ bulk: async () => ({ body: { items: [{ delete: { status: 403 } }] } }) } as unknown as Client, config).removeMany(["a"]), /Could not remove/);
+});
+
 test("bulk indexing uses stable IDs and the embedding pipeline, without refreshing or setting up", async () => {
   const requests: any[] = [];
   const client = { bulk: async (input: any) => { requests.push(input); return acceptedBulk(input.body); } } as unknown as Client;

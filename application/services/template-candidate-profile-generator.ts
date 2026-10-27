@@ -1,7 +1,9 @@
 import { CandidateProfileGenerator } from "../ports/candidate-profile-generator";
 import { Candidate } from "../../domain/entities/candidate";
+import { CandidateCvTextFormatter } from "./candidate-cv-text-formatter";
 
 export class TemplateCandidateProfileGenerator implements CandidateProfileGenerator {
+  constructor(private readonly cvText: CandidateCvTextFormatter = new CandidateCvTextFormatter()) {}
   generate(candidate: Candidate): string {
     const parts: string[] = [];
 
@@ -67,6 +69,7 @@ export class TemplateCandidateProfileGenerator implements CandidateProfileGenera
     }
 
     parts.push(...this.professionalDetails(candidate));
+    parts.push(...this.cvText.format(candidate.enrichment?.cvProfile));
     return parts.join(" ");
   }
 
@@ -101,6 +104,7 @@ export class TemplateCandidateProfileGenerator implements CandidateProfileGenera
       );
     }
     sections.push(...this.professionalDetails(candidate));
+    sections.push(...this.cvText.format(candidate.enrichment?.cvProfile));
     return sections.join("\n");
   }
 

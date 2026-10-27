@@ -12,6 +12,9 @@ export const consoleConfigurationSchema = z.object({
   sfRecordTypes: z.string().trim().max(1000).optional(), sfTagTypes: z.string().trim().max(10000).optional(),
 }).strict();
 export const operationRequestSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("enrich"), configuration: consoleConfigurationSchema,
+    action: z.enum(["preview", "add", "regenerate", "remove"]), seed: z.string().trim().min(1).max(100),
+    files: z.array(batchFileNameSchema).min(1).max(1000).refine((files) => new Set(files).size === files.length, "Select each file once") }).strict(),
   z.object({ kind: z.literal("fetch"), configuration: consoleConfigurationSchema,
     batchSize: z.number().int().min(1).max(1000), maxBatches: z.number().int().min(1).max(10000), resume: z.boolean() }).strict(),
   z.object({ kind: z.literal("setup"), configuration: consoleConfigurationSchema }).strict(),

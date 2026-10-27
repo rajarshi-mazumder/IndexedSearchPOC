@@ -1,8 +1,9 @@
 import { Component, computed, input, signal } from "@angular/core";
 import { DecimalPipe, KeyValuePipe } from "@angular/common";
 import type { ConsoleSearchResult } from "../../../shared/candidate-console-contracts";
+import { CandidateCvDetailsComponent } from "./batches/candidate-cv-details-component";
 
-@Component({ selector: "candidate-table", standalone: true, imports: [DecimalPipe, KeyValuePipe], template: `
+@Component({ selector: "candidate-table", standalone: true, imports: [DecimalPipe, KeyValuePipe, CandidateCvDetailsComponent], template: `
   @if (rows().length) {
     <div class="table-scroll"><table class="candidate-table"><thead><tr>
       @if (ranked()) { <th>#</th><th><button class="sort" (click)="sortBy('score')">Score ↕</button></th> }
@@ -13,7 +14,7 @@ import type { ConsoleSearchResult } from "../../../shared/candidate-console-cont
       @for (row of sorted(); track row.candidate.id) {
         <tr>
           @if (ranked()) { <td class="muted mono">{{row.rank}}</td><td class="score">{{row.score | number:'1.3-3'}}</td> }
-          <td><strong>{{row.candidate.name}}</strong><span class="subtext mono">{{row.candidate.id}}</span></td>
+          <td><strong>{{row.candidate.name}}</strong><span class="subtext mono">{{row.candidate.id}}</span>@if (row.candidate.enrichment?.cvProfile) { <span class="status stopping">Demo CV</span> }</td>
           <td>{{row.candidate.title || '—'}}</td><td>{{row.candidate.company || '—'}}</td>
           <td><div class="tags">@for (skill of expertise(row).slice(0,3); track $index) { <span class="tag">{{skill}}</span> }
             @if (expertise(row).length > 3) { <span class="tag quiet">+{{expertise(row).length - 3}}</span> }
@@ -23,6 +24,7 @@ import type { ConsoleSearchResult } from "../../../shared/candidate-console-cont
         </tr>
         @if (expanded() === row.candidate.id) {
           <tr class="detail-row"><td [attr.colspan]="ranked() ? 8 : 6"><div class="detail-grid">
+            @if (row.candidate.enrichment?.cvProfile; as cv) { <candidate-cv-details class="span-all" [cv]="cv" /> }
             <div><span class="eyebrow">Skills</span><p>{{row.candidate.skills.join(', ') || 'Not provided'}}</p></div>
             <div><span class="eyebrow">Expertise</span><p>{{row.candidate.skillCategories.join(', ') || 'Not provided'}}</p></div>
             <div><span class="eyebrow">Systems</span><p>{{row.candidate.systems.join(', ') || 'Not provided'}}</p></div>

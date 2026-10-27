@@ -12,24 +12,26 @@ export class IndexCandidates {
   // Omitted IDs select all candidates; an explicit empty selection does no work.
   async execute(ids?: string[], report: (progress: {
     processed: number; total: number; indexed: number; skipped: number;
-  }) => void = () => {}, signal?: AbortSignal): Promise<{ indexed: number; skipped: number }> {
+  }) => void = () => {}, signal?: AbortSignal): Promise<{ indexed: number; skipped: number; deleted?: number }> {
     if (ids?.length === 0) return { indexed: 0, skipped: 0 };
     const candidates = ids === undefined
       ? await this.repository.getAll()
       : await this.repository.getByIds([...new Set(ids)]);
     let indexed = 0;
+    let deleted = 0;
     report({ processed: 0, total: candidates.length, indexed: 0, skipped: 0 });
     // Bound document preparation memory independently of the adapter's bulk limit.
     for (let offset = 0; offset < candidates.length; offset += 100) {
       if (signal?.aborted) throw new Error("Indexing stopped after the last completed bulk batch. Rerun this file to finish it.");
-      const documents = candidates.slice(offset, offset + 100)
-        .map((candidate) => this.documentFactory.create(candidate))
-        .filter((document) => document !== null);
+      const prepared = candidates.slice(offset, offset + 100).map((candidate) => ({ candidate, document: this.documentFactory.create(candidate) }));
+      const documents = prepared.map((item) => item.document).filter((document) => document !== null);
+      const removed = prepared.filter((item) => !item.document && item.candidate.enrichment?.cvProfileRemoved).map((item) => item.candidate.id);
+      if (removed.length) { await this.documentIndex.removeMany(removed); deleted += removed.length; }
       await this.documentIndex.indexMany(documents);
       indexed += documents.length;
       const processed = Math.min(offset + 100, candidates.length);
       report({ processed, total: candidates.length, indexed, skipped: processed - indexed });
     }
-    return { indexed, skipped: candidates.length - indexed };
+    return { indexed, skipped: candidates.length - indexed, ...(deleted ? { deleted } : {}) };
   }
 }

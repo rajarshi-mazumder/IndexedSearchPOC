@@ -8,14 +8,14 @@ import type { CandidatePreview, ConsoleConfiguration, ConsoleSearchResult, Datas
   <section class="card batch-library"><div class="section-heading"><div><span class="eyebrow">Dataset · {{configuration().dataset}}</span><h2>Batch library <span class="count">{{listing()?.totalFiles ?? 0}}</span></h2>
       <p>{{listing()?.checkpoint?.fetched?.toLocaleString() ?? '0'}} records exported. Open a file to inspect candidates before embedding.</p></div>
       <button class="button secondary small" (click)="refresh()" [disabled]="loading()">{{loading() ? 'Refreshing…' : '↻ Refresh'}}</button></div>
-    @if (selectable()) { <div class="selection-bar"><label class="checkbox-line"><input type="checkbox" [checked]="pageSelected()" (change)="togglePage()" /> Select this page</label><span>{{selected().length}} file(s) selected</span><button class="button text small" (click)="clearSelection()">Clear</button></div> }
+    @if (selectable()) { <div class="selection-bar"><label class="checkbox-line"><input type="checkbox" [disabled]="loading() || !listing()?.files?.length" [checked]="pageSelected()" (change)="togglePage()" /> Select this page</label><span>{{selected().length}} file(s) selected</span><button class="button text small" (click)="clearSelection()">Clear</button></div> }
     @if (listing()?.files?.length) {
       <div class="table-scroll"><table><thead><tr>@if (selectable()) { <th class="check-cell"></th> }<th>Batch file</th><th>Records</th><th>Size</th><th>Saved</th><th>Last embedding in {{configuration().index}}</th><th></th></tr></thead><tbody>
         @for (file of listing()!.files; track file.name) { <tr [class.selected-row]="previewFile() === file.name">
-          @if (selectable()) { <td><input type="checkbox" [attr.aria-label]="'Select ' + file.name" [disabled]="!file.committed" [checked]="selected().includes(file.name)" (change)="toggle(file.name)" /></td> }
+          @if (selectable()) { <td><input type="checkbox" [attr.aria-label]="'Select ' + file.name" [disabled]="loading() || !file.committed" [checked]="selected().includes(file.name)" (change)="toggle(file.name)" /></td> }
           <td class="mono"><span class="file-icon">▤</span>{{file.name}} @if (!file.committed) { <span class="status stopping">Uncommitted</span> }</td>
           <td>{{file.records ?? '—'}}</td><td class="muted">{{file.size / 1024 | number:'1.0-1'}} KB</td><td class="muted">{{file.modifiedAt | date:'MMM d, HH:mm'}}</td>
-          <td>@if (file.lastEmbedding; as last) { <span class="status" [class]="'status ' + (last.changed ? 'stopping' : 'succeeded')">{{last.changed ? 'File changed' : 'Run succeeded'}}</span><span class="subtext">{{last.indexed}} indexed · {{last.skipped}} skipped</span> } @else { <span class="muted">No recorded run</span> }</td>
+          <td>@if (file.lastEmbedding; as last) { <span class="status" [class]="'status ' + (last.changed ? 'stopping' : 'succeeded')">{{last.changed ? 'Needs re-embedding' : 'Run succeeded'}}</span><span class="subtext">{{last.indexed}} indexed · {{last.skipped}} skipped</span> } @else { <span class="muted">No recorded run</span> }</td>
           <td><button class="button text small" (click)="open(file.name)">Preview</button></td></tr> }
       </tbody></table></div>
       <div class="pagination"><span>{{listing()!.totalFiles}} files · page {{page()}} of {{pageCount()}}</span><div><button class="button secondary small" [disabled]="page() === 1 || loading()" (click)="changePage(-1)">← Previous</button><button class="button secondary small" [disabled]="page() >= pageCount() || loading()" (click)="changePage(1)">Next →</button></div></div>
@@ -42,7 +42,7 @@ export class CandidateBatchBrowserComponent {
   private requestNumber = 0;
   constructor(readonly store: CandidateConsoleStore) {
     effect(() => { this.configuration(); untracked(() => { this.page.set(1); this.clearSelection(); this.previewFile.set(""); void this.refresh(); }); });
-    effect(() => { this.store.catalogRevision(); untracked(() => { void this.refresh(); }); });
+    effect(() => { this.store.catalogRevision(); untracked(() => { void this.refresh(); if (this.previewFile()) void this.loadPreview(); }); });
   }
   async refresh(): Promise<void> {
     const sequence = ++this.requestNumber; this.loading.set(true);

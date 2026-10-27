@@ -134,6 +134,13 @@ must not be represented as employment experience. The three-slot TagConnector
 summary is no longer the extraction source; inspect association coverage and the
 guide's connector comparison if your org has connector-only information.
 
+
+## Demo CV data in the UI
+
+You can now enrich existing batch files with synthetic CV sections before embedding. In **Embed & index**, select batch files, then use **Preview demo CV**, **Add demo CV data**, **Regenerate demo CV**, or **Remove demo CV**. Re-embed changed files into the desired index to update search.
+
+See [Demo CV enrichment](docs/demo-cv-enrichment.md) for the full workflow, generated sections, backups, stop/retry behavior, and search examples.
+
 ## Angular console
 
 From the repository folder:

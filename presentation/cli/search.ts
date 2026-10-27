@@ -18,6 +18,7 @@ async function main() {
       console.log("Hybrid Score:", result.score.toFixed(6));
       console.log("Name:", candidate.name);
       console.log("Salesforce ID:", candidate.id);
+      if (candidate.enrichment?.cvProfile) console.log("Demo CV: synthetic professional details included (seed " + candidate.enrichment.cvProfile.source.seed + ")");
       console.log("Title:", candidate.title ?? "Not provided");
       console.log("Skills:", candidate.skills.join(", "));
       console.log("Systems / technologies:", candidate.systems.join(", "));

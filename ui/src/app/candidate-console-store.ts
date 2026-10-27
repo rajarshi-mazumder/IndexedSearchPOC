@@ -28,7 +28,7 @@ export class CandidateConsoleStore {
       const [profiles, operations] = await Promise.all([this.api.profiles(), this.api.operations()]);
       this.profiles.set(profiles); this.configuration.set(profiles[0]); this.operations.set(operations); this.ready.set(true);
       this.connect();
-      for (const kind of ["fetch", "embed", "setup", "search"]) {
+      for (const kind of ["fetch", "embed", "setup", "search", "enrich"]) {
         const latest = operations.find((item) => item.kind === kind); if (latest) void this.loadDetail(latest.id).catch((error) => this.fail(error));
       }
     } catch (error) { this.fail(error); }

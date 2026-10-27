@@ -25,7 +25,7 @@ export class CandidateConsoleEnvironment {
     const environment = this.create(request.configuration, base);
     if (request.kind === "fetch") loadSalesforceConfig(environment);
     else if (request.kind === "setup") loadOpenSearchSetupConfig(environment);
-    else loadOpenSearchConfig(environment);
+    else if (request.kind !== "enrich") loadOpenSearchConfig(environment);
     return environment;
   }
 }

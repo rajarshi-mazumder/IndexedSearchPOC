@@ -108,6 +108,7 @@ test("stopping indexing finishes the current bulk batch and does not start the n
   const candidates = Array.from({ length: 250 }, (_, index) => candidateFixture({ id: String(index), skills: ["Java"] }));
   const indexer = new IndexCandidates({ getAll: async () => candidates, getByIds: async () => [] }, factory, {
     indexMany: async (documents) => { batches.push(documents.length); controller.abort(); },
+    removeMany: async () => {},
   });
   await assert.rejects(indexer.execute(undefined, undefined, controller.signal), /stopped after/);
   assert.deepEqual(batches, [100]);

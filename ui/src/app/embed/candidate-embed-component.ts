@@ -3,8 +3,9 @@ import { FormsModule } from "@angular/forms";
 import { CandidateConsoleStore } from "../candidate-console-store";
 import { CandidateBatchBrowserComponent } from "../batches/candidate-batch-browser-component";
 import { OperationProgressComponent } from "../operation-progress-component";
+import { CandidateCvEnrichmentComponent } from "../batches/candidate-cv-enrichment-component";
 
-@Component({ selector: "candidate-embed", standalone: true, imports: [FormsModule, CandidateBatchBrowserComponent, OperationProgressComponent], template: `
+@Component({ selector: "candidate-embed", standalone: true, imports: [FormsModule, CandidateBatchBrowserComponent, OperationProgressComponent, CandidateCvEnrichmentComponent], template: `
   <div class="page-heading"><div><span class="eyebrow">02 / Local files → OpenSearch</span><h1>Embed & index</h1><p>Choose saved files and a destination index. Files run one at a time, in batch order.</p></div></div>
   <section class="card"><form #form="ngForm"><div class="form-grid two">
     <label>Source dataset<input name="dataset" [ngModel]="dataset()" (ngModelChange)="dataset.set($event)" required pattern="[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}" /></label>
@@ -14,6 +15,7 @@ import { OperationProgressComponent } from "../operation-progress-component";
   <operation-progress [job]="store.recordFor('setup')" />
   <operation-progress [job]="store.recordFor('embed')" />
   <candidate-batch-browser [configuration]="target()" [selectable]="true" (selectionChange)="files.set($event)" />
+  <candidate-cv-enrichment [configuration]="target()" [files]="files()" />
 ` })
 export class CandidateEmbedComponent {
   readonly dataset = signal(""); readonly index = signal(""); readonly files = signal<string[]>([]); readonly busy = signal(false);

@@ -28,6 +28,25 @@ export class OpenSearchCandidateDocumentIndex implements CandidateDocumentIndex 
     }
   }
 
+  async removeMany(ids: string[]): Promise<void> {
+    for (let offset = 0; offset < ids.length; offset += 100) {
+      let pending = ids.slice(offset, offset + 100);
+      for (let attempt = 0; attempt < 4; attempt++) {
+        const response = await this.client.bulk({ body: pending.map((id) => ({ delete: { _index: this.config.OPENSEARCH_INDEX, _id: id } })) });
+        if (response.body.items.length !== pending.length) throw new Error("OpenSearch returned an incomplete deletion acknowledgement; retry the file.");
+        const retry: string[] = [];
+        response.body.items.forEach((item, position) => {
+          const result = item.delete;
+          if (result && ((!result.error && result.status >= 200 && result.status < 300) || result.status === 404)) return;
+          if (result && [429, 502, 503, 504].includes(result.status) && attempt < 3) retry.push(pending[position]);
+          else throw new Error(`Could not remove stale demo CV document ${pending[position]}: ${result?.error?.reason ?? "Missing or failed result"}. Retry the file.`);
+        });
+        if (!retry.length) break;
+        pending = retry; await this.wait(1000 * 2 ** attempt);
+      }
+    }
+  }
+
   private async writeBatch(documents: CandidateDocument[]): Promise<void> {
     let pending = documents;
     for (let attempt = 0; attempt < 4; attempt++) {

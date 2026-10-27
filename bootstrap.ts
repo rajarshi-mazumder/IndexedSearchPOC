@@ -1,4 +1,8 @@
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { LocalCandidateDatasetLock } from "./infrastructure/json/local-candidate-dataset-lock";
+import { JsonCandidateBatchEditor } from "./infrastructure/json/json-candidate-batch-editor";
+import { DeterministicCandidateCvGenerator } from "./infrastructure/dummy/deterministic-candidate-cv-generator";
+import { EnrichCandidateBatchFiles } from "./application/usecases/enrich-candidate-batch-files";
 import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { CandidateReadRepository } from "./application/ports/candidate-read-repository";
 import { DummyCandidateRepository } from "./infrastructure/dummy/dummy-candidate-repository";
@@ -52,7 +56,11 @@ export function createIndexingContext(snapshotFile = DEFAULT_CANDIDATE_SNAPSHOT_
 }
 
 export function createJsonIndexingContext(snapshotFile = DEFAULT_CANDIDATE_SNAPSHOT_FILE, environment = process.env) {
-  return createCandidateIndexingContext(new JsonCandidateSnapshotStore(snapshotFile), environment);
+  const context = createCandidateIndexingContext(new JsonCandidateSnapshotStore(snapshotFile), environment);
+  const lock = new LocalCandidateDatasetLock(dirname(snapshotFile));
+  return { ...context, indexCandidates: {
+    execute: (...args: Parameters<IndexCandidates["execute"]>) => lock.withLock(() => context.indexCandidates.execute(...args)),
+  } };
 }
 
 export function createCandidateSnapshotExportContext(snapshotFile = DEFAULT_CANDIDATE_SNAPSHOT_FILE, environment = process.env) {
@@ -110,6 +118,8 @@ export function createCandidateConsoleOperationExecutor(request: OperationReques
   const catalog = new LocalCandidateBatchCatalog(join(workspace, ".cache/candidates"));
   const dataset = request.configuration.dataset;
   return new CandidateConsoleOperationExecutor({
+    enrich: (enrich, report, signal) => new EnrichCandidateBatchFiles(new JsonCandidateBatchEditor(catalog, dataset),
+      new DeterministicCandidateCvGenerator()).execute(enrich.files, enrich.action, enrich.seed, report, signal),
     fetch: async (fetch, report, signal) => {
       const context = createCandidateBatchExportContext(await catalog.datasetPath(dataset, true), environment);
       return context.exportCandidateBatches.execute({ org: environment.SF_TARGET_ORG!, sourceId: context.sourceId,

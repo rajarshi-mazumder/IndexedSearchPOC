@@ -1,6 +1,9 @@
 import { z } from "zod";
+import { candidateCvProfileSchema } from "./candidate-cv-profile-schema";
 
 export const candidateEnrichmentSchema = z.object({
+  cvProfileRemoved: z.literal(true).optional(),
+  cvProfile: candidateCvProfileSchema.optional(),
   version: z.literal(2), modifiedAt: z.string().optional(), recordType: z.string().optional(),
   details: z.record(z.string(), z.union([z.string(), z.number().finite(), z.boolean(), z.null()])),
   resolvedDetails: z.record(z.string(), z.string()).optional(),

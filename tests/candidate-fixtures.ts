@@ -30,6 +30,7 @@ export function recordingDocumentIndex() {
   const documents: CandidateDocument[] = [];
   const batches: number[] = [];
   const index: CandidateDocumentIndex = {
+    removeMany: async () => {},
     indexMany: async (batch) => { batches.push(batch.length); documents.push(...batch); },
   };
   return { index, documents, batches };

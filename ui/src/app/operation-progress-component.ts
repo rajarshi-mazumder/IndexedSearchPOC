@@ -18,10 +18,12 @@ import type { OperationRecord } from "../../../shared/candidate-console-contract
         @if (run.progress.fetched !== undefined) { <span><strong>{{run.progress.fetched.toLocaleString()}}</strong> records saved in dataset</span> }
         @if (run.progress.total !== undefined) { <span><strong>{{run.progress.processed}} / {{run.progress.total}}</strong> processed in file</span> }
         @if (run.progress.indexed !== undefined) { <span><strong>{{run.progress.indexed}}</strong> indexed · <strong>{{run.progress.skipped}}</strong> skipped</span> }
+        @if (run.progress.changed !== undefined) { <span><strong>{{run.progress.changed}}</strong> prepared · <strong>{{run.progress.skipped}}</strong> skipped</span> }
         @if (run.progress.fileTotal) { <span>File <strong>{{run.progress.fileNumber}} / {{run.progress.fileTotal}}</strong></span> }
-        <span class="mono">{{run.kind === 'fetch' ? run.dataset : run.index}}</span>
+        <span class="mono">{{run.kind === 'fetch' || run.kind === 'enrich' ? run.dataset : run.index}}</span>
       </div>
       @if (run.error) { <div class="alert error">{{run.error}}</div> }
+      @if (run.result?.enrichment; as result) { <p>{{result.changed}} candidates changed · {{result.skipped}} skipped · {{result.completedFiles}} files processed.</p> }
       @if (run.result?.modelId; as modelId) { <div class="result-callout">Registered model: <code>{{modelId}}</code>
         <button class="button secondary small" (click)="useModel(modelId, run)">Use model in configuration</button></div> }
       @if (run.result?.fetched !== undefined) { <p class="muted">{{run.result.fetched.toLocaleString()}} records across {{run.result.batchNumber}} files. {{run.result.complete ? 'Export complete.' : 'Use Resume to fetch more.'}}</p> }
