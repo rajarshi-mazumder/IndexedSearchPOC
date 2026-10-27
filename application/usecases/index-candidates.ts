@@ -10,12 +10,15 @@ export class IndexCandidates {
   ) {}
 
   // Omitted IDs select all candidates; an explicit empty selection does no work.
-  async execute(ids?: string[]): Promise<{ indexed: number; skipped: number }> {
+  async execute(ids?: string[], report: (progress: {
+    processed: number; total: number; indexed: number; skipped: number;
+  }) => void = () => {}): Promise<{ indexed: number; skipped: number }> {
     if (ids?.length === 0) return { indexed: 0, skipped: 0 };
     const candidates = ids === undefined
       ? await this.repository.getAll()
       : await this.repository.getByIds([...new Set(ids)]);
     let indexed = 0;
+    report({ processed: 0, total: candidates.length, indexed: 0, skipped: 0 });
     // Bound document preparation memory independently of the adapter's bulk limit.
     for (let offset = 0; offset < candidates.length; offset += 100) {
       const documents = candidates.slice(offset, offset + 100)
@@ -23,6 +26,8 @@ export class IndexCandidates {
         .filter((document) => document !== null);
       await this.documentIndex.indexMany(documents);
       indexed += documents.length;
+      const processed = Math.min(offset + 100, candidates.length);
+      report({ processed, total: candidates.length, indexed, skipped: processed - indexed });
     }
     return { indexed, skipped: candidates.length - indexed };
   }

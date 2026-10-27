@@ -158,6 +158,11 @@ create the AWS collection, IAM roles, budgets, or other account infrastructure.
 
 ### Fetch once, inspect, and embed later
 
+For a large sandbox, use [resumable batch exports](docs/batched-sandbox-ingestion.md).
+Fetching defaults to **one file of up to 1,000 records**, not the whole org.
+Fetch and embedding progress are printed separately. You decide how many new files
+to fetch and which file/index to embed on each invocation.
+
 The Salesforce query now selects the standard Contact `Title` field and maps it
 to `candidate.title`. Other custom fields and the `TagConnector__r` relationship
 still need to match the connected org's schema.
@@ -165,17 +170,22 @@ still need to match the connected org's schema.
 ```powershell
 # Salesforce -> local JSON only. Requires SF_TARGET_ORG and a Salesforce login;
 # no AWS configuration or embedding requests are needed.
-npm run fetch-candidates
+npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --max-batches 1
+
+# Continue from the saved ID cursor; fetch one additional file.
+npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --resume --max-batches 1
 
 # Read the saved JSON and embed/index it using the configured AWS account.
-npm run index-json
+npm run setup-opensearch -- --index candidates-fsb
+npm run index-json -- --file .cache/candidates/fsb/batch-000001.json --index candidates-fsb
 
-# Fetch fresh Salesforce data, replace the JSON, then embed/index that data.
-npm run full-index
+# Add the second file whenever ready; search uses the chosen index.
+npm run index-json -- --file .cache/candidates/fsb/batch-000002.json --index candidates-fsb
+npm run search -- --index candidates-fsb "Java Spring Boot Kafka microservices"
 ```
 
-The default snapshot is `.cache/candidates/salesforce-candidates.json`, which is
-ignored by Git. It contains the mapped candidate DTOs before embedding:
+Batch files and earlier single-file snapshots use the same format, containing
+mapped candidate DTOs before embedding. Data under `.cache/` is ignored by Git:
 
 ```json
 {
@@ -195,35 +205,31 @@ Explicit source flags and custom files are supported by the same indexing CLI:
 
 ```powershell
 npm run index-candidates -- --source=json --file=.cache/candidates/reviewed.json
-npm run index-candidates -- --source=salesforce --file=.cache/candidates/fresh.json
-npm run fetch-candidates -- --file=.cache/candidates/reviewed.json
 
 # Export a selected contact, or select contacts from an existing snapshot.
-npm run fetch-candidates -- --file=.cache/candidates/selected.json 003000000000001
+npm run fetch-candidates -- --org full --file=.cache/candidates/selected.json 003000000000001
 npm run index-json -- 003000000000001
 ```
 
 On Windows PowerShell, if its `npm` wrapper drops forwarded flags, use `npm.cmd`
-in these examples. `index-json`, `full-index`, and `fetch-candidates` without
-additional flags work without argument forwarding.
+in these examples. Without `--index`, the env index/pipeline settings still apply.
+An explicit `--index NAME` consistently selects `NAME`, `NAME-ingest`, and
+`NAME-hybrid` for setup/index/search. Keep the working registered model ID in `.env`.
 
-Fresh Salesforce indexing always saves the successful retrieval before any bulk
+Selected-ID Salesforce indexing saves the successful retrieval before any bulk
 write. If indexing fails, that snapshot remains available to retry with
 `index-json`. If fetching or saving fails, indexing does not start. Snapshot
 replacement uses a temporary file and rename, so a failed fetch does not replace
 an existing file. JSON mode validates the entire file and never logs in to
 Salesforce or automatically refreshes a missing/invalid snapshot.
 
-Each successful fresh fetch replaces its output file with exactly the returned
-records. A selected-ID fetch therefore creates a snapshot of that selection;
-use a separate `--file` when preserving an earlier full export. Reindexing JSON
+Each selected-ID fetch replaces its output file with exactly that selection.
+Batch exports instead save numbered files and advance `checkpoint.json` after
+each saved file. `--resume` adds more files with bounded memory. Reindexing JSON
 generates embeddings again using the current AWS configuration. To switch AWS
 accounts, use that account's profile, endpoint, role, index/pipelines, and model ID.
 
 ```powershell
-# Retrieve all Salesforce query pages and upsert searchable contacts.
-npm run full-index
-
 # Upsert selected contacts.
 npm run index-candidates -- 003000000000001 003000000000002
 
@@ -239,9 +245,13 @@ npm run search -- "Business analysis experience"
 
 `full-index` and `index-demo` are aliases for the same `index-candidates.ts` CLI.
 The default source is Salesforce; `--source json` uses the snapshot instead.
-Omitting IDs indexes all candidates from the
-chosen source; providing IDs indexes only that selection. The internal use case
-treats an explicit empty ID array as no work.
+Unselected direct Salesforce indexing (`full-index` or `index-candidates`) and
+full single-file fetches now fail with guidance to use bounded exports, preventing
+the `Invalid string length` failure from serializing a million-contact sandbox.
+Omitting IDs for JSON/dummy mode indexes that file/source; providing IDs selects
+only those records. The internal use case treats an explicit empty ID array as no work.
+Existing default `index-json` still reads `.cache/candidates/salesforce-candidates.json`;
+always supply the new batch `--file` for sandbox exports.
 
 The ingestion adapter sends batches of up to 100 documents, uses Salesforce IDs as
 document IDs, and retries transient bulk failures for the affected documents only.
@@ -275,8 +285,11 @@ against representative candidate queries.
   runs automatically.
 - The recovered mapper still leaves languages empty and location undefined.
   No new Salesforce fields or inferred filters were introduced.
-- Salesforce query pagination is fixed. The repository still loads the returned
-  candidate list into memory; document generation and OpenSearch writes are batched.
+- Sandbox exports keep only one batch of at most 1,000 Contacts in memory, use an ID
+  cursor rather than OFFSET, and atomically persist each file before its checkpoint.
+  They traverse live data; updates to already-exported IDs require a fresh export.
+- Fetch checkpoints track exported files, not embedding completion. Each explicit
+  `index-json --file ... --index ...` adds that selected file to the target index.
 
 ## Verification
 
@@ -290,7 +303,8 @@ npm run build
 npm audit --omit=dev
 ```
 
-Tests cover pagination, auth argument selection, document serialization, indexing
+Tests cover bounded pagination, file/checkpoint failures, resuming across runs,
+export locks, index overrides, auth argument selection, document serialization, indexing
 and selective retries, local snapshot export/reuse/failure handling, hybrid requests/results, setup compatibility, and real
 AWS SigV4 signing against a local HTTP server. Other external calls use doubles.
 Neither the tests nor the build access Salesforce, Bedrock, or a live collection.

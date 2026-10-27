@@ -64,3 +64,11 @@ test("Salesforce CLI authentication uses the configured org alias", () => {
   ]);
   assert.throws(() => loadSalesforceConfig({ SF_TARGET_ORG: "org & command" }));
 });
+
+test("export authentication exposes the actual org identity for resume validation", () => {
+  const auth = new SalesforceCliAuthentication("full", (args) => JSON.stringify({ status: 0, result: args.includes("display")
+    ? { instanceUrl: "https://offline.invalid", id: "00D000000000001" } : { accessToken: "offline-token" } }));
+  const session = auth.createSession();
+  assert.equal(session.sourceId, "00D000000000001");
+  assert.equal(session.connection.instanceUrl, "https://offline.invalid");
+});

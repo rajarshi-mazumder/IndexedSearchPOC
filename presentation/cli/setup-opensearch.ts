@@ -1,8 +1,12 @@
 import { errors } from "@opensearch-project/opensearch";
 import { createSetupContext } from "../../bootstrap";
+import { parseArgs } from "node:util";
+import { OpenSearchCommandEnvironment } from "./open-search-command-environment";
 
 async function main() {
-  const context = createSetupContext();
+  const { values } = parseArgs({ options: { index: { type: "string" } } });
+  const context = createSetupContext(OpenSearchCommandEnvironment.create(process.env, values.index));
+  console.log("Setting up OpenSearch index:", context.index);
   try {
     const modelId = await context.setup.execute();
     console.log("OpenSearch candidate setup complete. Remote embedding simulation passed.");

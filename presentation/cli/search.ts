@@ -1,9 +1,13 @@
 import { createSearchContext } from "../../bootstrap";
+import { parseArgs } from "node:util";
+import { OpenSearchCommandEnvironment } from "./open-search-command-environment";
 
 async function main() {
-  const query = process.argv.slice(2).join(" ").trim() || "Business analysis experience";
-  const context = createSearchContext();
+  const { values, positionals } = parseArgs({ options: { index: { type: "string" } }, allowPositionals: true });
+  const query = positionals.join(" ").trim() || "Business analysis experience";
+  const context = createSearchContext(OpenSearchCommandEnvironment.create(process.env, values.index));
   try {
+    console.log("OpenSearch index:", context.index);
     console.log('Query: "' + query + '"\n');
     const results = await context.searchCandidates.execute(query, 10);
     for (const [index, result] of results.entries()) {
