@@ -1,0 +1,7 @@
+{
+  "compilerOptions": { "target": "ES2022", "module": "ES2022", "moduleResolution": "bundler",
+    "lib": ["ES2022", "dom"], "strict": true, "experimentalDecorators": true,
+    "useDefineForClassFields": false, "skipLibCheck": true, "isolatedModules": true, "types": [], "outDir": "../dist/ui-ts" },
+  "angularCompilerOptions": { "strictTemplates": true, "strictInjectionParameters": true },
+  "include": ["src/**/*.ts"]
+}

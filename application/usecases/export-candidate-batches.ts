@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { CandidateBatchSource } from "../ports/candidate-batch-source";
 import { CandidateBatchExportStore, CandidateBatchCheckpoint } from "../ports/candidate-batch-export-store";
+import { CandidateBatchExportProgress } from "../ports/candidate-batch-export-progress";
+export type { CandidateBatchExportProgress } from "../ports/candidate-batch-export-progress";
 
 const optionsSchema = z.object({
   org: z.string().min(1), sourceId: z.string().min(1),
@@ -8,10 +10,6 @@ const optionsSchema = z.object({
   maxBatches: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
   resume: z.boolean(),
 });
-
-export type CandidateBatchExportProgress =
-  | { stage: "fetching"; batchNumber: number; fetched: number }
-  | { stage: "saved"; batchNumber: number; fetched: number; count: number; file: string };
 
 export class ExportCandidateBatches {
   constructor(private readonly source: CandidateBatchSource, private readonly store: CandidateBatchExportStore) {}

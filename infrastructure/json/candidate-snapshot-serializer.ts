@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Candidate } from "../../domain/entities/candidate";
 
 const optionalText = z.string().nullish().transform((value) => value ?? undefined);
-const candidatesSchema = z.array(z.object({
+export const candidateSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   title: optionalText,
@@ -16,7 +16,8 @@ const candidatesSchema = z.array(z.object({
   subIndustries: z.array(z.string()),
   jobFunctions: z.array(z.string()),
   languages: z.array(z.object({ code: z.string(), level: z.string() }).strict()),
-}).strict()).refine((candidates) => new Set(candidates.map((candidate) => candidate.id)).size === candidates.length,
+}).strict();
+const candidatesSchema = z.array(candidateSchema).refine((candidates) => new Set(candidates.map((candidate) => candidate.id)).size === candidates.length,
   "Candidate IDs in a snapshot must be unique");
 
 const snapshotSchema = z.object({

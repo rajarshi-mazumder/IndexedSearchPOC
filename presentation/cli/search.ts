@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { createSearchContext } from "../../bootstrap";
 import { parseArgs } from "node:util";
 import { OpenSearchCommandEnvironment } from "./open-search-command-environment";

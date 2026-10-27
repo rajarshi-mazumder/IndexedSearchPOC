@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { errors } from "@opensearch-project/opensearch";
 import { createSetupContext } from "../../bootstrap";
 import { parseArgs } from "node:util";

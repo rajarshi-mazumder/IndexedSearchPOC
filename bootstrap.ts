@@ -1,4 +1,4 @@
-import "dotenv/config";
+import { join } from "node:path";
 import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { CandidateReadRepository } from "./application/ports/candidate-read-repository";
 import { DummyCandidateRepository } from "./infrastructure/dummy/dummy-candidate-repository";
@@ -23,6 +23,10 @@ import { SalesforceCandidateRepository } from "./infrastructure/salesforce/sales
 import { SalesforceQueryClient } from "./infrastructure/salesforce/salesforce-query-client";
 import { SalesforceCliAuthentication } from "./infrastructure/salesforce/salesforce-cli-authentication";
 import { SalesforceCliCommand } from "./infrastructure/salesforce/salesforce-cli-command";
+import { CandidateConsoleOperationExecutor } from "./application/services/candidate-console-operation-executor";
+import { LocalCandidateBatchCatalog } from "./infrastructure/json/local-candidate-batch-catalog";
+import { CandidateConsoleEnvironment } from "./infrastructure/config/candidate-console-environment";
+import { OperationRequest } from "./shared/candidate-console-contracts";
 
 export const DEFAULT_CANDIDATE_SNAPSHOT_FILE = ".cache/candidates/salesforce-candidates.json";
 
@@ -90,4 +94,32 @@ export function createSetupContext(environment = process.env) {
     index: config.OPENSEARCH_INDEX,
     close: () => client.close(),
   };
+}
+
+export function createCandidateConsoleOperationExecutor(request: OperationRequest, workspace: string, baseEnvironment = process.env) {
+  const environment = CandidateConsoleEnvironment.validate(request, baseEnvironment);
+  const catalog = new LocalCandidateBatchCatalog(join(workspace, ".cache/candidates"));
+  const dataset = request.configuration.dataset;
+  return new CandidateConsoleOperationExecutor({
+    fetch: async (fetch, report, signal) => {
+      const context = createCandidateBatchExportContext(await catalog.datasetPath(dataset, true), environment);
+      return context.exportCandidateBatches.execute({ org: environment.SF_TARGET_ORG!, sourceId: context.sourceId,
+        batchSize: fetch.batchSize, maxBatches: fetch.maxBatches, resume: fetch.resume }, report, signal);
+    },
+    setup: async () => {
+      const context = createSetupContext(environment);
+      try { return await context.setup.execute(); } finally { await context.close(); }
+    },
+    search: async (query, limit) => {
+      const context = createSearchContext(environment);
+      try { return await context.searchCandidates.execute(query, limit); } finally { await context.close(); }
+    },
+    index: async (file, report, signal) => {
+      const context = createJsonIndexingContext(await catalog.filePath(dataset, file), environment);
+      try { return await context.indexCandidates.execute(undefined, report, signal); } finally { await context.close(); }
+    },
+  }, {
+    validate: async (file) => { await catalog.assertCommitted(dataset, file); await catalog.preview(dataset, file, 1, 1); },
+    fingerprint: (file) => catalog.fingerprint(dataset, file),
+  });
 }

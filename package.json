@@ -2,8 +2,15 @@
   "name": "indexed-search",
   "version": "0.0.0-recovered",
   "private": true,
+  "workspaces": [
+    "ui"
+  ],
   "description": "Salesforce candidate indexing and hybrid search with Amazon OpenSearch Serverless and Bedrock",
   "scripts": {
+    "ui": "npm run ui:build && npm run ui:serve",
+    "ui:build": "npm --workspace ui run build",
+    "ui:serve": "node --import tsx presentation/http/start-candidate-console.ts",
+    "test:ui": "npm run ui:build && node node_modules/playwright/cli.js test --config tests/ui/playwright.config.ts",
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/typescript/bin/tsc --noEmit -p tsconfig.tests.json",
     "build": "node node_modules/typescript/bin/tsc",
     "test": "node --import tsx --test tests/*.test.ts",
@@ -21,6 +28,7 @@
   "engines": {
     "node": ">=22.19.0"
   },
+  "overrides": { "vite": "8.3.3" },
   "dependencies": {
     "@aws-sdk/credential-provider-node": "3.972.88",
     "@aws-sdk/types": "3.975.0",
@@ -30,6 +38,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@types/node": "^22.0.0",
     "node": "24.22.1",
     "tsx": "^4.20.0",

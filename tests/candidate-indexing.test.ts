@@ -102,3 +102,13 @@ test("search validates input and delegates plain text through its port", async (
   await assert.rejects(search.execute("Engineer", 101));
   assert.equal(calls.length, 1);
 });
+
+test("stopping indexing finishes the current bulk batch and does not start the next", async () => {
+  const controller = new AbortController(); const batches: number[] = [];
+  const candidates = Array.from({ length: 250 }, (_, index) => candidateFixture({ id: String(index), skills: ["Java"] }));
+  const indexer = new IndexCandidates({ getAll: async () => candidates, getByIds: async () => [] }, factory, {
+    indexMany: async (documents) => { batches.push(documents.length); controller.abort(); },
+  });
+  await assert.rejects(indexer.execute(undefined, undefined, controller.signal), /stopped after/);
+  assert.deepEqual(batches, [100]);
+});

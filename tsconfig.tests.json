@@ -2,5 +2,5 @@
   "extends": "./tsconfig.json",
   "include": ["tests/**/*.ts"],
   "exclude": ["node_modules", "dist"],
-  "compilerOptions": { "noEmit": true }
+  "compilerOptions": { "noEmit": true, "lib": ["ES2022", "DOM"] }
 }

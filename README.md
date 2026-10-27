@@ -8,7 +8,90 @@ Salesforce CLI authentication, and candidate mapper. It prepares structured fiel
 and expertise text. OpenSearch calls Bedrock to generate document and query
 embeddings, builds the indexes, and returns hybrid lexical/semantic results.
 
-For the full sandbox, start with [the FSB commands below](#full-sandbox-fsb-fetch-embed-and-search).
+Use the [Angular console](#angular-console) for buttons, progress, batch previews,
+and search tables, or use [the FSB commands below](#full-sandbox-fsb-fetch-embed-and-search).
+
+## Angular console
+
+From the repository folder:
+
+```powershell
+git pull
+npm ci
+npm run ui
+```
+
+Open **http://127.0.0.1:4310**. Keep that terminal running while using the console.
+`npm run ui` builds Angular and starts the local API; subsequent launches can use
+`npm run ui:serve` until UI code changes. The npm scripts use the project's pinned
+Node 24 runtime, including the Angular build.
+
+1. **Configuration:** save a named configuration with Salesforce org alias `full`,
+   your AWS profile/region, collection endpoint, registered model ID, role ARN,
+   index `candidates-fsb`, and dataset folder `fsb`. Enable **Derive pipeline names
+   from the index** to use `candidates-fsb-ingest` and `candidates-fsb-hybrid`.
+2. **Fetch candidates:** choose `fsb`, **1,000 records per file**, and **1 batch this
+   run**. Click **Fetch new dataset** once, then **Resume fetch** for subsequent
+   batches. Choose more batches when ready. This step only retrieves Salesforce
+   data; it does not call OpenSearch or Bedrock.
+3. **Embed & index:** choose dataset `fsb` and destination index `candidates-fsb`.
+   Click **Set up index** once for a new index. If setup returns a model ID, click
+   **Use model in configuration**. Select saved batch files and click **Embed
+   selected files**. Files run sequentially; each file uses bounded bulk writes.
+4. **Search candidates:** select the same index, enter your query, and click
+   **Search candidates**. Results show rank, score, name, title, company, skills,
+   and job functions. Sort columns or open candidate details.
+5. **Activity:** inspect live operations, logs, completed-file counts, errors,
+   configuration snapshots, and the latest 100 runs.
+
+The batch library lists files with pagination and previews 20 candidates at a
+time. Files saved by the batched CLI under `.cache/candidates/<dataset>/` are
+also available here. The **Last embedding** column records runs performed through
+this console for the selected collection, model, and index; it is not a live
+count of OpenSearch documents or a record of CLI indexing.
+
+Changing an operation's index derives matching pipeline names for that operation.
+Changing the dataset selects another local export folder. Fetching has no
+OpenSearch destination: files remain reusable for any compatible index. Export
+resume requires the original Salesforce org and batch size. Re-embedding a file
+upserts the same Salesforce IDs, progressively adding to the selected index.
+
+Settings initially come from `.env`. Saved profiles and operation history live
+in `.cache/ui/`; saving a UI configuration does **not** edit `.env` or change CLI
+defaults. AWS credentials and Salesforce tokens stay with the server's existing
+AWS profile and Salesforce CLI login. To change the actual login, use `sf` or AWS
+CLI on the machine running the console.
+
+Switching tabs or refreshing the browser does not stop a running operation.
+**Stop** finishes the current fetch batch or bulk request before stopping; retry
+an unfinished embedding file to complete it. Keep the server terminal open;
+closing it interrupts workers. Resume fetching or retry unfinished files after
+restart. If a forcibly killed fetch leaves `.export.lock`, follow the lock error's
+instructions after confirming its process has stopped.
+
+The console binds to loopback and allows one data-changing operation plus a search
+at a time. A workspace lock prevents a second console instance from writing the
+same history. Do not run separate CLI writers against the same dataset/index
+while a console operation is active. Existing collection permissions still apply.
+
+### Console development and checks
+
+```powershell
+npm run typecheck
+npm test
+npm run build
+npm run ui:build
+
+# Once, install the browser used by the offline UI test.
+npx playwright install chromium
+npm run test:ui
+```
+
+`test:ui` starts an isolated local fixture on port 4321 and uses the real API,
+worker, export, indexing, and search code with fake Salesforce/AWS adapters. It
+makes no Salesforce or AWS calls. Screenshots and failure traces go to
+`.cache/ui-tests/`. `test:e2e` elsewhere in this README remains a separate **live
+AWS** demo check.
 
 ## Run the configured dummy-data demo
 
@@ -89,6 +172,14 @@ Each primary class/interface has a matching, descriptive kebab-case filename.
 | `infrastructure/json/` | Validate, atomically save, and read local candidate snapshots |
 | `infrastructure/opensearch/` | Signed client, bulk writes, document mapping, hybrid search, and separate setup |
 | `presentation/cli/` | Parse command-line arguments, call use cases, and display results |
+| `ui/` | Angular screens, forms, candidate tables, and progress subscription |
+| `presentation/http/` | Local HTTP routes, static Angular assets, and server startup |
+| `presentation/worker/` | Fixed operation worker and structured IPC |
+| `application/services/candidate-operation-service.ts` | Operation lifecycle, concurrency, configuration snapshots, and history |
+| `application/services/candidate-console-operation-executor.ts` | Fetch/setup/search orchestration and sequential file embedding through injected ports |
+| `application/services/candidate-dataset-service.ts` | Paginated dataset queries and completed embedding receipts |
+| `infrastructure/process/` | Worker processes and exclusive console workspace lock |
+| `shared/candidate-console-contracts.ts` | Browser/API/worker request and result contracts |
 | `bootstrap.ts` | Construct and inject adapters; own connection lifetimes |
 
 `CandidateDocumentIndex` exposes only bulk writes. The unused change-tracking,
