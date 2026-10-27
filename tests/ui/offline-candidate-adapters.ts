@@ -4,13 +4,30 @@ import { join } from "node:path";
 import { SalesforceCliCommand } from "../../infrastructure/salesforce/salesforce-cli-command";
 import { SalesforceQueryClient } from "../../infrastructure/salesforce/salesforce-query-client";
 import { OpenSearchConfig } from "../../infrastructure/config/opensearch-config";
+import { metadataFields, candidateRecordType, systemRecordType } from "../salesforce-profile-fixtures";
+SalesforceQueryClient.prototype.describe = async function(object: string) {
+  return { queryable: true, fields: metadataFields[object].map((name) => ({ name, type: "string" })) };
+};
+SalesforceQueryClient.prototype.query = async function(query: string) {
+  if (query.includes("FROM RecordType")) return [
+    { Id: candidateRecordType, DeveloperName: "Candidate", SobjectType: "Contact" },
+    { Id: "012000000000003", DeveloperName: "CandidatePreReg", SobjectType: "Contact" },
+    { Id: systemRecordType, DeveloperName: "Systems", SobjectType: "Tag__c" },
+  ] as never;
+  if (query.includes("FROM TagAssociation__c")) {
+    const ids = [...query.matchAll(/'(003\d+)'/g)].map((match) => match[1]).filter((id) => Number(id.slice(3)) % 10 !== 0);
+    return ids.map((id) => ({ Id: "a010" + id.slice(4), candidate__c: id, firstTag__c: "a02000000000001" })) as never;
+  }
+  if (query.includes("FROM Tag__c")) return [{ Id: "a02000000000001", Name: "Java", label__c: "Java", RecordTypeId: systemRecordType }] as never;
+  return [] as never;
+};
 const delay = (ms: number) => new Promise((done) => setTimeout(done, ms));
 SalesforceCliCommand.prototype.execute = function(args: string[]) {
   return JSON.stringify({ status: 0, result: args.includes("display") ? { instanceUrl: "https://offline.invalid", id: "offline-full-org" } : { accessToken: "offline-token" } });
 };
 SalesforceQueryClient.prototype.queryBatch = async function(query: string) {
   await delay(350);
-  const start = Number(/WHERE Id > '003(\d+)'/.exec(query)?.[1] ?? "0") + 1;
+  const start = Number(/Id > '003(\d+)'/.exec(query)?.[1] ?? "0") + 1;
   const limit = Number(/LIMIT (\d+)/.exec(query)?.[1]);
   return Array.from({ length: Math.max(0, Math.min(limit, 1005 - start + 1)) }, (_, offset) => {
     const number = start + offset; const blank = number % 10 === 0;
@@ -27,7 +44,8 @@ require.cache[awsModule]!.exports = { OpenSearchServerlessClient: class {
     const directory = join(process.cwd(), ".cache/offline-index"); const path = join(directory, config.OPENSEARCH_INDEX + ".json");
     const read = async (): Promise<Record<string, unknown>> => { try { return JSON.parse(await readFile(path, "utf8")); } catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return {}; throw error; } };
     this.connection = {
-      close: async () => {}, indices: { exists: async () => ({ body: false }), create: async () => ({ body: { acknowledged: true } }) },
+      close: async () => {}, indices: { exists: async () => ({ body: false }), create: async () => ({ body: { acknowledged: true } }),
+        getMapping: async () => ({ body: { [config.OPENSEARCH_INDEX]: { mappings: { _meta: { schema_version: 3 }, properties: { enrichment: { type: "object", enabled: false } } } } } }) },
       bulk: async (request: { body: any[] }) => {
         await delay(100); const documents = await read();
         for (let index = 0; index < request.body.length; index += 2) documents[request.body[index].index._id] = request.body[index + 1];

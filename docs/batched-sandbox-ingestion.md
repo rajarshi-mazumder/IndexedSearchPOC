@@ -14,9 +14,13 @@ npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --batc
 ```
 
 This creates `batch-000001.json` and `checkpoint.json` in that directory. Every
-batch file uses the existing version-1 candidate snapshot format. Each contains
-at most 1,000 mapped Contacts; no vectors or credentials are included. The query
-still selects **all accessible Contacts**, using the existing fields and mapper.
+batch file uses the version-2 enriched candidate snapshot format. Each contains
+at most 1,000 candidates, including resolved associations, tags, and employers;
+no vectors or credentials are included. The query selects the configured Contact
+record types (default: Candidate and CandidatePreReg), with all statuses included.
+Old version-1 files remain readable, but their checkpoints cannot resume with the
+new extractor. Follow the [FSB clean-start guide](fsb-clean-start.md) to replace
+an old export/index, or use new dataset and index names.
 
 Defaults are the configured `SF_TARGET_ORG`, `.cache/candidates/<org>`, a batch
 size of 1,000, and **one new file per invocation**. `--org` overrides the env file
@@ -43,14 +47,14 @@ The last file may contain fewer records. If a result exactly fills the last file
 a later empty query confirms completion without writing an empty file.
 
 The implementation queries `ORDER BY Id ASC LIMIT <batch-size>`, then resumes
-with `WHERE Id > '<last-saved-id>'`. It follows any REST continuation pages within
+with `AND Id > '<last-saved-id>'` alongside the candidate record-type filter. It follows any REST continuation pages within
 that bounded query. It never accumulates the whole sandbox or uses large SOQL
 offsets. See Salesforce's [query response pagination](https://developer.salesforce.com/docs/platform/api-rest/guide/resources-query)
 and [OFFSET limit](https://developer.salesforce.com/docs/platform/salesforce-soql-sosl/guide/sforce-api-calls-soql-select-offset.html).
 
 The checkpoint records the source org identity/alias, batch size, last ID, file
 number, cumulative fetched count, and completion status. Resume rejects a different
-org or batch size. A Salesforce sandbox refresh changes its org ID: start a new
+org, batch size, extraction version, or configured scope/tag mapping. A Salesforce sandbox refresh changes its org ID: start a new
 export directory afterward.
 
 Files are saved before their checkpoints. If a request or write fails, committed

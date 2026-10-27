@@ -45,7 +45,7 @@ async function main() {
     const result = await context.exportCandidateBatches.execute({
       org, sourceId: context.sourceId, batchSize: options.batchSize, maxBatches: options.maxBatches, resume: values.resume,
     }, (event) => {
-      if (event.stage === "fetching") progress.update(`Fetching batch ${event.batchNumber}; ${event.fetched} records previously saved`);
+      if (event.stage === "fetching") progress.update(event.message ?? `Fetching batch ${event.batchNumber}; ${event.fetched} records previously saved`);
       else progress.update(`Saved batch ${event.batchNumber}: ${event.count} records; ${event.fetched} total. File: ${event.file}`);
     }, controller.signal);
     progress.update(`Export ${result.complete ? "complete" : "paused"}: ${result.fetched} records in ${result.batchNumber} files.`);

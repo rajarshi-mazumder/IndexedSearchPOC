@@ -20,6 +20,9 @@ import { OpenSearchHybridSearch } from "./infrastructure/opensearch/open-search-
 import { OpenSearchBedrockModel } from "./infrastructure/opensearch/open-search-bedrock-model";
 import { OpenSearchCandidateSetup } from "./infrastructure/opensearch/open-search-candidate-setup";
 import { SalesforceCandidateRepository } from "./infrastructure/salesforce/salesforce-candidate-repository";
+import { SalesforceCandidateSchema } from "./infrastructure/salesforce/salesforce-candidate-schema";
+import { CandidateEnrichmentService } from "./application/services/candidate-enrichment-service";
+import { CandidateProfileAssembler } from "./application/services/candidate-profile-assembler";
 import { SalesforceQueryClient } from "./infrastructure/salesforce/salesforce-query-client";
 import { SalesforceCliAuthentication } from "./infrastructure/salesforce/salesforce-cli-authentication";
 import { SalesforceCliCommand } from "./infrastructure/salesforce/salesforce-cli-command";
@@ -30,11 +33,17 @@ import { OperationRequest } from "./shared/candidate-console-contracts";
 
 export const DEFAULT_CANDIDATE_SNAPSHOT_FILE = ".cache/candidates/salesforce-candidates.json";
 
+function createEnrichedRepository(client: SalesforceQueryClient, config: ReturnType<typeof loadSalesforceConfig>) {
+  return new CandidateEnrichmentService(new SalesforceCandidateRepository(client, new SalesforceCandidateSchema(client), {
+    recordTypes: config.SF_CANDIDATE_RECORD_TYPES, tagTypes: config.SF_TAG_TYPE_MAP,
+  }), new CandidateProfileAssembler());
+}
+
 function createSalesforceSnapshotRepository(snapshotFile: string, environment: NodeJS.ProcessEnv) {
   const sfConfig = loadSalesforceConfig(environment);
   const cli = new SalesforceCliCommand();
   const auth = new SalesforceCliAuthentication(sfConfig.SF_TARGET_ORG, (args) => cli.execute(args));
-  const repository = new SalesforceCandidateRepository(new SalesforceQueryClient(auth.createConnection()));
+  const repository = createEnrichedRepository(new SalesforceQueryClient(auth.createConnection()), sfConfig);
   return new SnapshottingCandidateRepository(repository, new JsonCandidateSnapshotStore(snapshotFile));
 }
 
@@ -54,7 +63,7 @@ export function createCandidateBatchExportContext(directory: string, environment
   const sfConfig = loadSalesforceConfig(environment);
   const cli = new SalesforceCliCommand();
   const session = new SalesforceCliAuthentication(sfConfig.SF_TARGET_ORG, (args) => cli.execute(args)).createSession();
-  const repository = new SalesforceCandidateRepository(new SalesforceQueryClient(session.connection));
+  const repository = createEnrichedRepository(new SalesforceQueryClient(session.connection), sfConfig);
   return { sourceId: session.sourceId,
     exportCandidateBatches: new ExportCandidateBatches(repository, new JsonCandidateBatchExportStore(directory)) };
 }

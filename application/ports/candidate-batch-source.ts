@@ -1,5 +1,6 @@
 import { Candidate } from "../../domain/entities/candidate";
 
 export interface CandidateBatchSource {
-  getBatch(limit: number, afterId?: string): Promise<Candidate[]>;
+  readonly extractionKey?: string;
+  getBatch(limit: number, afterId?: string, report?: (message: string) => void): Promise<Candidate[]>;
 }

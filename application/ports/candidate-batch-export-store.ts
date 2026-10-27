@@ -2,6 +2,7 @@ import { Candidate } from "../../domain/entities/candidate";
 
 export interface CandidateBatchCheckpoint {
   version: 1;
+  extractionKey?: string;
   org: string;
   sourceId: string;
   batchSize: number;

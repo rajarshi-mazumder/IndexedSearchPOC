@@ -1,5 +1,11 @@
 # Salesforce candidate extraction: queries to validate before implementation
 
+Implementation status: the [main README](../../README.md#enriched-candidate-exports)
+now describes the association-based extractor and migration commands. These queries
+remain useful for validating your org's mappings and discovering the still-unverified
+history objects. Runtime preflight checks metadata; no live sandbox query results
+have been supplied in this repository.
+
 Run this guide against the **`full` sandbox** and share the results before we
 implement the richer extraction. These are read-only Salesforce queries; they
 do not fetch the entire sandbox, index documents, or invoke embeddings.

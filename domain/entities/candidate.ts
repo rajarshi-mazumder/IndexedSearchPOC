@@ -1,3 +1,5 @@
+import { CandidateEnrichment } from "./candidate-enrichment";
+
 export interface Language {
   code: string;
   level: string;
@@ -17,4 +19,5 @@ export interface Candidate {
   jobFunctions: string[];
   languages: Language[];
   salary?: number;
+  enrichment?: CandidateEnrichment;
 }

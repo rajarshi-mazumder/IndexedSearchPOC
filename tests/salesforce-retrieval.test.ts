@@ -5,31 +5,35 @@ import { SalesforceQueryClient } from "../infrastructure/salesforce/salesforce-q
 import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
 import { SalesforceCliAuthentication } from "../infrastructure/salesforce/salesforce-cli-authentication";
 import { loadSalesforceConfig } from "../infrastructure/config/salesforce-config";
+import { profileClient, profileRepository } from "./salesforce-profile-fixtures";
 
 test("Salesforce retrieval follows every query continuation", async () => {
   const locators: string[] = [];
   const pages = [
-    { records: [{ Id: "second" }], done: false, nextRecordsUrl: "/query/third" },
+    { records: [{ Id: "first" }], done: false, nextRecordsUrl: "/services/data/v65.0/query/second" },
+    { records: [{ Id: "second" }], done: false, nextRecordsUrl: "/services/data/v65.0/query/third" },
     { records: [{ Id: "third" }], done: true },
   ];
   const connection = {
-    query: async () => ({ records: [{ Id: "first" }], done: false, nextRecordsUrl: "/query/second" }),
-    queryMore: async (url: string) => { locators.push(url); return pages.shift(); },
+    version: "65.0", request: async ({ url }: { url: string }) => { locators.push(url); return pages.shift(); },
   } as unknown as Connection;
   assert.deepEqual(await new SalesforceQueryClient(connection).query("SELECT Id FROM Contact"),
     [{ Id: "first" }, { Id: "second" }, { Id: "third" }]);
-  assert.deepEqual(locators, ["/query/second", "/query/third"]);
+  assert.deepEqual(locators.slice(1), ["/services/data/v65.0/query/second", "/services/data/v65.0/query/third"]);
 });
 
 test("a missing Salesforce continuation fails instead of silently truncating", async () => {
-  const connection = { query: async () => ({ records: [], done: false }) } as unknown as Connection;
+  const connection = { request: async () => ({ records: [{ Id: "first" }], done: false }) } as unknown as Connection;
   await assert.rejects(new SalesforceQueryClient(connection).query("SELECT Id FROM Contact"), /continuation URL/);
 });
 
 test("a failed later Salesforce page propagates", async () => {
+  let calls = 0;
   const connection = {
-    query: async () => ({ records: [{ Id: "first" }], done: false, nextRecordsUrl: "/query/second" }),
-    queryMore: async () => { throw new Error("Salesforce outage"); },
+    request: async () => {
+      if (++calls > 1) throw new Error("Salesforce outage");
+      return { records: [{ Id: "first" }], done: false, nextRecordsUrl: "/services/data/v65.0/query/second" };
+    },
   } as unknown as Connection;
   await assert.rejects(new SalesforceQueryClient(connection).query("SELECT Id FROM Contact"), /outage/);
 });
@@ -37,11 +41,11 @@ test("a failed later Salesforce page propagates", async () => {
 test("partial retrieval validates IDs and groups large selections into queries", async () => {
   const queries: string[] = [];
   const client = { query: async (query: string) => { queries.push(query); return []; } } as unknown as SalesforceQueryClient;
-  const repository = new SalesforceCandidateRepository(client);
+  const repository = profileRepository(profileClient((soql) => client.query(soql)));
   const ids = Array.from({ length: 201 }, (_, i) => "003" + String(i).padStart(12, "0"));
   await repository.getByIds(ids);
   assert.equal(queries.length, 2);
-  assert.match(queries[0], /TagConnector__r.SkillCode1__c/);
+  assert.match(queries[0], /RecordTypeId IN/);
   assert.match(queries[1], new RegExp(ids[200]));
   await assert.rejects(repository.getByIds(["bad' OR Name != '"]));
   assert.equal(queries.length, 2);

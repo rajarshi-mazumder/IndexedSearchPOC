@@ -6,6 +6,7 @@ import { CandidateBatchCatalog } from "../../application/ports/candidate-batch-c
 import { batchFileNameSchema, datasetNameSchema } from "../../application/services/candidate-console-validation";
 import { CandidatePreview, DatasetListing } from "../../shared/candidate-console-contracts";
 import { CandidateSnapshotSerializer } from "./candidate-snapshot-serializer";
+import { CandidateQualitySummary } from "../../application/services/candidate-quality-summary";
 
 const checkpointSchema = z.object({ org: z.string(), fetched: z.number().int().nonnegative(), batchNumber: z.number().int().nonnegative(),
   batchSize: z.number().int().min(1).max(1000), complete: z.boolean() });
@@ -71,6 +72,7 @@ export class LocalCandidateBatchCatalog implements CandidateBatchCatalog {
   async preview(dataset: string, file: string, page: number, pageSize: number): Promise<CandidatePreview> {
     const candidates = CandidateSnapshotSerializer.deserialize(await readFile(await this.filePath(dataset, file), "utf8"));
     if (candidates.length > 1000) throw new Error("Use batch files with at most 1,000 candidates.");
-    return { candidates: candidates.slice((page - 1) * pageSize, page * pageSize), total: candidates.length, page, pageSize };
+    return { candidates: candidates.slice((page - 1) * pageSize, page * pageSize), total: candidates.length, page, pageSize,
+      quality: CandidateQualitySummary.summarize(candidates) };
   }
 }

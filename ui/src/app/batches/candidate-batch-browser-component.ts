@@ -23,6 +23,7 @@ import type { CandidatePreview, ConsoleConfiguration, ConsoleSearchResult, Datas
   </section>
   @if (previewFile()) {
     <section class="card preview-card"><div class="section-heading"><div><span class="eyebrow">Candidate preview</span><h2 class="mono">{{previewFile()}}</h2><p>Showing {{preview()?.candidates?.length ?? 0}} of {{preview()?.total ?? 0}} candidates. Sorting applies to this page.</p></div><button class="button text" (click)="previewFile.set('')">Close preview ×</button></div>
+      @if (preview()?.quality; as quality) { <p class="notice">Whole file: {{quality.withSkills}}/{{quality.total}} with skills · {{quality.withSystems}} with technologies · {{quality.withLanguages}} with languages · {{quality.withWarnings}} with quality notes · {{quality.associations}} associations</p> }
       <candidate-table [rows]="previewRows()" [emptyTitle]="previewLoading() ? 'Loading candidates…' : 'No candidates in this file'" />
       <div class="pagination"><span>Page {{previewPage()}} of {{previewPageCount()}}</span><div><button class="button secondary small" [disabled]="previewPage() === 1 || previewLoading()" (click)="previewMove(-1)">← Previous</button><button class="button secondary small" [disabled]="previewPage() >= previewPageCount() || previewLoading()" (click)="previewMove(1)">Next →</button></div></div>
     </section>

@@ -11,7 +11,7 @@ export class CandidateConsoleOperationExecutor {
       report({ type: "progress", progress: { message: `Authenticating to Salesforce org ${settings.sfOrg}` } });
       const result = await this.operations.fetch(request, (progress) => {
         report({ type: "progress", progress: { fetched: progress.fetched, batchNumber: progress.batchNumber,
-          message: progress.stage === "fetching" ? `Fetching batch ${progress.batchNumber}` : `Saved batch ${progress.batchNumber}: ${progress.count} records`,
+          message: progress.stage === "fetching" ? progress.message ?? `Fetching batch ${progress.batchNumber}` : `Saved batch ${progress.batchNumber}: ${progress.count} records`,
           file: progress.stage === "saved" ? progress.file.split(/[\\/]/).at(-1) : undefined } });
       }, signal);
       return { fetched: result.fetched, batchNumber: result.batchNumber, complete: result.complete };

@@ -9,6 +9,7 @@ export const consoleConfigurationSchema = z.object({
   sfOrg: text, awsProfile: text, awsRegion: text, endpoint: text,
   modelId: text, roleArn: text, index: text, automaticPipelines: z.boolean(),
   ingestPipeline: text, searchPipeline: text, dataset: datasetNameSchema,
+  sfRecordTypes: z.string().trim().max(1000).optional(), sfTagTypes: z.string().trim().max(10000).optional(),
 }).strict();
 export const operationRequestSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("fetch"), configuration: consoleConfigurationSchema,

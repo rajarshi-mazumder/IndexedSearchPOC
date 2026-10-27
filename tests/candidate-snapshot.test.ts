@@ -14,6 +14,7 @@ import { JsonCandidateSnapshotStore } from "../infrastructure/json/json-candidat
 import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
 import { SalesforceQueryClient } from "../infrastructure/salesforce/salesforce-query-client";
 import { candidateFixture, config, recordingDocumentIndex } from "./candidate-fixtures";
+import { enrichedRepository, profileClient } from "./salesforce-profile-fixtures";
 
 const runFile = promisify(execFile);
 const factory = new CandidateDocumentFactory(new TemplateCandidateProfileGenerator());
@@ -33,16 +34,18 @@ test("fresh Salesforce retrieval persists DTOs before indexing; cached indexing 
   const store = new JsonCandidateSnapshotStore(file);
   let queries = 0;
   const client = { query: async (query: string) => {
+    if (query.includes("FROM TagAssociation__c")) return [];
+    if (query.includes("FROM Account")) return [{ Id: "001000000000001", Name: "Example" }];
     assert.match(query, /\bTitle,/);
-    assert.match(query, /\bAccount\.Name,/);
+    assert.match(query, /\bAccountId,/);
     assert.match(query, /\bcurrentSalary__c,/);
     assert.doesNotMatch(query, /Current_Position__c/);
     queries++;
     return [{ Id: "003000000000001", Name: "Snapshot Candidate", Title: "Engineer",
-      Account: { Name: "Example" }, currentSalary__c: 7000000,
+      AccountId: "001000000000001", currentSalary__c: 7000000,
       TagConnector__r: { SkillCode1__c: "TypeScript", Systems1__c: "OpenSearch" } }];
   } } as unknown as SalesforceQueryClient;
-  const source = new SalesforceCandidateRepository(client);
+  const source = enrichedRepository(profileClient((soql) => client.query(soql)));
   const freshIndex = recordingDocumentIndex();
   const originalIndexMany = freshIndex.index.indexMany;
   freshIndex.index.indexMany = async (documents) => {
@@ -50,10 +53,10 @@ test("fresh Salesforce retrieval persists DTOs before indexing; cached indexing 
     await originalIndexMany(documents);
   };
   const fresh = new IndexCandidates(new SnapshottingCandidateRepository(source, store), factory, freshIndex.index);
-  assert.deepEqual(await fresh.execute(), { indexed: 1, skipped: 0 });
+  assert.deepEqual(await fresh.execute(["003000000000001"]), { indexed: 1, skipped: 0 });
   const savedJson = await readFile(file, "utf8");
   const saved = JSON.parse(savedJson);
-  assert.equal(saved.version, 1);
+  assert.equal(saved.version, 2);
   assert.equal(saved.candidates[0].company, "Example");
   assert.equal(saved.candidates[0].salary, 7000000);
   assert.ok(Number.isFinite(Date.parse(saved.exportedAt)));
@@ -134,7 +137,7 @@ test("missing, malformed, unsupported, and incomplete snapshots fail before inde
   const index = recordingDocumentIndex();
   const usecase = new IndexCandidates(store, factory, index.index);
   await assert.rejects(usecase.execute(), /snapshot not found/);
-  for (const contents of ["{bad", JSON.stringify({ version: 2, exportedAt: new Date().toISOString(), candidates: [] }),
+  for (const contents of ["{bad", JSON.stringify({ version: 99, exportedAt: new Date().toISOString(), candidates: [] }),
     JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), candidates: [{ id: "incomplete" }] })]) {
     await writeFile(file, contents);
     await assert.rejects(usecase.execute(), /Invalid candidate snapshot/);

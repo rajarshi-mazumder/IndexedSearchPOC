@@ -16,6 +16,8 @@ import type { ConsoleConfiguration } from "../../../../shared/candidate-console-
         <label class="field">AWS profile<input name="awsProfile" [(ngModel)]="draft.awsProfile" placeholder="default" /><small>Leave blank to use the default credential chain.</small></label>
         <label class="field">AWS region<input name="region" [(ngModel)]="draft.awsRegion" placeholder="ap-northeast-1" /></label></div>
       <label class="field">OpenSearch collection endpoint<input name="endpoint" [(ngModel)]="draft.endpoint" placeholder="https://your-collection.aoss.ap-northeast-1.on.aws" /></label>
+      <label class="field">Candidate record types<input name="recordTypes" [(ngModel)]="draft.sfRecordTypes" placeholder="Candidate,CandidatePreReg" /><small>Comma-separated Salesforce developer names. All statuses are included.</small></label>
+      <label class="field">Tag type overrides (JSON)<textarea name="tagTypes" [(ngModel)]="draft.sfTagTypes" rows="3" placeholder="{}"></textarea><small>Map custom tag record-type developer names to skills, skillCategories, systems, industries, subIndustries, jobFunctions, language, or proficiency.</small></label>
       <div class="form-grid"><label class="field">Registered OpenSearch model ID<input name="model" [(ngModel)]="draft.modelId" placeholder="Set after index setup" /></label>
         <label class="field">Bedrock invocation role ARN<input name="role" [(ngModel)]="draft.roleArn" placeholder="arn:aws:iam::123456789012:role/IndexedSearchBedrockRole" /></label></div>
     </section>

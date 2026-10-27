@@ -11,6 +11,7 @@
       "company": { "type": "text" },
       "location": { "type": "text" },
       "salary": { "type": "float" },
+      "enrichment": { "type": "object", "enabled": false },
       "languages": {
         "type": "nested",
         "properties": {

@@ -3,14 +3,14 @@ import { test } from "node:test";
 import { Client } from "@opensearch-project/opensearch";
 import { OpenSearchCandidateSetup } from "../infrastructure/opensearch/open-search-candidate-setup";
 import { OpenSearchBedrockModel } from "../infrastructure/opensearch/open-search-bedrock-model";
-import { TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../infrastructure/opensearch/titan-embedding-config";
+import { CANDIDATE_SCHEMA_VERSION, TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../infrastructure/opensearch/titan-embedding-config";
 import { loadOpenSearchConfig, loadOpenSearchSetupConfig } from "../infrastructure/config/opensearch-config";
 import { config, setupConfig } from "./candidate-fixtures";
 
 function setupDouble(options: { exists?: boolean; modelId?: string; dimension?: number; simulationDimension?: number; pipelineModelId?: string } = {}) {
   const calls: any[] = [];
   const existing = {
-    _meta: { schema_version: 2, embedding_model: TITAN_MODEL_ID, embedding_model_id: options.modelId ?? "test-model" },
+    _meta: { schema_version: CANDIDATE_SCHEMA_VERSION, embedding_model: TITAN_MODEL_ID, embedding_model_id: options.modelId ?? "test-model" },
     properties: { embedding: { type: "knn_vector", dimension: options.dimension ?? TITAN_DIMENSIONS }, searchText: { type: "text" } },
   };
   const client = {

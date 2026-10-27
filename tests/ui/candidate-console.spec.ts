@@ -19,6 +19,7 @@ test("settings, progressive fetch, embedding and ranked search work through real
   await expect(page.getByText("1,005 records across 2 files.", { exact: false })).toBeVisible();
   await page.locator(".batch-library tbody tr").first().getByRole("button", { name: "Preview" }).click();
   await expect(page.getByText("Maya Chen 1", { exact: true })).toBeVisible();
+  await expect(page.getByText("Whole file:", { exact: false })).toContainText("900 with technologies");
   await page.locator(".preview-card").getByRole("button", { name: "Next →" }).click();
   await expect(page.getByText("Maya Chen 21", { exact: true })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("fetch-preview.png"), fullPage: true });
@@ -39,9 +40,12 @@ test("settings, progressive fetch, embedding and ranked search work through real
   await page.getByRole("textbox", { name: "What expertise" }).fill("Java Spring Boot Kafka");
   await page.getByRole("button", { name: "Search candidates →", exact: true }).click();
   await expect(page.locator(".results-card tbody tr")).toHaveCount(10);
+  await expect(page.locator(".results-card tbody tr").first()).toContainText("Java");
   await expect(page.getByText("Maya Chen 1", { exact: true })).toBeVisible();
   await page.locator(".results-card").getByRole("button", { name: "Details", exact: true }).first().click();
   await expect(page.getByText("Candidate profile", { exact: true })).toBeVisible();
+  await expect(page.getByText("Source coverage", { exact: true })).toBeVisible();
+  await expect(page.getByText("1 associations · 1 resolved tags", { exact: true })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("search-results.png"), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole("heading", { name: "Search candidates", exact: true })).toBeVisible();
@@ -63,7 +67,7 @@ test("stop preserves a completed fetch batch and a refreshed browser can resume 
   await page.getByRole("textbox", { name: "Dataset folder" }).fill("stop-test");
   await page.getByRole("spinbutton", { name: "Batches this run" }).fill("10");
   await page.getByRole("button", { name: "Fetch new dataset" }).click();
-  await expect(page.getByRole("heading", { name: "Fetching batch 1", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Checking Salesforce schema and fetching candidate profiles", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Stop", exact: true }).click();
   await expect(page.locator("operation-progress .status")).toHaveText("cancelled");
   await expect(page.getByText("1,000 records across 1 files.", { exact: false })).toBeVisible();

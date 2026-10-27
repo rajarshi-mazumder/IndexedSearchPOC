@@ -17,8 +17,13 @@ async function main() {
       console.log("#" + (index + 1));
       console.log("Hybrid Score:", result.score.toFixed(6));
       console.log("Name:", candidate.name);
+      console.log("Salesforce ID:", candidate.id);
+      console.log("Title:", candidate.title ?? "Not provided");
       console.log("Skills:", candidate.skills.join(", "));
+      console.log("Systems / technologies:", candidate.systems.join(", "));
       console.log("Job Functions:", candidate.jobFunctions.join(", "));
+      console.log("Languages:", candidate.languages.map((language) => `${language.code} (${language.level || "Level not provided"})`).join(", "));
+      if (candidate.enrichment?.warnings.length) console.log("Data quality notes:", candidate.enrichment.warnings.join("; "));
     }
     if (!results.length) console.log("No candidates found.");
   } finally {

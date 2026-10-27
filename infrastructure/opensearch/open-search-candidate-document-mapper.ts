@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CandidateDocument } from "../../domain/entities/candidate-document";
+import { candidateEnrichmentSchema } from "../json/candidate-enrichment-schema";
 
 const optionalText = z.string().nullish().transform((value) => value ?? undefined);
 const sourceSchema = z.object({
@@ -9,6 +10,7 @@ const sourceSchema = z.object({
   company: optionalText,
   location: optionalText,
   salary: z.number().nullish().transform((value) => value ?? undefined),
+  enrichment: candidateEnrichmentSchema.optional(),
   skills: z.array(z.string()),
   skillCategories: z.array(z.string()),
   systems: z.array(z.string()),

@@ -4,8 +4,10 @@ import { CandidateDocument } from "../../domain/entities/candidate-document";
 import { CandidateDocumentIndex } from "../../application/ports/candidate-document-index";
 import { OpenSearchIndexConfig } from "../config/opensearch-config";
 import { OpenSearchCandidateDocumentMapper } from "./open-search-candidate-document-mapper";
+import { CANDIDATE_SCHEMA_VERSION } from "./titan-embedding-config";
 
 export class OpenSearchCandidateDocumentIndex implements CandidateDocumentIndex {
+  private enrichedMappingVerified = false;
   constructor(
     private readonly client: Client,
     private readonly config: OpenSearchIndexConfig,
@@ -13,6 +15,14 @@ export class OpenSearchCandidateDocumentIndex implements CandidateDocumentIndex 
   ) {}
 
   async indexMany(documents: CandidateDocument[]): Promise<void> {
+    if (!this.enrichedMappingVerified && documents.some((document) => document.candidate.enrichment)) {
+      const mapping = (await this.client.indices.getMapping({ index: this.config.OPENSEARCH_INDEX })).body[this.config.OPENSEARCH_INDEX]?.mappings;
+      const enrichment = mapping?.properties?.enrichment;
+      if (mapping?._meta?.schema_version !== CANDIDATE_SCHEMA_VERSION || !enrichment || !("enabled" in enrichment) || enrichment.enabled !== false) {
+        throw new Error("Enriched candidates require a new index created with the current setup-opensearch command. Choose a new --index and set it up before embedding.");
+      }
+      this.enrichedMappingVerified = true;
+    }
     for (let offset = 0; offset < documents.length; offset += 100) {
       await this.writeBatch(documents.slice(offset, offset + 100));
     }

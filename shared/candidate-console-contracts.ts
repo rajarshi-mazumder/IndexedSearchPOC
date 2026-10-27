@@ -4,6 +4,7 @@ export interface ConsoleConfiguration {
   id: string; name: string; sfOrg: string; awsProfile: string; awsRegion: string;
   endpoint: string; modelId: string; roleArn: string; index: string;
   automaticPipelines: boolean; ingestPipeline: string; searchPipeline: string; dataset: string;
+  sfRecordTypes?: string; sfTagTypes?: string;
 }
 export type OperationRequest =
   | { kind: "fetch"; configuration: ConsoleConfiguration; batchSize: number; maxBatches: number; resume: boolean }
@@ -39,7 +40,8 @@ export interface DatasetListing {
   dataset: string; files: BatchFile[]; totalFiles: number; page: number; pageSize: number;
   checkpoint?: { org: string; fetched: number; batchNumber: number; batchSize: number; complete: boolean };
 }
-export interface CandidatePreview { candidates: Candidate[]; total: number; page: number; pageSize: number }
+export interface CandidatePreview { candidates: Candidate[]; total: number; page: number; pageSize: number;
+  quality?: { total: number; withSkills: number; withSystems: number; withLanguages: number; withWarnings: number; associations: number } }
 export type WorkerEvent =
   | { type: "progress"; progress: OperationProgress }
   | { type: "file"; result: FileEmbeddingResult }

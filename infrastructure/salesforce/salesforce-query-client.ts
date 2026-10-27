@@ -8,8 +8,19 @@ const pageSchema = z.object({
 export class SalesforceQueryClient {
   constructor(private readonly connection: Connection) {}
 
+  async describe(object: string) {
+    z.string().regex(/^[A-Za-z][A-Za-z0-9_]*$/).parse(object);
+    return z.object({ queryable: z.boolean(), fields: z.array(z.object({ name: z.string(), type: z.string(),
+      referenceTo: z.array(z.string()).optional() })) }).parse(await this.connection.request({ method: "GET",
+      url: `/services/data/v${this.connection.version}/sobjects/${object}/describe` }, { timeout: 120_000 }));
+  }
+
   async queryBatch(soql: string, limit: number): Promise<SalesforceRecord[]> {
     z.number().int().min(1).max(1000).parse(limit);
+    return this.readPages(soql, limit);
+  }
+
+  private async readPages(soql: string, limit: number): Promise<SalesforceRecord[]> {
     let url = `/services/data/v${this.connection.version}/query?q=${encodeURIComponent(soql)}`;
     const records: SalesforceRecord[] = [];
     const visited = new Set<string>();
@@ -30,13 +41,6 @@ export class SalesforceQueryClient {
   }
 
   async query<T extends SalesforceRecord = SalesforceRecord>(soql: string): Promise<T[]> {
-    let page = await this.connection.query<T>(soql);
-    const records = [...page.records];
-    while (!page.done) {
-      if (!page.nextRecordsUrl) throw new Error("Salesforce returned an incomplete page without a continuation URL");
-      page = await this.connection.queryMore<T>(page.nextRecordsUrl);
-      records.push(...page.records);
-    }
-    return records;
+    return await this.readPages(soql, 100_000) as T[];
   }
 }

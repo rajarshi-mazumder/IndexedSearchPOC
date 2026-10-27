@@ -66,6 +66,7 @@ export class TemplateCandidateProfileGenerator implements CandidateProfileGenera
       parts.push(`Their current salary is ${candidate.salary}.`);
     }
 
+    parts.push(...this.professionalDetails(candidate));
     return parts.join(" ");
   }
 
@@ -99,7 +100,21 @@ export class TemplateCandidateProfileGenerator implements CandidateProfileGenera
           .join(", ")}`,
       );
     }
+    sections.push(...this.professionalDetails(candidate));
     return sections.join("\n");
+  }
+
+  private professionalDetails(candidate: Candidate): string[] {
+    const details = candidate.enrichment?.details ?? {};
+    const fields: Record<string, string> = { desiredTitle: "Desired role", positionLevel: "Position level",
+      highestEducationalQualification: "Education", highestEducationalInstitute: "Institute",
+      educationalSpecialization: "Educational specialization", jobType: "Job type" };
+    return Object.entries(fields).flatMap(([key, label]) => {
+      const value = candidate.enrichment?.resolvedDetails?.[key] ?? details[key];
+      const unresolved = candidate.enrichment?.warnings.some((warning) => warning.startsWith(`Unresolved profile lookup: ${key}=`));
+      return typeof value === "string" && value.trim() && !unresolved
+        ? [`${label}: ${value.trim()}`] : [];
+    });
   }
 
   private formatList(values: string[]): string {

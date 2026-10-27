@@ -3,18 +3,136 @@
 Candidate search recovered from photographs, now adapted for **Amazon OpenSearch
 Serverless NextGen** and **Amazon Bedrock Titan Text Embeddings V2**.
 
-The application retrieves Salesforce Contacts using the existing SOQL query,
-Salesforce CLI authentication, and candidate mapper. It prepares structured fields
+The application retrieves candidate Contacts, all their tag associations, tag
+labels/types/parents, and employer details using Salesforce CLI authentication.
+It prepares structured fields
 and expertise text. OpenSearch calls Bedrock to generate document and query
 embeddings, builds the indexes, and returns hybrid lexical/semantic results.
 
 Use the [Angular console](#angular-console) for buttons, progress, batch previews,
 and search tables, or use [the FSB commands below](#full-sandbox-fsb-fetch-embed-and-search).
 
-To validate richer candidate data before changing extraction, use the
+To inspect and validate the Salesforce schema used for enrichment, use the
 [Salesforce candidate discovery query README](docs/salesforce-candidate-discovery/README.md).
 Start with its metadata commands and share the results before running the
 schema-dependent candidate, tag, and history queries.
+
+## Enriched candidate exports
+
+Replacing old FSB data? Follow the [clean-start test guide](docs/fsb-clean-start.md)
+to remove the old export and index, then verify a fresh enriched batch.
+
+New Salesforce exports use the association-based extractor. Each batch resolves
+both tag references, parent tags, actual tag record types, employer names, and
+available Contact profile fields. Language/proficiency pairs populate languages;
+verified education and desired-role fields contribute to embedding text. Optional
+profile lookups are resolved to names in groups, retaining their original IDs.
+The extractor checks object metadata automatically before querying fields.
+
+JSON snapshots now have `version: 2`. Each candidate's `enrichment` contains raw
+association IDs/scores, resolved tags and parent IDs, employer context, source
+timestamps, profile details, resolved lookup labels, and quality warnings. Raw
+metadata is stored in OpenSearch `_source` without generating dynamic index fields.
+Salary remains a structured value, not embedding evidence; employer descriptions
+are not treated as the candidate's own experience.
+
+**Use a new dataset folder and a new index for this extraction version.** Old
+version-1 files remain readable, but old export checkpoints cannot be resumed
+with the new extractor. Re-embedding an old file cannot recover missing data.
+Existing indices remain usable for old data; enriched writes require schema 3,
+created by the current setup command. Your compatible registered Titan model can
+be reused.
+
+```powershell
+# First inspect one enriched file before starting a large export.
+npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb-enriched --batch-size 1000 --max-batches 1
+
+# Create the new destination, then embed that file.
+npm run setup-opensearch -- --index candidates-fsb-enriched
+npm run index-json -- --file .cache/candidates/fsb-enriched/batch-000001.json --index candidates-fsb-enriched
+npm run search -- --index candidates-fsb-enriched "Candidates with experience in Java"
+
+# Continue fetching when the first batch's labels and quality notes look right.
+npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb-enriched --batch-size 1000 --max-batches 1 --resume
+npm run index-json -- --file .cache/candidates/fsb-enriched/batch-000002.json --index candidates-fsb-enriched
+```
+
+In the Angular console, save dataset `fsb-enriched` and index
+`candidates-fsb-enriched`, with automatic pipeline names enabled. Fetch one batch,
+preview its whole-file quality counts and candidate details, set up the index,
+and embed the selected file. The progress feed shows profile fetching, association
+retrieval, tag hierarchy resolution, and quality totals. The Details view shows
+languages, source tags, resolved profile values, and missing-data warnings.
+Search tables show skills and technologies together; CLI search also prints
+systems/technologies and Salesforce IDs so Java evidence is visible directly.
+
+### Candidate scope and tag classification
+
+Set these in `.env`, or use **Candidate record types** and **Tag type overrides**
+in the console's Configuration screen:
+
+```dotenv
+SF_CANDIDATE_RECORD_TYPES=Candidate,CandidatePreReg
+SF_TAG_TYPE_MAP={"CustomTechnologyType":"systems","CustomLanguageLevel":"proficiency"}
+```
+
+The override names above are examples: substitute actual Tag record-type
+`DeveloperName` values from your org. Defaults recognize these names after
+lowercasing and removing punctuation:
+
+| Developer name | Candidate category |
+| --- | --- |
+| Skill, Skills, SkillCode | skills |
+| SkillCategory | skillCategories |
+| System, Systems, Technology | systems |
+| Industry / SubIndustry | industries / subIndustries |
+| JobFunction | jobFunctions |
+| Language | language |
+| LanguageLevel, Proficiency | proficiency |
+
+Exact override keys take precedence. Unrecognized types are preserved in raw tags
+and flagged; they are not guessed into skills or silently discarded. Language
+associations use the first tag as language and the second as proficiency only
+when their classified types match. No skill, proficiency, or experience duration
+is inferred from a tag score. JavaScript is not rewritten into Java.
+
+Configured candidate record types must exist; a mismatch fails instead of falling
+back to all Contacts. All statuses and dummy flags remain in scope; no hidden
+active-only filter is applied. The checkpoint fingerprints record-type scope and
+tag overrides: changing either requires a new dataset folder. New and existing
+console profiles can specify these per sandbox.
+
+Each operation keeps only one candidate batch and its related data in memory,
+groups ID queries by 200, and follows REST continuation pages. Relationship reads
+fail at 100,000 rows per query/result group; hierarchy traversal fails beyond 32
+levels or 100,000 attempted tags per batch. Snapshot files are limited to 32 MB.
+If a batch exceeds those bounds, choose a smaller batch size in a new folder.
+Failed queries do not commit incomplete candidate files or advance the cursor.
+Missing optional fields, unresolved IDs and hierarchy cycles appear as quality
+warnings rather than fabricated values.
+
+### Check the Java example
+
+For a known Java candidate, fetch its exact ID if it is outside the first batch:
+
+```powershell
+npm run fetch-candidates -- --org full --file .cache/candidates/java-check.json REPLACE_WITH_CONTACT_ID
+npm run index-json -- --file .cache/candidates/java-check.json --index candidates-fsb-enriched
+```
+
+Check that its Java tag resolves to `systems` or `skills`, that the selected file
+was embedded into the same index being searched, and that there are no unresolved
+tag-type warnings. The document's `searchText` includes those technology labels.
+The hybrid ranking weights are unchanged; live relevance must be evaluated on
+your real candidate data after re-exporting and re-embedding.
+
+Employment-history, education-history, resume-attachment and recruitment-process
+objects are not yet ingested: their exact fields/relationships were not supplied.
+Contact-level education fields are included when available. Use the discovery
+README to identify history sources before adding them; recruitment process status
+must not be represented as employment experience. The three-slot TagConnector
+summary is no longer the extraction source; inspect association coverage and the
+guide's connector comparison if your org has connector-only information.
 
 ## Angular console
 

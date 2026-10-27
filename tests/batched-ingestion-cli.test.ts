@@ -8,6 +8,7 @@ import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import { test } from "node:test";
 import { config, setupConfig } from "./candidate-fixtures";
+import { metadataFields, candidateRecordType, systemRecordType } from "./salesforce-profile-fixtures";
 
 const run = promisify(execFile);
 
@@ -21,12 +22,19 @@ test("actual CLI commands fetch/resume files and select the same explicit index 
   const queries: string[] = [];
   const id = (number: number) => "003" + String(number).padStart(12, "0");
   const server = createServer((request, response) => {
+    response.writeHead(200, { "Content-Type": "application/json" });
+    const object = /sobjects\/(\w+)\/describe/.exec(request.url!)?.[1];
+    if (object) { response.end(JSON.stringify({ queryable: true, fields: metadataFields[object].map((name) => ({ name, type: "string" })) })); return; }
     const query = new URL(request.url!, "http://localhost").searchParams.get("q")!;
+    if (query.includes("FROM RecordType")) {
+      response.end(JSON.stringify({ done: true, records: [{ Id: candidateRecordType, DeveloperName: "Candidate", SobjectType: "Contact" },
+        { Id: systemRecordType, DeveloperName: "Systems", SobjectType: "Tag__c" }] })); return;
+    }
+    if (!query.includes("FROM Contact")) { response.end(JSON.stringify({ done: true, records: [] })); return; }
     queries.push(query);
-    const after = /WHERE Id > '(\w+)'/.exec(query)?.[1];
+    const after = /Id > '(\w+)'/.exec(query)?.[1];
     const start = after ? Number(after.slice(3)) + 1 : 1;
     const count = Math.min(1000, 1003 - start + 1);
-    response.writeHead(200, { "Content-Type": "application/json" });
     response.end(JSON.stringify({ done: true, totalSize: count, records: Array.from({ length: count }, (_, i) => ({
       Id: id(start + i), Name: "CLI Candidate " + (start + i), Title: "Engineer",
       Account: { Name: "Example" }, TagConnector__r: { SkillCode1__c: "Java" },
@@ -64,6 +72,7 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
       close: async () => {},
       indices: {
         exists: async () => ({body:false}),
+        getMapping: async () => ({body:{[config.OPENSEARCH_INDEX]:{mappings:{_meta:{schema_version:3},properties:{enrichment:{type:'object',enabled:false}}}}}}),
         create: async request => {record({operation:'create',index:request.index});return {body:{acknowledged:true}};}
       },
       bulk: async request => {
@@ -87,7 +96,7 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
   }
 }};
 `);
-  const environment = { ...process.env, ...setupConfig, SF_TARGET_ORG: "wrong-default-org", AWS_PROFILE: "offline" };
+  const environment = { ...process.env, ...setupConfig, SF_TARGET_ORG: "wrong-default-org", SF_CANDIDATE_RECORD_TYPES: "Candidate", SF_TAG_TYPE_MAP: "{}", AWS_PROFILE: "offline" };
   const command = (script: string, args: string[]) => run(process.execPath,
     ["--import", "tsx", "--import", pathToFileURL(preload).href, `presentation/cli/${script}.ts`, ...args],
     { env: environment, windowsHide: true, timeout: 30_000, maxBuffer: 2_000_000 });
@@ -100,7 +109,7 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
   assert.match(second.stdout, /Saved batch 2: 3 records/);
   assert.match(second.stdout, /Export complete: 1003 records in 2 files/);
   assert.equal(queries.length, 2);
-  assert.match(queries[1], /WHERE Id > '003000000001000'/);
+  assert.match(queries[1], /AND Id > '003000000001000'/);
   const checkpoint = JSON.parse(await readFile(join(output, "checkpoint.json"), "utf8"));
   assert.equal(checkpoint.sourceId, "offline-full-org");
   assert.equal(checkpoint.org, "full");

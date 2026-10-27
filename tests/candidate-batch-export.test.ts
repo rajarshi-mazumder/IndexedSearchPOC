@@ -14,6 +14,7 @@ import { IndexCandidates } from "../application/usecases/index-candidates";
 import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
 import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
 import { candidateFixture } from "./candidate-fixtures";
+import { profileClient, profileRepository, enrichedRepository } from "./salesforce-profile-fixtures";
 
 const id = (number: number) => "003" + String(number).padStart(12, "0");
 const options = { org: "full", sourceId: "test-org-id", batchSize: 1000, maxBatches: 1, resume: false };
@@ -38,14 +39,14 @@ test("bounded Salesforce exports resume across runs; files embed independently i
     assert.match(soql, /ORDER BY Id ASC LIMIT 1000$/);
     assert.doesNotMatch(soql, /OFFSET/);
     assert.equal(requestOptions.timeout, 120_000);
-    const after = /WHERE Id > '(\w+)'/.exec(soql)?.[1];
+    const after = /Id > '(\w+)'/.exec(soql)?.[1];
     const start = after ? Number(after.slice(3)) + 1 : 1;
     if (start > 1) assert.equal(JSON.parse(await readFile(join(path, "checkpoint.json"), "utf8")).lastId, id(start - 1));
     return { done: true, records: Array.from({ length: Math.min(1000, 2505 - start + 1) }, (_, i) => ({
       Id: id(start + i), Name: "Candidate " + (start + i), Title: "Engineer", TagConnector__r: { SkillCode1__c: "Java" },
     })) };
   } } as unknown as Connection;
-  const source = new SalesforceCandidateRepository(new SalesforceQueryClient(connection));
+  const source = enrichedRepository(profileClient(undefined, (soql, limit) => new SalesforceQueryClient(connection).queryBatch(soql, limit)));
   const progress: CandidateBatchExportProgress[] = [];
   const first = await new ExportCandidateBatches(source, store).execute(options, (event) => progress.push(event));
   assert.equal(first.fetched, 1000);
@@ -198,9 +199,9 @@ test("batch source validates cursor/size before I/O and never uses OFFSET", asyn
   const client = { queryBatch: async (query: string, limit: number) => {
     queries.push(query); assert.equal(limit, 1000); return [];
   } } as unknown as SalesforceQueryClient;
-  const repository = new SalesforceCandidateRepository(client);
+  const repository = profileRepository(profileClient(undefined, (soql, limit) => client.queryBatch(soql, limit)));
   await repository.getBatch(1000, id(1));
-  assert.match(queries[0], /WHERE Id > '003000000000001' ORDER BY Id ASC LIMIT 1000/);
+  assert.match(queries[0], /AND Id > '003000000000001' ORDER BY Id ASC LIMIT 1000/);
   await assert.rejects(repository.getBatch(1001));
   await assert.rejects(repository.getBatch(1000, "injection'"));
   assert.equal(queries.length, 1);

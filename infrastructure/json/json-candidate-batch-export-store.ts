@@ -8,6 +8,7 @@ import { JsonCandidateSnapshotStore } from "./json-candidate-snapshot-store";
 
 const checkpointSchema = z.object({
   version: z.literal(1), org: z.string().min(1), sourceId: z.string().min(1),
+  extractionKey: z.string().optional(),
   batchSize: z.number().int().min(1).max(1000), batchNumber: z.number().int().nonnegative(),
   fetched: z.number().int().nonnegative(), lastId: z.string().regex(/^[a-zA-Z0-9]{15}(?:[a-zA-Z0-9]{3})?$/).optional(),
   complete: z.boolean(),

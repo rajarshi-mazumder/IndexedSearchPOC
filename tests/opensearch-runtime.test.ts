@@ -6,6 +6,21 @@ import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/
 import { OpenSearchHybridSearch } from "../infrastructure/opensearch/open-search-hybrid-search";
 import { config, documentFixture } from "./candidate-fixtures";
 
+test("enriched documents reject an old index before bulk writes and verify compatible mapping once", async () => {
+  let version = 2; let reads = 0; let writes = 0;
+  const client = { indices: { getMapping: async () => {
+    reads++; return { body: { [config.OPENSEARCH_INDEX]: { mappings: { _meta: { schema_version: version }, properties: { enrichment: { type: "object", enabled: false } } } } } };
+  } }, bulk: async (request: { body: unknown[] }) => { writes++; return acceptedBulk(request.body); } } as unknown as Client;
+  const document = documentFixture();
+  document.candidate.enrichment = { version: 2, details: {}, associations: [], tags: [], warnings: [] };
+  const index = new OpenSearchCandidateDocumentIndex(client, config);
+  await assert.rejects(index.indexMany([document]), /Enriched candidates require a new index/);
+  assert.equal(writes, 0);
+  version = 3;
+  await index.indexMany([document]); await index.indexMany([document]);
+  assert.equal(writes, 2); assert.equal(reads, 2);
+});
+
 function acceptedBulk(body: unknown[]) {
   return { body: { errors: false, items: Array.from({ length: body.length / 2 }, () => ({ index: { status: 200 } })) } };
 }

@@ -4,7 +4,7 @@ import { IndexCandidates } from "../application/usecases/index-candidates";
 import { SearchCandidates } from "../application/usecases/search-candidates";
 import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
 import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
-import { SalesforceCandidateMapper } from "../infrastructure/salesforce/mappers/salesforce-candidate-mapper";
+import { SalesforceCandidateCoreMapper } from "../infrastructure/salesforce/mappers/salesforce-candidate-core-mapper";
 import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
 import { candidateFixture, documentFixture, recordingDocumentIndex } from "./candidate-fixtures";
 
@@ -12,16 +12,16 @@ const generator = new TemplateCandidateProfileGenerator();
 const factory = new CandidateDocumentFactory(generator);
 
 test("Salesforce candidate fields survive the document round trip without vectors", () => {
-  const candidate = SalesforceCandidateMapper.fromContact({
+  const candidate = SalesforceCandidateCoreMapper.fromRecord({
     Id: "003000000000001", Name: "Recovered Candidate", Title: "Engineer",
     Account: { Name: "Example" }, currentSalary__c: 100,
     TagConnector__r: { SkillCode1__c: "TypeScript", SkillCode2__c: " ", Systems1__c: "OpenSearch" },
-  });
+  }, [], []).candidate;
   const document = { ...documentFixture(), candidate };
   const source = OpenSearchCandidateDocumentMapper.toDocument(document);
-  assert.deepEqual(candidate.skills, ["TypeScript"]);
+  assert.deepEqual(candidate.skills, [], "Expertise is supplied by the association enrichment step");
   assert.equal(candidate.title, "Engineer");
-  assert.equal(candidate.company, "Example");
+  assert.equal(candidate.company, undefined, "Employer is supplied by the account join");
   assert.equal(candidate.salary, 100);
   assert.match(factory.create(candidate)!.searchText, /^Role: Engineer/m);
   assert.equal("embedding" in source, false);
@@ -30,9 +30,9 @@ test("Salesforce candidate fields survive the document round trip without vector
 });
 
 test("Salesforce contacts without an Account retain their zero salary", () => {
-  const candidate = SalesforceCandidateMapper.fromContact({
+  const candidate = SalesforceCandidateCoreMapper.fromRecord({
     Id: "003000000000001", Name: "Candidate", Account: null, currentSalary__c: 0,
-  });
+  }, [], []).candidate;
   assert.equal(candidate.company, undefined);
   assert.equal(candidate.salary, 0);
 });
