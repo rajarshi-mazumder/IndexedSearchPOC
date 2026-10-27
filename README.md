@@ -8,6 +8,8 @@ Salesforce CLI authentication, and candidate mapper. It prepares structured fiel
 and expertise text. OpenSearch calls Bedrock to generate document and query
 embeddings, builds the indexes, and returns hybrid lexical/semantic results.
 
+For the full sandbox, start with [the FSB commands below](#full-sandbox-fsb-fetch-embed-and-search).
+
 ## Run the configured dummy-data demo
 
 This workspace is configured for the Tokyo collection `indexed-search-dev` and
@@ -156,7 +158,7 @@ create the AWS collection, IAM roles, budgets, or other account infrastructure.
 
 ## Index and search
 
-### Fetch once, inspect, and embed later
+### Full sandbox (FSB): fetch, embed, and search
 
 For a large sandbox, use [resumable batch exports](docs/batched-sandbox-ingestion.md).
 Fetching defaults to **one file of up to 1,000 records**, not the whole org.
@@ -168,21 +170,41 @@ to `candidate.title`. Other custom fields and the `TagConnector__r` relationship
 still need to match the connected org's schema.
 
 ```powershell
-# Salesforce -> local JSON only. Requires SF_TARGET_ORG and a Salesforce login;
-# no AWS configuration or embedding requests are needed.
-npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --max-batches 1
+# 1. Pull the latest code on the machine connected to Salesforce and AWS.
+git pull
 
-# Continue from the saved ID cursor; fetch one additional file.
-npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --resume --max-batches 1
+# 2. Fetch the first 1,000 Contacts from the authenticated sandbox alias "full".
+# Saves batch-000001.json and checkpoint.json. No embedding happens here.
+npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --batch-size 1000 --max-batches 1
 
-# Read the saved JSON and embed/index it using the configured AWS account.
+# 3. Prepare the destination index and pipelines once. Keep the working model ID
+# and AWS connection settings in .env; --index overrides the index/pipeline names.
 npm run setup-opensearch -- --index candidates-fsb
+
+# 4. Embed/index the first file into candidates-fsb.
 npm run index-json -- --file .cache/candidates/fsb/batch-000001.json --index candidates-fsb
 
-# Add the second file whenever ready; search uses the chosen index.
+# 5. Whenever ready, fetch the next 1,000 Contacts using the saved cursor.
+# Saves batch-000002.json; existing committed files remain in place.
+npm run fetch-candidates -- --org full --output-dir .cache/candidates/fsb --resume --max-batches 1
+
+# 6. Add the second file to the SAME index, growing the searchable dataset.
 npm run index-json -- --file .cache/candidates/fsb/batch-000002.json --index candidates-fsb
+
+# 7. Search the records indexed so far.
 npm run search -- --index candidates-fsb "Java Spring Boot Kafka microservices"
 ```
+
+Run each command after the previous one succeeds. Later fetches keep using
+`--resume`; select the resulting `batch-000003.json`, `batch-000004.json`, etc.
+explicitly when indexing. Change `--max-batches 1` to `--max-batches 10` to fetch up
+to ten additional files in one invocation. The last file may have fewer records.
+
+Fetching only creates local files; it never starts embedding. Each `index-json`
+operation embeds only the chosen file and upserts it into the specified index.
+Re-indexing a file updates the same candidate IDs without creating duplicates,
+but can regenerate embeddings. Allow approximately 10-15 seconds after indexing
+before searching. Use these batch commands instead of unselected `full-index`.
 
 Batch files and earlier single-file snapshots use the same format, containing
 mapped candidate DTOs before embedding. Data under `.cache/` is ignored by Git:
