@@ -98,9 +98,31 @@ export async function currentSystemScenario(): Promise<Record<string, string>> {
     }
     await h.recordRequests("36-validation-no-requests");
     assert.equal(h.outputs["36-validation-no-requests.requests.jsonl"], "");
-    // Reproduce the pre-existing history bug without changing production code.
+    // Restart the actual server with mixed persisted history, including every CV action.
+    const beforeRestart = await h.api("GET", "/api/operations");
+    assert.equal(beforeRestart.status, 200);
+    const recordsBeforeRestart = [];
+    for (const operation of beforeRestart.body) {
+      const record = await h.api("GET", "/api/operations/" + operation.id);
+      assert.equal(record.status, 200);
+      recordsBeforeRestart.push(record.body);
+    }
+    assert.deepEqual(new Set(recordsBeforeRestart.map((record) => record.kind)), new Set(["fetch", "enrich", "setup", "embed", "search"]));
+    assert.ok(recordsBeforeRestart.some((record) => record.result?.enrichment?.changed > 0));
+    assert.ok(recordsBeforeRestart.some((record) => record.progress.changed > 0));
+    assert.ok(recordsBeforeRestart.some((record) => record.result?.files?.some((file: { deleted?: number }) => (file.deleted ?? 0) > 0)));
     await h.stopServer();
-    await assert.rejects(() => h.start(), /Invalid option.*fetch.*embed.*setup.*search/s);
+    await h.start();
+    assert.deepEqual(await h.api("GET", "/api/operations"), beforeRestart);
+    for (const record of recordsBeforeRestart) {
+      const restored = await h.api("GET", "/api/operations/" + record.id);
+      assert.equal(restored.status, 200);
+      assert.deepEqual(restored.body, record, "Restart must preserve the complete operation history");
+    }
+    for (const file of files) {
+      assert.equal(await h.read(directory + file), h.outputs["removed-" + file], "Restart must not change candidate files");
+    }
+    assert.deepEqual(await documents(), JSON.parse(h.outputs["33-final-documents.json"]));
     return h.outputs;
   } finally { await h.close(); }
 }

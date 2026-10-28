@@ -568,7 +568,7 @@ npm run test:baseline
 This runs type checking, backend tests, exact-byte input/output contracts and the
 three browser workflows. `npm run test:contracts` runs only the new offline
 contracts. See [baseline coverage and frozen search settings](docs/offline-refactor-baseline.md)
-for the fixture rules, the search-only RRF revision, limitations and the existing CV-history
+for the fixture rules, the search-only RRF revision, limitations and the resolved CV-history
 restart defect. The older `test:e2e` command below uses live AWS and is **not** part
 of this baseline.
 

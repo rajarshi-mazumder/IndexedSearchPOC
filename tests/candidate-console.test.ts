@@ -20,7 +20,7 @@ import { consoleConfiguration as configuration, ControlledCandidateOperationRunn
 import { candidateFixture } from "./candidate-fixtures";
 import { CandidateConsoleOperationExecutor } from "../backend/host/services/candidateConsoleOperationExecutor";
 import { CandidateConsoleOperations } from "../backend/host/ports/candidateConsoleOperations";
-import { WorkerEvent } from "../shared/candidateConsoleContracts";
+import { OperationRecord, OperationRequest, OperationResult, WorkerEvent } from "../shared/candidateConsoleContracts";
 
 async function temporary(t: TestContext) {
   const directory = await mkdtemp(join(tmpdir(), "candidate-console-test-"));
@@ -89,6 +89,47 @@ test("search history preserves raw scores and ranks while reading legacy results
   await service.close();
   const restored = (await history.read()).find((record) => record.id === job.id)!;
   assert.deepEqual(restored.result?.candidates, JSON.parse(JSON.stringify(candidates)));
+});
+
+test("history round-trips every operation kind and CV action without dropping counters", async (t) => {
+  const path = join(await temporary(t), "history.json");
+  const history = new JsonOperationHistoryStore(new AtomicJsonFileStore(path));
+  // Exhaustive by operation kind: adding a new kind requires a persistence case.
+  const cases: Record<OperationRequest["kind"], { request: OperationRequest; result: OperationResult }> = {
+    fetch: { request: { kind: "fetch", configuration, batchSize: 1000, maxBatches: 1, resume: false },
+      result: { fetched: 1000, batchNumber: 1, complete: false } },
+    embed: { request: { kind: "embed", configuration, files: ["batch-000001.json"] },
+      result: { files: [{ file: "batch-000001.json", indexed: 998, skipped: 2, deleted: 2,
+        hash: "fixture-hash", size: 42, modifiedAt: "2026-10-28T00:00:00.000Z" }] } },
+    setup: { request: { kind: "setup", configuration }, result: { modelId: "fixture-model" } },
+    search: { request: { kind: "search", configuration, query: "Java", limit: 10 }, result: { candidates: [] } },
+    enrich: { request: { kind: "enrich", configuration, files: ["batch-000001.json"], action: "add", seed: "demo" },
+      result: { enrichment: { changed: 3, skipped: 0, completedFiles: 1 },
+        candidates: [{ rank: 0, score: 0, candidate: candidateFixture(), profile: "" }] } },
+  };
+  const examples = Object.values(cases);
+  for (const action of ["preview", "regenerate", "remove"] as const) {
+    examples.push({ request: { kind: "enrich", configuration, files: ["batch-000001.json"], action, seed: "demo" },
+      result: { enrichment: { changed: 0, skipped: 3, completedFiles: 1 } } });
+  }
+  const records: OperationRecord[] = examples.map((example, index) => ({
+    id: "operation-" + index, kind: example.request.kind, status: "succeeded",
+    profileName: configuration.name, index: configuration.index, dataset: configuration.dataset,
+    startedAt: "2026-10-28T00:00:00.000Z", finishedAt: "2026-10-28T00:00:01.000Z",
+    progress: { message: "Complete", changed: 0 }, events: [], ...example,
+  }));
+  await history.write(records);
+  const restarted = new JsonOperationHistoryStore(new AtomicJsonFileStore(path));
+  const restored = await restarted.read();
+  assert.deepEqual(restored, JSON.parse(JSON.stringify(records)));
+  await restarted.write(restored);
+  assert.deepEqual(await history.read(), restored, "A second save must retain the restored fields");
+
+  // Keep validation: malformed data must not be silently ignored or reset.
+  await writeFile(path, JSON.stringify([{ ...records[0], kind: "unknown-operation" }]));
+  await assert.rejects(history.read(), /Invalid option/);
+  await writeFile(path, JSON.stringify([{ ...records[4], result: { enrichment: { changed: "invalid", skipped: 0, completedFiles: 1 } } }]));
+  await assert.rejects(history.read());
 });
 
 test("catalog paginates files and records, rejects escape paths and marks only checkpointed files", async (t) => {

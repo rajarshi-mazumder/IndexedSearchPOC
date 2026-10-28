@@ -135,18 +135,23 @@ The 25%/75% weights combine normalized scores. They do not specify percentages o
 returned candidates. The baseline freezes these settings without introducing a
 separate ranking implementation.
 
-## Known baseline defect: restart after CV enrichment
+## Resolved defect: restart after CV enrichment
 
-A real server restart after a completed `enrich` operation currently fails:
-`JsonOperationHistoryStore` accepts only `fetch`, `embed`, `setup`, and `search`
-as persisted operation kinds. Its schema also omits the enrichment result and
-some progress fields.
+The original baseline recorded a startup failure after an `enrich` operation:
+`JsonOperationHistoryStore` did not recognize that saved operation kind. This has
+now been fixed as a separate behavior change. History also preserves enrichment
+results, the `changed` progress counter, and embedding `deleted` counts.
 
-The acceptance scenario explicitly reproduces the restart failure. This is a
-characterization of the existing defect, **not a claim that restart works after
-CV enrichment**. Restart after fetch/failure is tested separately and succeeds.
-This defect remains unchanged by the preparation refactor. A fix should be a separate, reviewed behavior
-change with a new success assertion, rather than hidden inside the refactor.
+The acceptance scenario now restarts the real local server with mixed fetch,
+enrichment, setup, embedding and search history. It verifies every operation's
+full details survive, including all four CV actions and the raw search scores.
+Candidate batch files and indexed documents are unchanged by restarting.
+Focused tests cover every operation kind, legacy search results, zero counters,
+and rejection of malformed history. The existing golden artifacts are unchanged.
+
+Existing `.cache/ui/operations.json` files containing valid enrichment records
+load directly after updating. No history deletion, data re-fetch or re-embedding
+is required. Fields discarded by an older version cannot be reconstructed.
 
 ## Keeping the baseline intact during refactoring
 
