@@ -5,14 +5,14 @@ import { tmpdir } from "node:os";
 import { join, resolve, sep } from "node:path";
 import { test, TestContext } from "node:test";
 import { promisify } from "node:util";
-import { IndexCandidates } from "../application/usecases/index-candidates";
-import { ExportCandidateSnapshot } from "../application/usecases/export-candidate-snapshot";
-import { SnapshottingCandidateRepository } from "../application/services/snapshotting-candidate-repository";
-import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
-import { JsonCandidateSnapshotStore } from "../infrastructure/json/json-candidate-snapshot-store";
-import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
-import { SalesforceQueryClient } from "../infrastructure/salesforce/salesforce-query-client";
+import { EmbedCandidatesTestDriver as IndexCandidates } from "./support/embedCandidatesTestDriver";
+import { FetchSelectedSalesforceCandidatesIntoFileUseCase as FetchSelectedSalesforceCandidatesIntoFileOrchestrator } from "../backend/dataPreparation/application/useCases/fetchSelectedSalesforceCandidatesIntoFileUseCase";
+import { PersistFetchedCandidatesRepository } from "../backend/dataPreparation/infrastructure/repositories/persistFetchedCandidatesRepository";
+import { PrepareCandidateDocumentTestDriver as CandidateDocumentFactory } from "./support/prepareCandidateDocumentTestDriver";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
+import { JsonCandidateSnapshotStore } from "../backend/candidateData/repositories/jsonCandidateSnapshotStore";
+import { SalesforceCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateRepository";
+import { SalesforceQueryClient } from "../backend/dataPreparation/infrastructure/repositories/salesforceQueryClient";
 import { candidateFixture, config, recordingDocumentIndex } from "./candidate-fixtures";
 import { enrichedRepository, profileClient } from "./salesforce-profile-fixtures";
 
@@ -52,7 +52,7 @@ test("fresh Salesforce retrieval persists DTOs before indexing; cached indexing 
     assert.equal(JSON.parse(await readFile(file, "utf8")).candidates[0].title, "Engineer");
     await originalIndexMany(documents);
   };
-  const fresh = new IndexCandidates(new SnapshottingCandidateRepository(source, store), factory, freshIndex.index);
+  const fresh = new IndexCandidates(new PersistFetchedCandidatesRepository(source, store), factory, freshIndex.index);
   assert.deepEqual(await fresh.execute(["003000000000001"]), { indexed: 1, skipped: 0 });
   const savedJson = await readFile(file, "utf8");
   const saved = JSON.parse(savedJson);
@@ -81,7 +81,7 @@ test("export-only fetches selected IDs without requiring an indexing adapter", a
     getByIds: async (ids: string[]) => { calls.push(ids); return [candidate]; },
   };
   const store = new JsonCandidateSnapshotStore(file);
-  const exporter = new ExportCandidateSnapshot(new SnapshottingCandidateRepository(source, store));
+  const exporter = new FetchSelectedSalesforceCandidatesIntoFileOrchestrator(new PersistFetchedCandidatesRepository(source, store));
   assert.deepEqual(await exporter.execute([candidate.id, candidate.id]), { fetched: 1 });
   assert.deepEqual(calls, [[candidate.id]]);
   assert.equal((await store.getAll())[0].id, candidate.id);
@@ -96,7 +96,7 @@ test("a failed Salesforce fetch preserves the old snapshot and makes no index wr
   const before = await readFile(file, "utf8");
   const fail = async () => { throw new Error("Salesforce unavailable"); };
   const index = recordingDocumentIndex();
-  const usecase = new IndexCandidates(new SnapshottingCandidateRepository({ getAll: fail, getByIds: fail }, store), factory, index.index);
+  const usecase = new IndexCandidates(new PersistFetchedCandidatesRepository({ getAll: fail, getByIds: fail }, store), factory, index.index);
   await assert.rejects(usecase.execute(), /Salesforce unavailable/);
   assert.equal(await readFile(file, "utf8"), before);
   assert.equal(index.documents.length, 0);
@@ -107,7 +107,7 @@ test("a snapshot write failure prevents indexing", async () => {
   const source = { getAll: async () => [candidate], getByIds: async () => [candidate] };
   const snapshot = { ...source, save: async () => { throw new Error("Disk full"); } };
   const index = recordingDocumentIndex();
-  await assert.rejects(new IndexCandidates(new SnapshottingCandidateRepository(source, snapshot), factory, index.index).execute(), /Disk full/);
+  await assert.rejects(new IndexCandidates(new PersistFetchedCandidatesRepository(source, snapshot), factory, index.index).execute(), /Disk full/);
   assert.equal(index.documents.length, 0);
 });
 
@@ -147,7 +147,7 @@ test("missing, malformed, unsupported, and incomplete snapshots fail before inde
 
 test("the JSON CLI checks its file without Salesforce authentication or outgoing AWS calls", async (t) => {
   const { file } = await snapshotFile(t);
-  await assert.rejects(runFile(process.execPath, ["--import", "tsx", "presentation/cli/index-candidates.ts", "--source", "json", "--file", file], {
+  await assert.rejects(runFile(process.execPath, ["--import", "tsx", "backend/host/cli/indexCandidates.ts", "--source", "json", "--file", file], {
     cwd: resolve(__dirname, ".."),
     env: { ...process.env, ...config, SF_TARGET_ORG: "invalid & alias", AWS_PROFILE: "nonexistent-offline-profile" },
     windowsHide: true,

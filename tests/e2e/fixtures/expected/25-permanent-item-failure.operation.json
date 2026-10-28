@@ -1,0 +1,43 @@
+{
+  "kind": "embed",
+  "status": "failed",
+  "request": {
+    "kind": "embed",
+    "configuration": {
+      "id": "contract",
+      "name": "Offline behavior contract",
+      "sfOrg": "fixture",
+      "awsProfile": "fixture",
+      "awsRegion": "ap-northeast-1",
+      "endpoint": "https://fixture.ap-northeast-1.aoss.amazonaws.com",
+      "modelId": "fixture-model",
+      "roleArn": "arn:aws:iam::123456789012:role/FixtureRole",
+      "index": "contract-main",
+      "automaticPipelines": true,
+      "ingestPipeline": "",
+      "searchPipeline": "",
+      "dataset": "contract",
+      "sfRecordTypes": "Candidate,CandidatePreReg",
+      "sfTagTypes": "{}"
+    },
+    "files": [
+      "batch-000001.json"
+    ]
+  },
+  "progress": {
+    "processed": 0,
+    "total": 3,
+    "indexed": 0,
+    "skipped": 0,
+    "file": "batch-000001.json",
+    "fileNumber": 1,
+    "fileTotal": 1,
+    "message": "Embedding batch-000001.json: 0/3 processed"
+  },
+  "error": "OpenSearch indexing failed for 003000000000001 (400): Fixture bulk rejection. Some other documents may already be indexed; rerunning uses the same IDs.",
+  "messages": [
+    "Starting operation",
+    "Embedding batch-000001.json: 0/3 processed",
+    "OpenSearch indexing failed for 003000000000001 (400): Fixture bulk rejection. Some other documents may already be indexed; rerunning uses the same IDs."
+  ]
+}

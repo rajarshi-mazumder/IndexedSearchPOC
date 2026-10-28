@@ -96,7 +96,7 @@ npm run search -- "improve unpaid visibility on Google by auditing website crawl
 `test:e2e` re-embeds the fixtures and makes billed AWS requests. `verify-demo` runs the same retrieval checks on existing stored documents without reindexing. The raw report contains all queries, returned IDs and scores, ranks, metrics, and the actual deployed search pipeline.
 
 - [Final raw report](../.cache/search-benchmarks/2026-10-25T09-41-15-582Z-all.json) (local ignored artifact).
-- [Candidate records](../infrastructure/dummy/dummy-candidates.ts).
+- [Candidate records](../backend/dataPreparation/infrastructure/fixtures/dummyCandidates.ts).
 - [Fixed natural-language judgments](../tests/candidate-search-benchmark-cases.ts).
 - Index: `candidates-demo-titan-v2`.
 - Registered model: `83e4421c-528f-475c-bff6-b652eae6d27f`.

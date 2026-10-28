@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 import { CandidateConsoleApi } from "./candidate-console-api";
-import type { ConsoleConfiguration, OperationRecord, OperationRequest, OperationSummary } from "../../../shared/candidate-console-contracts";
+import type { ConsoleConfiguration, OperationRecord, OperationRequest, OperationSummary } from "../../../shared/candidateConsoleContracts";
 
 @Injectable({ providedIn: "root" })
 export class CandidateConsoleStore {

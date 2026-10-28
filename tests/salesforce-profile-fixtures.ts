@@ -1,8 +1,8 @@
-import { SalesforceQueryClient } from "../infrastructure/salesforce/salesforce-query-client";
-import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
-import { SalesforceCandidateSchema } from "../infrastructure/salesforce/salesforce-candidate-schema";
-import { CandidateEnrichmentService } from "../application/services/candidate-enrichment-service";
-import { CandidateProfileAssembler } from "../application/services/candidate-profile-assembler";
+import { SalesforceQueryClient } from "../backend/dataPreparation/infrastructure/repositories/salesforceQueryClient";
+import { SalesforceCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateRepository";
+import { SalesforceCandidateSchema } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateSchema";
+import { LoadSalesforceCandidateDetailsService as LoadSalesforceCandidateDetailsOrchestrator } from "../backend/dataPreparation/application/services/loadSalesforceCandidateDetailsService";
+import { CombineSalesforceCandidateDetailsService } from "../backend/dataPreparation/application/services/combineSalesforceCandidateDetailsService";
 
 export const candidateRecordType = "012000000000001";
 export const systemRecordType = "012000000000002";
@@ -27,5 +27,5 @@ export function profileRepository(client: SalesforceQueryClient) {
   return new SalesforceCandidateRepository(client, new SalesforceCandidateSchema(client), { recordTypes: ["Candidate"], tagTypes: {} });
 }
 export function enrichedRepository(client: SalesforceQueryClient) {
-  return new CandidateEnrichmentService(profileRepository(client), new CandidateProfileAssembler());
+  return new LoadSalesforceCandidateDetailsOrchestrator(profileRepository(client), new CombineSalesforceCandidateDetailsService());
 }

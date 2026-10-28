@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { createServer } from "node:http";
 import { AddressInfo } from "node:net";
 import { createHash } from "node:crypto";
-import { OpenSearchServerlessClient } from "../infrastructure/opensearch/open-search-serverless-client";
+import { OpenSearchServerlessClient } from "../backend/infrastructure/opensearch/openSearchServerlessClient";
 
 test("the real SDK signs requests for aoss and includes the payload hash", async () => {
   let captured: { authorization?: string; hash?: string; body: string } | undefined;

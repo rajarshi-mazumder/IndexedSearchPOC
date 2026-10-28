@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "org": "fixture",
+  "sourceId": "fixture-org",
+  "extractionKey": "candidate-enrichment-v2:fcc32d93b4932df92c0a7a6e05c831038cc8839678d5c1e88e62c0774b53683a",
+  "batchSize": 3,
+  "batchNumber": 1,
+  "fetched": 3,
+  "lastId": "003000000000003",
+  "complete": false
+}

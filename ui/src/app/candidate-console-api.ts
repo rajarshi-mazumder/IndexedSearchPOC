@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { firstValueFrom } from "rxjs";
-import type { CandidatePreview, ConsoleConfiguration, DatasetListing, OperationRecord, OperationRequest, OperationSummary } from "../../../shared/candidate-console-contracts";
+import type { CandidatePreview, ConsoleConfiguration, DatasetListing, OperationRecord, OperationRequest, OperationSummary } from "../../../shared/candidateConsoleContracts";
 
 @Injectable({ providedIn: "root" })
 export class CandidateConsoleApi {

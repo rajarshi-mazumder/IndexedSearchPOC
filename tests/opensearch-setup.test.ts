@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { Client } from "@opensearch-project/opensearch";
-import { OpenSearchCandidateSetup } from "../infrastructure/opensearch/open-search-candidate-setup";
-import { OpenSearchBedrockModel } from "../infrastructure/opensearch/open-search-bedrock-model";
-import { CANDIDATE_SCHEMA_VERSION, TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../infrastructure/opensearch/titan-embedding-config";
-import { loadOpenSearchConfig, loadOpenSearchSetupConfig } from "../infrastructure/config/opensearch-config";
+import { SetupCandidateOpenSearchResourcesTestDriver as OpenSearchCandidateSetup } from "./support/setupCandidateOpenSearchResourcesTestDriver";
+import { EnsureCandidateEmbeddingModelTestDriver as OpenSearchBedrockModel } from "./support/ensureCandidateEmbeddingModelTestDriver";
+import { CANDIDATE_SCHEMA_VERSION, TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../backend/infrastructure/opensearch/titanEmbeddingConfig";
+import { loadOpenSearchConfig, loadOpenSearchSetupConfig } from "../backend/infrastructure/config/opensearchConfig";
 import { config, setupConfig } from "./candidate-fixtures";
 
 function setupDouble(options: { exists?: boolean; modelId?: string; dimension?: number; simulationDimension?: number; pipelineModelId?: string } = {}) {

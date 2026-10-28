@@ -1,0 +1,52 @@
+{
+  "kind": "enrich",
+  "status": "succeeded",
+  "request": {
+    "kind": "enrich",
+    "configuration": {
+      "id": "contract",
+      "name": "Offline behavior contract",
+      "sfOrg": "fixture",
+      "awsProfile": "fixture",
+      "awsRegion": "ap-northeast-1",
+      "endpoint": "https://fixture.ap-northeast-1.aoss.amazonaws.com",
+      "modelId": "fixture-model",
+      "roleArn": "arn:aws:iam::123456789012:role/FixtureRole",
+      "index": "contract-main",
+      "automaticPipelines": true,
+      "ingestPipeline": "",
+      "searchPipeline": "",
+      "dataset": "contract",
+      "sfRecordTypes": "Candidate,CandidatePreReg",
+      "sfTagTypes": "{}"
+    },
+    "action": "regenerate",
+    "seed": "another-seed",
+    "files": [
+      "batch-000001.json"
+    ]
+  },
+  "progress": {
+    "message": "batch-000001.json: 3 enriched, 0 skipped. Re-embed changed files.",
+    "file": "batch-000001.json",
+    "fileNumber": 1,
+    "fileTotal": 1,
+    "processed": 3,
+    "total": 3,
+    "changed": 3,
+    "skipped": 0
+  },
+  "result": {
+    "enrichment": {
+      "changed": 3,
+      "skipped": 0,
+      "completedFiles": 1
+    },
+    "candidates": []
+  },
+  "messages": [
+    "Starting operation",
+    "batch-000001.json: 3 enriched, 0 skipped. Re-embed changed files.",
+    "Operation completed successfully."
+  ]
+}

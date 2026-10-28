@@ -1,0 +1,2 @@
+# Byte-contract fixtures must survive Windows/Linux checkout unchanged.
+tests/e2e/fixtures/** text eol=lf

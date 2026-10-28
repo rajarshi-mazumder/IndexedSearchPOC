@@ -7,14 +7,14 @@ import { promisify, parseArgs } from "node:util";
 import { setTimeout } from "node:timers/promises";
 import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { z } from "zod";
-import { loadOpenSearchConfig } from "../infrastructure/config/opensearch-config";
-import { OpenSearchServerlessClient } from "../infrastructure/opensearch/open-search-serverless-client";
-import { OpenSearchHybridSearch } from "../infrastructure/opensearch/open-search-hybrid-search";
-import { SearchCandidates } from "../application/usecases/search-candidates";
-import { DUMMY_CANDIDATES } from "../infrastructure/dummy/dummy-candidates";
-import { TITAN_DIMENSIONS } from "../infrastructure/opensearch/titan-embedding-config";
-import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
+import { loadOpenSearchConfig } from "../backend/infrastructure/config/opensearchConfig";
+import { OpenSearchServerlessClient } from "../backend/infrastructure/opensearch/openSearchServerlessClient";
+import { SearchOpenSearchCandidatesTestDriver as OpenSearchHybridSearch } from "./support/searchOpenSearchCandidatesTestDriver";
+import { SearchCandidatesUseCase as SearchCandidates } from "../backend/dataSearch/application/useCases/searchCandidatesUseCase";
+import { DUMMY_CANDIDATES } from "../backend/dataPreparation/infrastructure/fixtures/dummyCandidates";
+import { TITAN_DIMENSIONS } from "../backend/infrastructure/opensearch/titanEmbeddingConfig";
+import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
 import { CandidateSearchBenchmark } from "./candidate-search-benchmark";
 
 const runFile = promisify(execFile);
@@ -27,7 +27,7 @@ const storedCandidateSchema = z.object({
 
 async function runDemoIndexing(ids: string[] = []) {
   const { stdout } = await runFile(process.execPath, [
-    "--import", "tsx", resolve(__dirname, "../presentation/cli/index-candidates.ts"), "--source", "dummy", ...ids,
+    "--import", "tsx", resolve(__dirname, "../backend/host/cli/indexCandidates.ts"), "--source", "dummy", ...ids,
   ], { timeout: 300000, windowsHide: true });
   console.log(stdout.trim());
 }
@@ -120,7 +120,7 @@ async function main() {
       console.log("PASS: hybrid query " + JSON.stringify(query) + " -> " + results.map((result) => result.document.candidate.name).join(", "));
     }
     const { stdout } = await runFile(process.execPath, [
-      "--import", "tsx", resolve(__dirname, "../presentation/cli/search.ts"), "Java Spring Boot Kafka microservices",
+      "--import", "tsx", resolve(__dirname, "../backend/host/cli/search.ts"), "Java Spring Boot Kafka microservices",
     ], { timeout: 180000, windowsHide: true });
     assert.match(stdout, /#1\s+Hybrid Score: [\d.]+\s+Name: Alex Demo/);
     console.log("PASS: the search CLI displays Alex Demo as the first Java/Kafka result.");

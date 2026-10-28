@@ -1,0 +1,256 @@
+{
+  "version": 2,
+  "exportedAt": "2026-10-28T00:00:00.000Z",
+  "candidates": [
+    {
+      "id": "003000000000001",
+      "name": "Aki 佐藤",
+      "title": "Java Engineer",
+      "company": "Example & Co",
+      "location": "東京, Japan",
+      "salary": 0,
+      "enrichment": {
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {
+          "currentSalary": 0,
+          "desiredTitle": "a03000000000001",
+          "okToRelocate": false,
+          "highestEducationalQualification": "Computer Science",
+          "peopleManager": true
+        },
+        "resolvedDetails": {
+          "desiredTitle": "Principal Engineer"
+        },
+        "employer": {
+          "id": "001000000000001",
+          "name": "Example & Co",
+          "industry": "Technology",
+          "city": "Tokyo",
+          "country": "Japan",
+          "description": "Employer context, not candidate experience",
+          "website": "https://example.invalid"
+        },
+        "tags": [
+          {
+            "id": "a02000000000001",
+            "label": "Java",
+            "type": "Systems",
+            "parentId": "a02000000000003",
+            "category": "systems"
+          },
+          {
+            "id": "a02000000000003",
+            "label": "Software Engineering",
+            "type": "SkillCategory",
+            "parentId": "a02000000000004",
+            "category": "skillCategories"
+          },
+          {
+            "id": "a02000000000004",
+            "label": "Technology",
+            "type": "SkillCategory",
+            "category": "skillCategories"
+          },
+          {
+            "id": "a02000000000002",
+            "label": "REST API design",
+            "type": "SkillCode",
+            "category": "skills"
+          },
+          {
+            "id": "a02000000000005",
+            "label": "Japanese",
+            "type": "Language",
+            "category": "language"
+          },
+          {
+            "id": "a02000000000006",
+            "label": "Business level",
+            "type": "Proficiency",
+            "category": "proficiency"
+          }
+        ],
+        "associations": [
+          {
+            "id": "a01000000000001",
+            "firstTagId": "a02000000000001",
+            "secondTagId": "a02000000000002",
+            "score": 0,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          },
+          {
+            "id": "a01000000000002",
+            "firstTagId": "a02000000000005",
+            "secondTagId": "a02000000000006",
+            "score": 4,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          },
+          {
+            "id": "a01000000000003",
+            "firstTagId": "a02000000000001",
+            "score": 3,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          }
+        ],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c"
+        ]
+      },
+      "skills": [
+        "REST API design"
+      ],
+      "skillCategories": [
+        "Software Engineering",
+        "Technology"
+      ],
+      "systems": [
+        "Java"
+      ],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": [
+        {
+          "code": "Japanese",
+          "level": "Business level"
+        }
+      ]
+    },
+    {
+      "id": "003000000000002",
+      "name": "Jordan Smith",
+      "title": "JavaScript Developer",
+      "enrichment": {
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "CandidatePreReg",
+        "details": {},
+        "tags": [
+          {
+            "id": "a02000000000007",
+            "label": "JavaScript",
+            "type": "Systems",
+            "category": "systems"
+          }
+        ],
+        "associations": [
+          {
+            "id": "a01000000000004",
+            "firstTagId": "a02000000000007",
+            "score": 1,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          }
+        ],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [
+        "JavaScript"
+      ],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    },
+    {
+      "id": "003000000000003",
+      "name": "Priya Rao",
+      "title": "Data Engineer",
+      "enrichment": {
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {
+          "currentSalary": null,
+          "desiredTitle": null
+        },
+        "tags": [
+          {
+            "id": "a02000000000008",
+            "label": "Unclassified evidence",
+            "type": "UnmappedType",
+            "parentId": "a02000000000009"
+          },
+          {
+            "id": "a02000000000009",
+            "label": "Cyclic parent",
+            "type": "SkillCategory",
+            "parentId": "a02000000000008",
+            "category": "skillCategories"
+          }
+        ],
+        "associations": [
+          {
+            "id": "a01000000000005",
+            "firstTagId": "a02000000000008",
+            "secondTagId": "a02000000000099",
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          }
+        ],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "Unclassified tag type: UnmappedType (a02000000000008)",
+          "Tag hierarchy cycle: a02000000000008",
+          "Unresolved tag: a02000000000099",
+          "Unresolved employer: 001000000000099"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [
+        "Cyclic parent"
+      ],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    }
+  ]
+}

@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { test } from "node:test";
-import { OpenSearchCommandEnvironment } from "../presentation/cli/open-search-command-environment";
-import { loadOpenSearchConfig } from "../infrastructure/config/opensearch-config";
+import { OpenSearchCommandEnvironment } from "../backend/host/cli/openSearchCommandEnvironment";
+import { loadOpenSearchConfig } from "../backend/infrastructure/config/opensearchConfig";
 import { config } from "./candidate-fixtures";
 
 const run = promisify(execFile);
@@ -24,11 +24,11 @@ test("explicit index consistently selects setup/index/search pipelines without m
 
 test("CLI rejects invalid batch combinations and unbounded full indexing before authentication", async () => {
   for (const args of [
-    ["presentation/cli/fetch-candidates.ts", "--file", "old-export.json"],
-    ["presentation/cli/fetch-candidates.ts", "--batch-size", "1001"],
-    ["presentation/cli/fetch-candidates.ts", "--max-batches", "0"],
-    ["presentation/cli/fetch-candidates.ts", "003000000000001"],
-    ["presentation/cli/index-candidates.ts", "--source", "salesforce"],
+    ["backend/host/cli/fetchCandidates.ts", "--file", "old-export.json"],
+    ["backend/host/cli/fetchCandidates.ts", "--batch-size", "1001"],
+    ["backend/host/cli/fetchCandidates.ts", "--max-batches", "0"],
+    ["backend/host/cli/fetchCandidates.ts", "003000000000001"],
+    ["backend/host/cli/indexCandidates.ts", "--source", "salesforce"],
   ]) {
     await assert.rejects(run(process.execPath, ["--import", "tsx", ...args], {
       env: { ...process.env, SF_TARGET_ORG: "invalid & alias", AWS_PROFILE: "offline" }, windowsHide: true,
@@ -42,7 +42,7 @@ test("CLI rejects invalid batch combinations and unbounded full indexing before 
 
 test("all OpenSearch CLIs reject an invalid --index before outgoing requests", async () => {
   for (const script of ["setup-opensearch", "index-candidates", "search"]) {
-    const args = ["--import", "tsx", `presentation/cli/${script}.ts`, "--index", "bad/index"];
+    const args = ["--import", "tsx", `backend/host/cli/${script.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())}.ts`, "--index", "bad/index"];
     if (script === "index-candidates") args.push("--source", "json");
     await assert.rejects(run(process.execPath, args, {
       env: { ...process.env, ...config, AWS_PROFILE: "offline", SF_TARGET_ORG: "invalid & alias" }, windowsHide: true,

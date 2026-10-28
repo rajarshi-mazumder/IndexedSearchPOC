@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { DummyCandidateRepository } from "../infrastructure/dummy/dummy-candidate-repository";
-import { DUMMY_CANDIDATES } from "../infrastructure/dummy/dummy-candidates";
-import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
-import { IndexCandidates } from "../application/usecases/index-candidates";
+import { DummyCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/dummyCandidateRepository";
+import { DUMMY_CANDIDATES } from "../backend/dataPreparation/infrastructure/fixtures/dummyCandidates";
+import { PrepareCandidateDocumentTestDriver as CandidateDocumentFactory } from "./support/prepareCandidateDocumentTestDriver";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
+import { EmbedCandidatesTestDriver as IndexCandidates } from "./support/embedCandidatesTestDriver";
 import { recordingDocumentIndex } from "./candidate-fixtures";
 import { CANDIDATE_SEARCH_BENCHMARK_CASES } from "./candidate-search-benchmark-cases";
 

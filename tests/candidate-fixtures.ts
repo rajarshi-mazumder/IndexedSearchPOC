@@ -1,7 +1,7 @@
-import { Candidate } from "../domain/entities/candidate";
-import { CandidateDocument } from "../domain/entities/candidate-document";
-import { CandidateDocumentIndex } from "../application/ports/candidate-document-index";
-import { OpenSearchConfig, OpenSearchSetupConfig } from "../infrastructure/config/opensearch-config";
+import { Candidate } from "../shared/domain/models/candidate";
+import { CandidateDocument } from "../backend/candidateData/models/candidateDocument";
+import { CandidateDocumentIndex } from "../backend/dataEmbedding/indexing/application/ports/candidateDocumentIndex";
+import { OpenSearchConfig, OpenSearchSetupConfig } from "../backend/infrastructure/config/opensearchConfig";
 
 export const config: OpenSearchConfig = {
   AWS_REGION: "ap-northeast-1",

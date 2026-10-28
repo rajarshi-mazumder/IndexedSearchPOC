@@ -1,0 +1,54 @@
+{
+  "kind": "embed",
+  "status": "succeeded",
+  "request": {
+    "kind": "embed",
+    "configuration": {
+      "id": "contract",
+      "name": "Offline behavior contract",
+      "sfOrg": "fixture",
+      "awsProfile": "fixture",
+      "awsRegion": "ap-northeast-1",
+      "endpoint": "https://fixture.ap-northeast-1.aoss.amazonaws.com",
+      "modelId": "fixture-model",
+      "roleArn": "arn:aws:iam::123456789012:role/FixtureRole",
+      "index": "contract-main",
+      "automaticPipelines": true,
+      "ingestPipeline": "",
+      "searchPipeline": "",
+      "dataset": "contract",
+      "sfRecordTypes": "Candidate,CandidatePreReg",
+      "sfTagTypes": "{}"
+    },
+    "files": [
+      "batch-000001.json"
+    ]
+  },
+  "progress": {
+    "processed": 3,
+    "total": 3,
+    "indexed": 3,
+    "skipped": 0,
+    "file": "batch-000001.json",
+    "fileNumber": 1,
+    "fileTotal": 1,
+    "message": "Embedding batch-000001.json: 3/3 processed"
+  },
+  "result": {
+    "files": [
+      {
+        "file": "batch-000001.json",
+        "indexed": 3,
+        "skipped": 0,
+        "hash": "beac7f3d475c46f68b7455f50212445b38360cf1cf81af456392a0e6261feabe",
+        "size": 20362
+      }
+    ]
+  },
+  "messages": [
+    "Starting operation",
+    "Embedding batch-000001.json: 0/3 processed",
+    "Embedding batch-000001.json: 3/3 processed",
+    "Operation completed successfully."
+  ]
+}

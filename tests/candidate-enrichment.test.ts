@@ -1,20 +1,21 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { CandidateEnrichmentService } from "../application/services/candidate-enrichment-service";
-import { CandidateProfileAssembler } from "../application/services/candidate-profile-assembler";
-import { CandidateCoreProfile, CandidateProfileRepository } from "../application/ports/candidate-profile-repository";
-import { CandidateTag } from "../domain/entities/candidate-enrichment";
-import { CandidateSnapshotSerializer } from "../infrastructure/json/candidate-snapshot-serializer";
-import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
-import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
-import { ExportCandidateBatches } from "../application/usecases/export-candidate-batches";
-import { CandidateBatchCheckpoint } from "../application/ports/candidate-batch-export-store";
+import { LoadSalesforceCandidateDetailsService as LoadSalesforceCandidateDetailsOrchestrator } from "../backend/dataPreparation/application/services/loadSalesforceCandidateDetailsService";
+import { CombineSalesforceCandidateDetailsService } from "../backend/dataPreparation/application/services/combineSalesforceCandidateDetailsService";
+import { CandidateProfileRepository } from "../backend/dataPreparation/application/ports/candidateProfileRepository";
+import { CandidateCoreProfile } from "../backend/dataPreparation/application/models/candidateCoreProfile";
+import { CandidateTag } from "../shared/domain/models/candidateEnrichment";
+import { CandidateSnapshotSerializer } from "../backend/candidateData/repositories/candidateSnapshotSerializer";
+import { PrepareCandidateDocumentTestDriver as CandidateDocumentFactory } from "./support/prepareCandidateDocumentTestDriver";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
+import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
+import { FetchCandidateBatchesTestDriver as ExportCandidateBatches } from "./support/fetchCandidateBatchesTestDriver";
+import { CandidateBatchCheckpoint } from "../backend/candidateData/ports/candidateBatchExportStore";
 import { candidateFixture } from "./candidate-fixtures";
 import { profileClient, profileRepository, metadataFields, candidateRecordType, systemRecordType } from "./salesforce-profile-fixtures";
-import { loadSalesforceConfig } from "../infrastructure/config/salesforce-config";
-import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
-import { SalesforceCandidateSchema } from "../infrastructure/salesforce/salesforce-candidate-schema";
+import { loadSalesforceConfig } from "../backend/dataPreparation/infrastructure/config/salesforceConfig";
+import { SalesforceCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateRepository";
+import { SalesforceCandidateSchema } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateSchema";
 
 const core: CandidateCoreProfile = { candidate: candidateFixture({ id: "003000000000001", title: "Developer", skills: [], systems: [], languages: [] }),
   accountId: "001000000000001", details: { desiredTitle: "Senior developer", currentSalary: 6000000 }, warnings: [], modifiedAt: "2026-10-27T00:00:00.000Z" };
@@ -43,7 +44,7 @@ test("all associations, second tags, language pairs and recursive parents surviv
     tagCalls.push(ids); return tags.filter((tag) => ids.includes(tag.id));
   }, getEmployers: async () => [{ id: core.accountId!, name: "Example Employer" }] });
   const events: string[] = [];
-  const [candidate] = await new CandidateEnrichmentService(repository, new CandidateProfileAssembler()).getBatch(1000, undefined, (message) => events.push(message));
+  const [candidate] = await new LoadSalesforceCandidateDetailsOrchestrator(repository, new CombineSalesforceCandidateDetailsService()).getBatch(1000, undefined, (message) => events.push(message));
   assert.equal(candidate.skills.length, 5);
   assert.deepEqual(candidate.systems, ["Java"]);
   assert.deepEqual(candidate.languages, [{ code: "Japanese", level: "Business level" }]);
@@ -67,7 +68,7 @@ test("all associations, second tags, language pairs and recursive parents surviv
 });
 
 test("unknown types, missing tags, cycles and missing employers stay visible without fabricating expertise", async () => {
-  const candidate = new CandidateProfileAssembler().assemble(core, [
+  const candidate = new CombineSalesforceCandidateDetailsService().assemble(core, [
     { id: "link1", candidateId: core.candidate.id, firstTagId: "a", secondTagId: "missing" },
   ], new Map([ ["a", { id: "a", label: "Unverified", type: "UnmappedType", parentId: "b" }],
     ["b", { id: "b", label: "Other", parentId: "a" }] ]));
@@ -81,7 +82,7 @@ test("unknown types, missing tags, cycles and missing employers stay visible wit
 test("an association failure prevents file commits and checkpoint advancement", async () => {
   let checkpoint: CandidateBatchCheckpoint | undefined;
   let saves = 0;
-  const service = new CandidateEnrichmentService(source({ getAssociations: async () => { throw new Error("relationship unavailable"); } }), new CandidateProfileAssembler());
+  const service = new LoadSalesforceCandidateDetailsOrchestrator(source({ getAssociations: async () => { throw new Error("relationship unavailable"); } }), new CombineSalesforceCandidateDetailsService());
   const exporter = new ExportCandidateBatches(service, { withLock: (operation) => operation(), loadCheckpoint: async () => checkpoint,
     saveCheckpoint: async (value) => { checkpoint = value; }, saveBatch: async () => { saves++; return "file"; } });
   await assert.rejects(exporter.execute({ org: "full", sourceId: "org", batchSize: 1000, maxBatches: 1, resume: false }), /relationship unavailable/);
@@ -155,7 +156,7 @@ test("shared profile lookups resolve names in a batch while preserving original 
 });
 
 test("JavaScript labels are not rewritten into Java expertise", () => {
-  const candidate = new CandidateProfileAssembler().assemble(core, [{ id: "a", candidateId: core.candidate.id, firstTagId: "js" }],
+  const candidate = new CombineSalesforceCandidateDetailsService().assemble(core, [{ id: "a", candidateId: core.candidate.id, firstTagId: "js" }],
     new Map([["js", { id: "js", category: "systems", label: "JavaScript" }]]));
   assert.deepEqual(candidate.systems, ["JavaScript"]);
   assert.equal(candidate.systems.includes("Java"), false);

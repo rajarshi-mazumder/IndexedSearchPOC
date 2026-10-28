@@ -1,15 +1,15 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve, sep } from "node:path";
-import { CandidateOperationService } from "../../application/services/candidate-operation-service";
-import { CandidateConsoleSettingsService } from "../../application/services/candidate-console-settings-service";
-import { CandidateDatasetService } from "../../application/services/candidate-dataset-service";
-import { JsonConsoleSettingsStore } from "../../infrastructure/json/json-console-settings-store";
-import { JsonOperationHistoryStore } from "../../infrastructure/json/json-operation-history-store";
-import { AtomicJsonFileStore } from "../../infrastructure/json/atomic-json-file-store";
-import { LocalCandidateBatchCatalog } from "../../infrastructure/json/local-candidate-batch-catalog";
-import { NodeCandidateOperationRunner } from "../../infrastructure/process/node-candidate-operation-runner";
-import { CandidateConsoleServer } from "../../presentation/http/candidate-console-server";
+import { CandidateOperationService } from "../../backend/host/services/candidateOperationService";
+import { CandidateConsoleSettingsService } from "../../backend/host/services/candidateConsoleSettingsService";
+import { CandidateDatasetService } from "../../backend/host/services/candidateDatasetService";
+import { JsonConsoleSettingsStore } from "../../backend/host/repositories/jsonConsoleSettingsStore";
+import { JsonOperationHistoryStore } from "../../backend/host/repositories/jsonOperationHistoryStore";
+import { AtomicJsonFileStore } from "../../backend/candidateData/repositories/atomicJsonFileStore";
+import { LocalCandidateBatchCatalog } from "../../backend/candidateData/repositories/localCandidateBatchCatalog";
+import { NodeCandidateOperationRunner } from "../../backend/host/process/nodeCandidateOperationRunner";
+import { CandidateConsoleServer } from "../../backend/host/http/candidateConsoleServer";
 import { consoleConfiguration } from "../console-fixtures";
 async function main() {
   const directory = await mkdtemp(join(tmpdir(), "candidate-console-browser-"));

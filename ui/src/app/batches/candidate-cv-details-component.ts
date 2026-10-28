@@ -1,6 +1,6 @@
 import { Component, input } from "@angular/core";
 import { KeyValuePipe } from "@angular/common";
-import type { CandidateCvProfile } from "../../../../domain/entities/candidate-cv-profile";
+import type { CandidateCvProfile } from "../../../../shared/domain/models/candidateCvProfile";
 
 @Component({ selector: "candidate-cv-details", standalone: true, imports: [KeyValuePipe], template: `
   <section class="cv-details"><h3>Demo CV <span class="status stopping">Synthetic</span></h3>

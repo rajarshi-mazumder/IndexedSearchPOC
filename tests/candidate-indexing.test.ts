@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { IndexCandidates } from "../application/usecases/index-candidates";
-import { SearchCandidates } from "../application/usecases/search-candidates";
-import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
-import { SalesforceCandidateCoreMapper } from "../infrastructure/salesforce/mappers/salesforce-candidate-core-mapper";
-import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
+import { EmbedCandidatesTestDriver as IndexCandidates } from "./support/embedCandidatesTestDriver";
+import { SearchCandidatesUseCase as SearchCandidates } from "../backend/dataSearch/application/useCases/searchCandidatesUseCase";
+import { PrepareCandidateDocumentTestDriver as CandidateDocumentFactory } from "./support/prepareCandidateDocumentTestDriver";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
+import { SalesforceCandidateCoreMapper } from "../backend/dataPreparation/infrastructure/mappers/salesforceCandidateCoreMapper";
+import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
 import { candidateFixture, documentFixture, recordingDocumentIndex } from "./candidate-fixtures";
 
 const generator = new TemplateCandidateProfileGenerator();

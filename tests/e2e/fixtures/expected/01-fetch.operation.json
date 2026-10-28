@@ -1,0 +1,52 @@
+{
+  "kind": "fetch",
+  "status": "succeeded",
+  "request": {
+    "kind": "fetch",
+    "configuration": {
+      "id": "contract",
+      "name": "Offline behavior contract",
+      "sfOrg": "fixture",
+      "awsProfile": "fixture",
+      "awsRegion": "ap-northeast-1",
+      "endpoint": "https://fixture.ap-northeast-1.aoss.amazonaws.com",
+      "modelId": "fixture-model",
+      "roleArn": "arn:aws:iam::123456789012:role/FixtureRole",
+      "index": "contract-main",
+      "automaticPipelines": true,
+      "ingestPipeline": "",
+      "searchPipeline": "",
+      "dataset": "contract",
+      "sfRecordTypes": "Candidate,CandidatePreReg",
+      "sfTagTypes": "{}"
+    },
+    "batchSize": 3,
+    "maxBatches": 1,
+    "resume": false
+  },
+  "progress": {
+    "fetched": 3,
+    "batchNumber": 1,
+    "message": "Saved batch 1: 3 records",
+    "file": "batch-000001.json"
+  },
+  "result": {
+    "fetched": 3,
+    "batchNumber": 1,
+    "complete": false
+  },
+  "messages": [
+    "Starting operation",
+    "Authenticating to Salesforce org fixture",
+    "Fetching batch 1",
+    "Checking Salesforce schema and fetching candidate profiles",
+    "Fetching tag associations for 3 candidates",
+    "Resolving 7 tags at hierarchy level 1; 5 associations",
+    "Resolving 2 tags at hierarchy level 2; 5 associations",
+    "Resolving 1 tags at hierarchy level 3; 5 associations",
+    "Resolving employers and assembling candidate documents",
+    "Batch quality: 1/3 with skills, 2 with technologies, 1 with languages, 3 with warnings; 5 associations",
+    "Saved batch 1: 3 records",
+    "Operation completed successfully."
+  ]
+}

@@ -3,7 +3,9 @@
     "target": "ES2022",
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "rootDir": ".",
     "outDir": "dist",
     "strict": true,
@@ -12,6 +14,13 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["application/**/*.ts", "domain/**/*.ts", "infrastructure/**/*.ts", "presentation/**/*.ts", "shared/**/*.ts", "bootstrap.ts"],
-  "exclude": ["node_modules", "dist", "tests"]
+  "include": [
+    "backend/**/*.ts",
+    "shared/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests"
+  ]
 }

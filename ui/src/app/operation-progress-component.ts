@@ -1,7 +1,7 @@
 import { Component, input, signal, OnDestroy } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { CandidateConsoleStore } from "./candidate-console-store";
-import type { OperationRecord } from "../../../shared/candidate-console-contracts";
+import type { OperationRecord } from "../../../shared/candidateConsoleContracts";
 
 @Component({ selector: "operation-progress", standalone: true, imports: [DatePipe], template: `
   @if (job(); as run) {

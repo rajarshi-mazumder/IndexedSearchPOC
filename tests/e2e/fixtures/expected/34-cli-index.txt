@@ -1,0 +1,6 @@
+[0s] Reading json candidates for OpenSearch index contract-main
+[0s] Index contract-main: 0/3 processed; 0 indexed, 0 skipped
+[0s] Index contract-main: 3/3 processed; 3 indexed, 0 skipped
+Indexing accepted (json): { indexed: 3, skipped: 0 }
+Candidate snapshot: <workspace>/.cache/candidates/contract/batch-000001.json
+Allow approximately 10-15 seconds for updates to become searchable.

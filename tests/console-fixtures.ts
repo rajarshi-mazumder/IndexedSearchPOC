@@ -1,6 +1,6 @@
-import { CandidateOperationHandle, CandidateOperationRunner } from "../application/ports/candidate-operation-runner";
-import { CandidateOperationHistoryStore } from "../application/ports/candidate-operation-history-store";
-import { ConsoleConfiguration, OperationRecord, OperationRequest, WorkerEvent } from "../shared/candidate-console-contracts";
+import { CandidateOperationHandle, CandidateOperationRunner } from "../backend/host/ports/candidateOperationRunner";
+import { CandidateOperationHistoryStore } from "../backend/host/ports/candidateOperationHistoryStore";
+import { ConsoleConfiguration, OperationRecord, OperationRequest, WorkerEvent } from "../shared/candidateConsoleContracts";
 export const consoleConfiguration: ConsoleConfiguration = {
   id: "test", name: "Full sandbox", sfOrg: "full", awsProfile: "default", awsRegion: "ap-northeast-1",
   endpoint: "https://offline.ap-northeast-1.aoss.amazonaws.com", modelId: "offline-model",

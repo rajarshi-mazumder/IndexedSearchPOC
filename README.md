@@ -231,7 +231,7 @@ the index `candidates-demo-titan-v2`. The local `.env` selects the dedicated
 file, outside the repository.
 
 The 100 fictional candidates in
-[`dummy-candidates.ts`](infrastructure/dummy/dummy-candidates.ts) implement the same
+[`dummy-candidates.ts`](backend/dataPreparation/infrastructure/fixtures/dummyCandidates.ts) implement the same
 `Candidate` DTO used by Salesforce. `DummyCandidateRepository` implements the same
 read port and feeds the existing indexing use case; embedding and search use real
 OpenSearch and Bedrock services.
@@ -272,7 +272,7 @@ Salesforce CLI login -> SalesforceQueryClient (all query pages)
                     -> OpenSearch bulk API + text_embedding ingest pipeline
                     -> Titan V2 (1024 dimensions) -> candidate index
 
-Search text -> SearchCandidates -> OpenSearchHybridSearch
+Search text -> SearchCandidatesUseCase -> CandidateOpenSearchSearchRepository
             -> multi_match (BM25) + neural query (same Titan model)
             -> min_max normalization + weighted arithmetic mean (25% lexical / 75% semantic)
             -> CandidateSearchResult[]
@@ -286,31 +286,45 @@ provisioned Amazon OpenSearch Ingestion service.
 
 ## Code responsibilities
 
-Source files are organized by responsibility, with wiring in the composition root.
-Each primary class/interface has a matching, descriptive kebab-case filename.
+Backend source lives under `backend/`; Angular stays in `ui/`. Shared candidate
+and API types live in `shared/`, which has no backend or Angular dependencies.
+Backend filenames use camelCase and classes use PascalCase.
+
+Start with [the dataPreparation walkthrough](docs/dataPreparationRefactor.md).
+[FetchSalesforceCandidatesIntoBatchFilesUseCase](backend/dataPreparation/application/useCases/fetchSalesforceCandidatesIntoBatchFilesUseCase.ts)
+coordinates progressive Salesforce fetching;
+[UpdateCandidateDemoCvFilesUseCase](backend/dataPreparation/application/useCases/updateCandidateDemoCvFilesUseCase.ts)
+coordinates preview, add, regenerate and remove operations on existing batch files.
 
 | Location | Responsibility |
 | --- | --- |
-| `domain/entities/` | Candidate, prepared document, and search-result data contracts |
-| `application/ports/` | Contracts for candidate retrieval, document indexing, search, and profile generation |
-| `application/usecases/index-candidates.ts` | Retrieve all or selected candidates, prepare bounded batches, submit documents |
-| `application/usecases/search-candidates.ts` | Validate a search request and delegate through the search port |
-| `application/services/` | Prepare candidate documents and generate readable profile/embedding text |
-| `application/services/snapshotting-candidate-repository.ts` | Save successfully retrieved candidates before indexing or export completes |
-| `infrastructure/salesforce/` | CLI authentication, paginated queries, and Salesforce-to-candidate mapping |
-| `infrastructure/dummy/` | Fictional candidates and an interchangeable read repository |
-| `infrastructure/json/` | Validate, atomically save, and read local candidate snapshots |
-| `infrastructure/opensearch/` | Signed client, bulk writes, document mapping, hybrid search, and separate setup |
-| `presentation/cli/` | Parse command-line arguments, call use cases, and display results |
-| `ui/` | Angular screens, forms, candidate tables, and progress subscription |
-| `presentation/http/` | Local HTTP routes, static Angular assets, and server startup |
-| `presentation/worker/` | Fixed operation worker and structured IPC |
-| `application/services/candidate-operation-service.ts` | Operation lifecycle, concurrency, configuration snapshots, and history |
-| `application/services/candidate-console-operation-executor.ts` | Fetch/setup/search orchestration and sequential file embedding through injected ports |
-| `application/services/candidate-dataset-service.ts` | Paginated dataset queries and completed embedding receipts |
-| `infrastructure/process/` | Worker processes and exclusive console workspace lock |
-| `shared/candidate-console-contracts.ts` | Browser/API/worker request and result contracts |
-| `bootstrap.ts` | Construct and inject adapters; own connection lifetimes |
+| `backend/dataPreparation/application/useCases/` | Sequence fetch and demo CV operations through injected ports |
+| `backend/dataPreparation/application/services/` | Relationship loading through repository ports; pure detail combination, CV generation/application and checkpoint rules |
+| `backend/dataPreparation/application/ports/` | Interfaces for sources, transformations, checkpoint rules, quality summaries and stop scheduling |
+| `backend/dataPreparation/application/models/` | Preparation requests, progress/results and intermediate relationship data |
+| `backend/dataPreparation/infrastructure/` | Salesforce queries/schema/authentication/configuration, raw-record mapping and dummy sources |
+| `backend/candidateData/` | Shared snapshot contracts, serialization, atomic files, checkpoints, backups and locks |
+| `backend/dataEmbedding/setup/` | Use case and ports for setup; infrastructure owns model, connector, pipeline and index SDK calls |
+| `backend/dataEmbedding/indexing/` | Use case, pure document/text services and ports; infrastructure owns bulk writes, acknowledgements and retries |
+| `backend/dataSearch/application/` | Search use case, repository port and result model |
+| `backend/dataSearch/infrastructure/` | Independent lexical/vector query mappers, hybrid request/response mapping, SDK repository and scoring configuration |
+| `backend/host/` | HTTP/CLI/worker entry points, operation lifecycle, settings and progress/history |
+| `backend/infrastructure/` | Shared OpenSearch client and connection configuration |
+| `backend/composition/createCandidatePreparation.ts` | Inject preparation use cases, service implementations, repositories and stop scheduling |
+| `backend/composition/createCandidateEmbedding.ts` | Inject setup/indexing repositories, pure services and the indexing clock |
+| `backend/composition/createCandidateSearch.ts` | Inject lexical/vector mappers, request/response mappers and the search repository |
+| `backend/composition/createCandidateApplication.ts` | Wire console operations, indexing, setup and search |
+| `shared/domain/models/` | Framework-independent candidate, enrichment and CV models |
+| `shared/candidateConsoleContracts.ts` | Browser/API/worker contracts outside the domain |
+| `ui/` | Existing Angular screens, forms, tables and progress subscription |
+
+Commands, environment variables, dataset paths and API payloads remain unchanged.
+For setup and indexing, see the [data embedding guide](docs/dataEmbeddingRefactor.md),
+including the two use cases, dependency boundaries and preserved behavior.
+For search, see the [search architecture and settings guide](docs/dataSearchRefactor.md),
+including lexical boosts, vector neighbor counts and the unchanged 25%/75% scoring pipeline.
+
+Run `npm run test:baseline` to compare against the same frozen pre-refactor outputs.
 
 `CandidateDocumentIndex` exposes only bulk writes. The unused change-tracking,
 query-builder, and filter contracts have been removed. Salesforce and dummy
@@ -536,6 +550,20 @@ against representative candidate queries.
 
 ## Verification
 
+For the behavior-preserving refactor, run the offline baseline (no Salesforce/AWS
+setup required):
+
+```powershell
+npm run test:baseline
+```
+
+This runs type checking, backend tests, exact-byte input/output contracts and the
+three browser workflows. `npm run test:contracts` runs only the new offline
+contracts. See [baseline coverage and frozen search settings](docs/offline-refactor-baseline.md)
+for the fixture rules, 25%/75% weighting, limitations and the existing CV-history
+restart defect. The older `test:e2e` command below uses live AWS and is **not** part
+of this baseline.
+
 See the [100-candidate benchmark results](docs/candidate-search-benchmark-results.md)
 for measured accuracy, the fixed query set, ranking changes, and limitations.
 
@@ -585,6 +613,5 @@ Use separate index and pipeline names when moving from the fictional demo to rea
 Salesforce records.
 
 The original reconstruction is preserved in local commit `f02fa2e`.
-[RECOVERY.md](RECOVERY.md) records the photographs and reconstruction assumptions;
-its original filenames refer to that baseline. Current TypeScript files use
-kebab-case names.
+The active source is under `backend/`, `shared/` and `ui/`.
+Backend TypeScript files use camelCase names; existing Angular filenames are unchanged.

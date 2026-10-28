@@ -3,7 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { CandidateConsoleStore } from "../candidate-console-store";
 import { OperationProgressComponent } from "../operation-progress-component";
 import { CandidateTableComponent } from "../candidate-table-component";
-import type { ConsoleConfiguration } from "../../../../shared/candidate-console-contracts";
+import type { ConsoleConfiguration } from "../../../../shared/candidateConsoleContracts";
 
 @Component({ selector: "candidate-cv-enrichment", standalone: true, imports: [FormsModule, OperationProgressComponent, CandidateTableComponent], template: `
   <section class="card"><div class="section-heading"><div><span class="eyebrow">Optional · Local enrichment</span><h2>Demo CV data</h2>

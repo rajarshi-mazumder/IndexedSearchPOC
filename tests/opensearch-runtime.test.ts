@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { Client } from "@opensearch-project/opensearch";
-import { OpenSearchCandidateDocumentIndex } from "../infrastructure/opensearch/open-search-candidate-document-index";
-import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
-import { OpenSearchHybridSearch } from "../infrastructure/opensearch/open-search-hybrid-search";
+import { CandidateOpenSearchDocumentRepository as OpenSearchCandidateDocumentIndex } from "../backend/dataEmbedding/indexing/infrastructure/repositories/candidateOpenSearchDocumentRepository";
+import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
+import { SearchOpenSearchCandidatesTestDriver as OpenSearchHybridSearch } from "./support/searchOpenSearchCandidatesTestDriver";
 import { config, documentFixture } from "./candidate-fixtures";
 
 test("enriched documents reject an old index before bulk writes and verify compatible mapping once", async () => {

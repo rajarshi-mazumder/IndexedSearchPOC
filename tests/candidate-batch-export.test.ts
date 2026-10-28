@@ -4,15 +4,15 @@ import { tmpdir } from "node:os";
 import { join, resolve, sep } from "node:path";
 import { test, TestContext } from "node:test";
 import { Connection } from "jsforce";
-import { ExportCandidateBatches, CandidateBatchExportProgress } from "../application/usecases/export-candidate-batches";
-import { CandidateBatchExportStore } from "../application/ports/candidate-batch-export-store";
-import { JsonCandidateBatchExportStore } from "../infrastructure/json/json-candidate-batch-export-store";
-import { JsonCandidateSnapshotStore } from "../infrastructure/json/json-candidate-snapshot-store";
-import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
-import { SalesforceQueryClient } from "../infrastructure/salesforce/salesforce-query-client";
-import { IndexCandidates } from "../application/usecases/index-candidates";
-import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
+import { FetchCandidateBatchesTestDriver as ExportCandidateBatches, CandidateBatchExportProgress } from "./support/fetchCandidateBatchesTestDriver";
+import { CandidateBatchExportStore } from "../backend/candidateData/ports/candidateBatchExportStore";
+import { CandidateBatchFileRepository } from "../backend/candidateData/repositories/candidateBatchFileRepository";
+import { JsonCandidateSnapshotStore } from "../backend/candidateData/repositories/jsonCandidateSnapshotStore";
+import { SalesforceCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateRepository";
+import { SalesforceQueryClient } from "../backend/dataPreparation/infrastructure/repositories/salesforceQueryClient";
+import { EmbedCandidatesTestDriver as IndexCandidates } from "./support/embedCandidatesTestDriver";
+import { PrepareCandidateDocumentTestDriver as CandidateDocumentFactory } from "./support/prepareCandidateDocumentTestDriver";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
 import { candidateFixture } from "./candidate-fixtures";
 import { profileClient, profileRepository, enrichedRepository } from "./salesforce-profile-fixtures";
 
@@ -31,7 +31,7 @@ async function directory(t: TestContext) {
 
 test("bounded Salesforce exports resume across runs; files embed independently into one accumulated dataset", async (t) => {
   const path = await directory(t);
-  const store = new JsonCandidateBatchExportStore(path);
+  const store = new CandidateBatchFileRepository(path);
   const queries: string[] = [];
   const connection = { version: "65.0", request: async (request: { url: string }, requestOptions: { timeout: number }) => {
     const soql = new URL(request.url, "https://offline.invalid").searchParams.get("q")!;
@@ -53,7 +53,7 @@ test("bounded Salesforce exports resume across runs; files embed independently i
   assert.equal(first.complete, false);
   assert.equal(queries.length, 1, "One-file operation must not prefetch the rest of the sandbox");
   const firstFile = await readFile(join(path, "batch-000001.json"), "utf8");
-  const resumed = await new ExportCandidateBatches(source, new JsonCandidateBatchExportStore(path))
+  const resumed = await new ExportCandidateBatches(source, new CandidateBatchFileRepository(path))
     .execute({ ...options, resume: true, maxBatches: 10 }, (event) => progress.push(event));
   assert.equal(resumed.fetched, 2505);
   assert.equal(resumed.batchNumber, 3);
@@ -87,7 +87,7 @@ test("an exact multiple ends with an empty probe and no empty batch file", async
   const path = await directory(t);
   let calls = 0;
   const source = { getBatch: async () => ++calls === 1 ? [candidateFixture({ id: id(1) })] : [] };
-  const result = await new ExportCandidateBatches(source, new JsonCandidateBatchExportStore(path))
+  const result = await new ExportCandidateBatches(source, new CandidateBatchFileRepository(path))
     .execute({ ...options, batchSize: 1, maxBatches: 3 });
   assert.equal(result.complete, true);
   assert.equal(result.batchNumber, 1);
@@ -97,7 +97,7 @@ test("an exact multiple ends with an empty probe and no empty batch file", async
 
 test("a later fetch failure preserves the committed batch and resumes from that ID", async (t) => {
   const path = await directory(t);
-  const store = new JsonCandidateBatchExportStore(path);
+  const store = new CandidateBatchFileRepository(path);
   const source = { getBatch: async (_: number, afterId?: string) => {
     if (afterId) throw new Error("Salesforce outage");
     return [candidateFixture({ id: id(1) })];
@@ -113,7 +113,7 @@ test("a later fetch failure preserves the committed batch and resumes from that 
 
 test("a checkpoint write failure re-fetches only the uncommitted file on resume", async (t) => {
   const path = await directory(t);
-  const disk = new JsonCandidateBatchExportStore(path);
+  const disk = new CandidateBatchFileRepository(path);
   const broken: CandidateBatchExportStore = {
     withLock: (operation) => disk.withLock(operation), loadCheckpoint: () => disk.loadCheckpoint(),
     saveBatch: (number, candidates) => disk.saveBatch(number, candidates),
@@ -136,7 +136,7 @@ test("a checkpoint write failure re-fetches only the uncommitted file on resume"
 
 test("a failed batch save leaves its cursor unchanged", async (t) => {
   const path = await directory(t);
-  const disk = new JsonCandidateBatchExportStore(path);
+  const disk = new CandidateBatchFileRepository(path);
   const broken: CandidateBatchExportStore = {
     withLock: (operation) => disk.withLock(operation), loadCheckpoint: () => disk.loadCheckpoint(),
     saveCheckpoint: (checkpoint) => disk.saveCheckpoint(checkpoint), saveBatch: async () => { throw new Error("Disk full"); },
@@ -146,7 +146,7 @@ test("a failed batch save leaves its cursor unchanged", async (t) => {
 });
 
 test("resume validates source and batch size, and rejects restart or missing checkpoint", async (t) => {
-  const store = new JsonCandidateBatchExportStore(await directory(t));
+  const store = new CandidateBatchFileRepository(await directory(t));
   let calls = 0;
   const source = { getBatch: async () => { calls++; return [candidateFixture()]; } };
   const usecase = new ExportCandidateBatches(source, store);
@@ -161,9 +161,9 @@ test("resume validates source and batch size, and rejects restart or missing che
 
 test("lock prevents concurrent writers and is released after a failure", async (t) => {
   const path = await directory(t);
-  const store = new JsonCandidateBatchExportStore(path);
+  const store = new CandidateBatchFileRepository(path);
   await assert.rejects(store.withLock(async () => {
-    await assert.rejects(new JsonCandidateBatchExportStore(path).withLock(async () => {}), /locked/);
+    await assert.rejects(new CandidateBatchFileRepository(path).withLock(async () => {}), /locked/);
     throw new Error("Failure inside lock");
   }), /Failure inside lock/);
   await store.withLock(async () => {});
@@ -176,7 +176,7 @@ test("a stop request commits the current batch and releases its lock", async (t)
   let calls = 0;
   const result = await new ExportCandidateBatches({ getBatch: async () => {
     calls++; controller.abort(); return [candidateFixture()];
-  } }, new JsonCandidateBatchExportStore(path)).execute({ ...options, batchSize: 1, maxBatches: 10 }, undefined, controller.signal);
+  } }, new CandidateBatchFileRepository(path)).execute({ ...options, batchSize: 1, maxBatches: 10 }, undefined, controller.signal);
   assert.equal(calls, 1);
   assert.equal(result.fetched, 1);
   assert.equal((await readdir(path)).includes(".export.lock"), false);
@@ -184,7 +184,7 @@ test("a stop request commits the current batch and releases its lock", async (t)
 
 test("edited or missing last batch and malformed checkpoints cannot silently resume", async (t) => {
   const path = await directory(t);
-  const store = new JsonCandidateBatchExportStore(path);
+  const store = new CandidateBatchFileRepository(path);
   const usecase = new ExportCandidateBatches({ getBatch: async () => [candidateFixture()] }, store);
   await usecase.execute(options);
   await new JsonCandidateSnapshotStore(join(path, "batch-000001.json")).save([candidateFixture({ id: id(2) })]);

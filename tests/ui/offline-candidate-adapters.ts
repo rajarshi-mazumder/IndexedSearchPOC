@@ -1,9 +1,9 @@
 // Test-only substitutions for Salesforce and AWS. Production does not import this module.
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import { SalesforceCliCommand } from "../../infrastructure/salesforce/salesforce-cli-command";
-import { SalesforceQueryClient } from "../../infrastructure/salesforce/salesforce-query-client";
-import { OpenSearchConfig } from "../../infrastructure/config/opensearch-config";
+import { SalesforceCliCommand } from "../../backend/dataPreparation/infrastructure/repositories/salesforceCliCommand";
+import { SalesforceQueryClient } from "../../backend/dataPreparation/infrastructure/repositories/salesforceQueryClient";
+import { OpenSearchConfig } from "../../backend/infrastructure/config/opensearchConfig";
 import { metadataFields, candidateRecordType, systemRecordType } from "../salesforce-profile-fixtures";
 SalesforceQueryClient.prototype.describe = async function(object: string) {
   return { queryable: true, fields: metadataFields[object].map((name) => ({ name, type: "string" })) };
@@ -36,7 +36,7 @@ SalesforceQueryClient.prototype.queryBatch = async function(query: string) {
       TagConnector__r: { SkillCode1__c: blank ? "" : "Java", SkillCode2__c: blank ? "" : "Spring Boot", Systems1__c: blank ? "" : "Kafka" } };
   }) as never;
 };
-const awsModule = require.resolve("../../infrastructure/opensearch/open-search-serverless-client");
+const awsModule = require.resolve("../../backend/infrastructure/opensearch/openSearchServerlessClient");
 require(awsModule);
 require.cache[awsModule]!.exports = { OpenSearchServerlessClient: class {
   readonly connection;

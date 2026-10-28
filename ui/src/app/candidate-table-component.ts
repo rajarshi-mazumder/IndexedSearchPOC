@@ -1,6 +1,6 @@
 import { Component, computed, input, signal } from "@angular/core";
 import { DecimalPipe, KeyValuePipe } from "@angular/common";
-import type { ConsoleSearchResult } from "../../../shared/candidate-console-contracts";
+import type { ConsoleSearchResult } from "../../../shared/candidateConsoleContracts";
 import { CandidateCvDetailsComponent } from "./batches/candidate-cv-details-component";
 
 @Component({ selector: "candidate-table", standalone: true, imports: [DecimalPipe, KeyValuePipe, CandidateCvDetailsComponent], template: `

@@ -1,0 +1,99 @@
+OpenSearch index: contract-main
+Query: "Java experience"
+
+--------------------------------------------------------------------------------
+#1
+Hybrid Score: 0.900000
+Name: Jordan Smith
+Salesforce ID: 003000000000002
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: JavaScript Developer
+Skills: 
+Systems / technologies: JavaScript
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c
+--------------------------------------------------------------------------------
+#2
+Hybrid Score: 0.900000
+Name: Aki 佐藤
+Salesforce ID: 003000000000001
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Java Engineer
+Skills: REST API design
+Systems / technologies: Java
+Job Functions: 
+Languages: Japanese (Business level)
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c
+--------------------------------------------------------------------------------
+#3
+Hybrid Score: 0.000000
+Name: Empty Profile
+Salesforce ID: 003000000000008
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Not provided
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+--------------------------------------------------------------------------------
+#4
+Hybrid Score: 0.340000
+Name: Priya Rao
+Salesforce ID: 003000000000003
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Data Engineer
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; Unclassified tag type: UnmappedType (a02000000000008); Tag hierarchy cycle: a02000000000008; Unresolved tag: a02000000000099; Unresolved employer: 001000000000099
+--------------------------------------------------------------------------------
+#5
+Hybrid Score: 0.300000
+Name: Alex Kim
+Salesforce ID: 003000000000007
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Cloud Engineer
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+--------------------------------------------------------------------------------
+#6
+Hybrid Score: 0.200000
+Name: Morgan Lee
+Salesforce ID: 003000000000004
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Analytics Specialist
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+--------------------------------------------------------------------------------
+#7
+Hybrid Score: 0.100000
+Name: Dana Chen
+Salesforce ID: 003000000000005
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Financial Accountant
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+--------------------------------------------------------------------------------
+#8
+Hybrid Score: 0.010000
+Name: Sam Patel
+Salesforce ID: 003000000000006
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Operations Specialist
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned

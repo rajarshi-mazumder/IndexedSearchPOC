@@ -1,10 +1,11 @@
+import { calculateCandidateSearchCodeHash } from "./support/calculateCandidateSearchCodeHash";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Client } from "@opensearch-project/opensearch";
-import { CandidateSearch } from "../application/ports/candidate-search";
-import { OpenSearchConfig } from "../infrastructure/config/opensearch-config";
-import { DUMMY_CANDIDATES } from "../infrastructure/dummy/dummy-candidates";
+import { CandidateSearchRepository as CandidateSearch } from "../backend/dataSearch/application/ports/candidateSearchRepository";
+import { OpenSearchConfig } from "../backend/infrastructure/config/opensearchConfig";
+import { DUMMY_CANDIDATES } from "../backend/dataPreparation/infrastructure/fixtures/dummyCandidates";
 import { CANDIDATE_SEARCH_BENCHMARK_CASES } from "./candidate-search-benchmark-cases";
 
 interface BenchmarkResult {
@@ -69,7 +70,7 @@ export class CandidateSearchBenchmark {
       split, candidateCount: DUMMY_CANDIDATES.length,
       candidateHash: createHash("sha256").update(JSON.stringify(DUMMY_CANDIDATES)).digest("hex"),
       caseHash: createHash("sha256").update(JSON.stringify(CANDIDATE_SEARCH_BENCHMARK_CASES)).digest("hex"),
-      searchCodeHash: createHash("sha256").update(await readFile(join(__dirname, "../infrastructure/opensearch/open-search-hybrid-search.ts"))).digest("hex"),
+      searchCodeHash: await calculateCandidateSearchCodeHash(),
       searchPipeline: (await this.client.transport.request({
         method: "GET", path: "/_search/pipeline/" + this.config.OPENSEARCH_SEARCH_PIPELINE,
       })).body,

@@ -1,0 +1,397 @@
+{
+  "metadata": {
+    "Contact": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "RecordTypeId",
+        "type": "string"
+      },
+      {
+        "name": "LastModifiedDate",
+        "type": "string"
+      },
+      {
+        "name": "Title",
+        "type": "string"
+      },
+      {
+        "name": "AccountId",
+        "type": "string"
+      },
+      {
+        "name": "MailingCity",
+        "type": "string"
+      },
+      {
+        "name": "MailingCountry",
+        "type": "string"
+      },
+      {
+        "name": "currentSalary__c",
+        "type": "string"
+      },
+      {
+        "name": "desiredTitle__c",
+        "type": "reference",
+        "referenceTo": [
+          "JobTitle__c"
+        ]
+      },
+      {
+        "name": "okToRelocate__c",
+        "type": "string"
+      },
+      {
+        "name": "peopleManager__c",
+        "type": "string"
+      },
+      {
+        "name": "highestEducationalQualification__c",
+        "type": "string"
+      }
+    ],
+    "TagAssociation__c": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "candidate__c",
+        "type": "string"
+      },
+      {
+        "name": "firstTag__c",
+        "type": "string"
+      },
+      {
+        "name": "secondTag__c",
+        "type": "string"
+      },
+      {
+        "name": "tagScore__c",
+        "type": "string"
+      },
+      {
+        "name": "LastModifiedDate",
+        "type": "string"
+      }
+    ],
+    "Tag__c": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "label__c",
+        "type": "string"
+      },
+      {
+        "name": "RecordTypeId",
+        "type": "string"
+      },
+      {
+        "name": "tagParent__c",
+        "type": "string"
+      }
+    ],
+    "Account": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Industry",
+        "type": "string"
+      },
+      {
+        "name": "BillingCity",
+        "type": "string"
+      },
+      {
+        "name": "BillingCountry",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      },
+      {
+        "name": "Website",
+        "type": "string"
+      }
+    ],
+    "JobTitle__c": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      }
+    ]
+  },
+  "records": {
+    "Contact": [
+      {
+        "Id": "003000000000001",
+        "Name": "Aki \u4f50\u85e4",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "Java Engineer",
+        "AccountId": "001000000000001",
+        "MailingCity": "\u6771\u4eac",
+        "MailingCountry": "Japan",
+        "currentSalary__c": 0,
+        "desiredTitle__c": "a03000000000001",
+        "okToRelocate__c": false,
+        "peopleManager__c": true,
+        "highestEducationalQualification__c": "Computer Science"
+      },
+      {
+        "Id": "003000000000002",
+        "Name": "Jordan Smith",
+        "RecordTypeId": "012000000000002",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "JavaScript Developer"
+      },
+      {
+        "Id": "003000000000003",
+        "Name": "Priya Rao",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "Data Engineer",
+        "AccountId": "001000000000099",
+        "currentSalary__c": null,
+        "desiredTitle__c": null
+      },
+      {
+        "Id": "003000000000004",
+        "Name": "Morgan Lee",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "Analytics Specialist"
+      },
+      {
+        "Id": "003000000000005",
+        "Name": "Dana Chen",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "Financial Accountant"
+      },
+      {
+        "Id": "003000000000006",
+        "Name": "Sam Patel",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "Operations Specialist"
+      },
+      {
+        "Id": "003000000000007",
+        "Name": "Alex Kim",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": "Cloud Engineer"
+      },
+      {
+        "Id": "003000000000008",
+        "Name": "Empty Profile",
+        "RecordTypeId": "012000000000001",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z",
+        "Title": null
+      },
+      {
+        "Id": "003000000000009",
+        "Name": "Excluded client contact",
+        "RecordTypeId": "012000000000003",
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z"
+      }
+    ],
+    "RecordType": [
+      {
+        "Id": "012000000000001",
+        "DeveloperName": "Candidate",
+        "SobjectType": "Contact"
+      },
+      {
+        "Id": "012000000000002",
+        "DeveloperName": "CandidatePreReg",
+        "SobjectType": "Contact"
+      },
+      {
+        "Id": "012000000000003",
+        "DeveloperName": "Client",
+        "SobjectType": "Contact"
+      },
+      {
+        "Id": "012000000000004",
+        "DeveloperName": "Systems",
+        "SobjectType": "Tag__c"
+      },
+      {
+        "Id": "012000000000005",
+        "DeveloperName": "SkillCode",
+        "SobjectType": "Tag__c"
+      },
+      {
+        "Id": "012000000000006",
+        "DeveloperName": "SkillCategory",
+        "SobjectType": "Tag__c"
+      },
+      {
+        "Id": "012000000000007",
+        "DeveloperName": "Language",
+        "SobjectType": "Tag__c"
+      },
+      {
+        "Id": "012000000000008",
+        "DeveloperName": "Proficiency",
+        "SobjectType": "Tag__c"
+      },
+      {
+        "Id": "012000000000009",
+        "DeveloperName": "UnmappedType",
+        "SobjectType": "Tag__c"
+      }
+    ],
+    "TagAssociation__c": [
+      {
+        "Id": "a01000000000001",
+        "candidate__c": "003000000000001",
+        "firstTag__c": "a02000000000001",
+        "secondTag__c": "a02000000000002",
+        "tagScore__c": 0,
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z"
+      },
+      {
+        "Id": "a01000000000002",
+        "candidate__c": "003000000000001",
+        "firstTag__c": "a02000000000005",
+        "secondTag__c": "a02000000000006",
+        "tagScore__c": 4,
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z"
+      },
+      {
+        "Id": "a01000000000003",
+        "candidate__c": "003000000000001",
+        "firstTag__c": "a02000000000001",
+        "secondTag__c": null,
+        "tagScore__c": 3,
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z"
+      },
+      {
+        "Id": "a01000000000004",
+        "candidate__c": "003000000000002",
+        "firstTag__c": "a02000000000007",
+        "secondTag__c": null,
+        "tagScore__c": 1,
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z"
+      },
+      {
+        "Id": "a01000000000005",
+        "candidate__c": "003000000000003",
+        "firstTag__c": "a02000000000008",
+        "secondTag__c": "a02000000000099",
+        "tagScore__c": null,
+        "LastModifiedDate": "2026-10-01T12:34:56.000Z"
+      }
+    ],
+    "Tag__c": [
+      {
+        "Id": "a02000000000001",
+        "Name": "tag-1",
+        "label__c": "Java",
+        "RecordTypeId": "012000000000004",
+        "tagParent__c": "a02000000000003"
+      },
+      {
+        "Id": "a02000000000002",
+        "Name": "tag-2",
+        "label__c": "REST API design",
+        "RecordTypeId": "012000000000005",
+        "tagParent__c": null
+      },
+      {
+        "Id": "a02000000000003",
+        "Name": "tag-3",
+        "label__c": "Software Engineering",
+        "RecordTypeId": "012000000000006",
+        "tagParent__c": "a02000000000004"
+      },
+      {
+        "Id": "a02000000000004",
+        "Name": "tag-4",
+        "label__c": "Technology",
+        "RecordTypeId": "012000000000006",
+        "tagParent__c": null
+      },
+      {
+        "Id": "a02000000000005",
+        "Name": "tag-5",
+        "label__c": "Japanese",
+        "RecordTypeId": "012000000000007",
+        "tagParent__c": null
+      },
+      {
+        "Id": "a02000000000006",
+        "Name": "tag-6",
+        "label__c": "Business level",
+        "RecordTypeId": "012000000000008",
+        "tagParent__c": null
+      },
+      {
+        "Id": "a02000000000007",
+        "Name": "tag-7",
+        "label__c": "JavaScript",
+        "RecordTypeId": "012000000000004",
+        "tagParent__c": null
+      },
+      {
+        "Id": "a02000000000008",
+        "Name": "tag-8",
+        "label__c": "Unclassified evidence",
+        "RecordTypeId": "012000000000009",
+        "tagParent__c": "a02000000000009"
+      },
+      {
+        "Id": "a02000000000009",
+        "Name": "tag-9",
+        "label__c": "Cyclic parent",
+        "RecordTypeId": "012000000000006",
+        "tagParent__c": "a02000000000008"
+      }
+    ],
+    "Account": [
+      {
+        "Id": "001000000000001",
+        "Name": "Example & Co",
+        "Industry": "Technology",
+        "BillingCity": "Tokyo",
+        "BillingCountry": "Japan",
+        "Description": "Employer context, not candidate experience",
+        "Website": "https://example.invalid"
+      }
+    ],
+    "JobTitle__c": [
+      {
+        "Id": "a03000000000001",
+        "Name": "Principal Engineer"
+      }
+    ]
+  }
+}

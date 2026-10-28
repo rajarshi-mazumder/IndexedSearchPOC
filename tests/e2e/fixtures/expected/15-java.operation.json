@@ -1,0 +1,213 @@
+{
+  "kind": "search",
+  "status": "succeeded",
+  "request": {
+    "kind": "search",
+    "configuration": {
+      "id": "contract",
+      "name": "Offline behavior contract",
+      "sfOrg": "fixture",
+      "awsProfile": "fixture",
+      "awsRegion": "ap-northeast-1",
+      "endpoint": "https://fixture.ap-northeast-1.aoss.amazonaws.com",
+      "modelId": "fixture-model",
+      "roleArn": "arn:aws:iam::123456789012:role/FixtureRole",
+      "index": "contract-main",
+      "automaticPipelines": true,
+      "ingestPipeline": "",
+      "searchPipeline": "",
+      "dataset": "contract",
+      "sfRecordTypes": "Candidate,CandidatePreReg",
+      "sfTagTypes": "{}"
+    },
+    "query": "candidates with Java experience",
+    "limit": 1
+  },
+  "progress": {
+    "message": "Searching contract-main"
+  },
+  "result": {
+    "candidates": [
+      {
+        "rank": 1,
+        "score": 0.9,
+        "candidate": {
+          "id": "003000000000002",
+          "name": "Jordan Smith",
+          "title": "JavaScript Developer",
+          "enrichment": {
+            "cvProfile": {
+              "source": {
+                "kind": "synthetic",
+                "generatorVersion": 1,
+                "seed": "contract-seed",
+                "archetype": "frontend"
+              },
+              "summary": "Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration.",
+              "technicalSkills": {
+                "languages": [
+                  "TypeScript",
+                  "JavaScript",
+                  "HTML",
+                  "CSS"
+                ],
+                "frameworks": [
+                  "Angular",
+                  "RxJS"
+                ],
+                "databases": [],
+                "tools": [
+                  "Playwright",
+                  "Git",
+                  "Figma"
+                ]
+              },
+              "employmentHistory": [
+                {
+                  "employer": "Demo Maple Services",
+                  "role": "Frontend Engineer",
+                  "location": "Demo regional office",
+                  "start": "2020-04",
+                  "end": "2023-03",
+                  "responsibilities": [
+                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
+                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                  ]
+                },
+                {
+                  "employer": "Demo River Group",
+                  "role": "Frontend Engineer",
+                  "location": "Demo Tokyo office",
+                  "start": "2023-04",
+                  "end": "2026-10",
+                  "responsibilities": [
+                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
+                    "Collaborated with colleagues on testing, issue resolution and handover."
+                  ]
+                }
+              ],
+              "projects": [
+                {
+                  "name": "Operations dashboard",
+                  "description": "Interactive monitoring of service queues and workload.",
+                  "role": "Frontend Engineer",
+                  "technologies": [
+                    "TypeScript",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "Angular",
+                    "RxJS",
+                    "Playwright",
+                    "Git",
+                    "Figma"
+                  ],
+                  "contributions": [
+                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                },
+                {
+                  "name": "Customer self-service portal",
+                  "description": "Accessible browser workflows for account servicing.",
+                  "role": "Frontend Engineer",
+                  "technologies": [
+                    "TypeScript",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "Angular",
+                    "RxJS",
+                    "Playwright",
+                    "Git",
+                    "Figma"
+                  ],
+                  "contributions": [
+                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                }
+              ],
+              "education": [
+                {
+                  "qualification": "Bachelor of Software Engineering",
+                  "institution": "Demo Institute of Applied Studies",
+                  "graduationYear": 2020
+                }
+              ],
+              "certifications": [
+                {
+                  "name": "Frontend Engineer professional training",
+                  "issuer": "Demo Learning Academy",
+                  "year": 2024
+                }
+              ],
+              "languages": [
+                {
+                  "language": "English",
+                  "level": "Business"
+                },
+                {
+                  "language": "Japanese",
+                  "level": "Conversational"
+                }
+              ]
+            },
+            "version": 2,
+            "modifiedAt": "2026-10-01T12:34:56.000Z",
+            "recordType": "CandidatePreReg",
+            "details": {},
+            "tags": [
+              {
+                "id": "a02000000000007",
+                "label": "JavaScript",
+                "type": "Systems",
+                "category": "systems"
+              }
+            ],
+            "associations": [
+              {
+                "id": "a01000000000004",
+                "firstTagId": "a02000000000007",
+                "score": 1,
+                "modifiedAt": "2026-10-01T12:34:56.000Z"
+              }
+            ],
+            "warnings": [
+              "Unavailable field: Contact.MailingState",
+              "Unavailable field: Contact.currentPositionStartDate__c",
+              "Unavailable field: Contact.positionLevel__c",
+              "Unavailable field: Contact.jobType__c",
+              "Unavailable field: Contact.currentMonthlySalary__c",
+              "Unavailable field: Contact.desiredSalary__c",
+              "Unavailable field: Contact.noticePeriod__c",
+              "Unavailable field: Contact.location__c",
+              "Unavailable field: Contact.relocateTo__c",
+              "Unavailable field: Contact.highestEducationalInstitute__c",
+              "Unavailable field: Contact.educationalSpecialization__c",
+              "Unavailable field: Contact.currentPeopleManaged__c",
+              "Unavailable field: Contact.maxPeopleManaged__c",
+              "Unavailable field: Contact.status__c",
+              "Unavailable field: Contact.isDummyCandidate__c"
+            ]
+          },
+          "skills": [],
+          "skillCategories": [],
+          "systems": [
+            "JavaScript"
+          ],
+          "industries": [],
+          "subIndustries": [],
+          "jobFunctions": [],
+          "languages": []
+        },
+        "profile": "Jordan Smith works as a JavaScript Developer. They have experience working with JavaScript. Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration. languages: TypeScript, JavaScript, HTML, CSS frameworks: Angular, RxJS tools: Playwright, Git, Figma Frontend Engineer, 2020-04 to 2023-03: Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Worked with stakeholders to clarify requirements and maintain delivery documentation. Frontend Engineer, 2023-04 to 2026-10: Implemented reusable UI components, chart filtering and browser performance improvements. Collaborated with colleagues on testing, issue resolution and handover. Project: Operations dashboard. Interactive monitoring of service queues and workload. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Implemented reusable UI components, chart filtering and browser performance improvements. Participated in requirements, validation and delivery reviews. Project: Customer self-service portal. Accessible browser workflows for account servicing. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Participated in requirements, validation and delivery reviews. Education: Bachelor of Software Engineering, 2020 Training: Frontend Engineer professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
+      }
+    ]
+  },
+  "messages": [
+    "Starting operation",
+    "Searching contract-main",
+    "Operation completed successfully."
+  ]
+}

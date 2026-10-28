@@ -1,0 +1,603 @@
+{
+  "version": 2,
+  "exportedAt": "2026-10-28T00:00:00.000Z",
+  "candidates": [
+    {
+      "id": "003000000000001",
+      "name": "Aki 佐藤",
+      "title": "Java Engineer",
+      "company": "Example & Co",
+      "location": "東京, Japan",
+      "salary": 0,
+      "enrichment": {
+        "cvProfile": {
+          "source": {
+            "kind": "synthetic",
+            "generatorVersion": 1,
+            "seed": "contract-seed",
+            "archetype": "java-backend"
+          },
+          "summary": "Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration.",
+          "technicalSkills": {
+            "languages": [
+              "Java",
+              "SQL"
+            ],
+            "frameworks": [
+              "Spring Boot",
+              "JUnit"
+            ],
+            "databases": [
+              "PostgreSQL"
+            ],
+            "tools": [
+              "Kafka",
+              "Docker",
+              "Git"
+            ]
+          },
+          "employmentHistory": [
+            {
+              "employer": "Demo Cedar Services",
+              "role": "Backend Engineer",
+              "location": "Demo regional office",
+              "start": "2022-04",
+              "end": "2023-03",
+              "responsibilities": [
+                "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
+                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+              ]
+            },
+            {
+              "employer": "Demo Summit Group",
+              "role": "Backend Engineer",
+              "location": "Demo Tokyo office",
+              "start": "2023-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
+                "Collaborated with colleagues on testing, issue resolution and handover."
+              ]
+            }
+          ],
+          "projects": [
+            {
+              "name": "Payment reconciliation",
+              "description": "Banking services matching payment events with settlement records.",
+              "role": "Backend Engineer",
+              "technologies": [
+                "Java",
+                "SQL",
+                "Spring Boot",
+                "JUnit",
+                "PostgreSQL",
+                "Kafka",
+                "Docker",
+                "Git"
+              ],
+              "contributions": [
+                "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            },
+            {
+              "name": "Order management",
+              "description": "Inventory reservation and order tracking for a retail platform.",
+              "role": "Backend Engineer",
+              "technologies": [
+                "Java",
+                "SQL",
+                "Spring Boot",
+                "JUnit",
+                "PostgreSQL",
+                "Kafka",
+                "Docker",
+                "Git"
+              ],
+              "contributions": [
+                "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            }
+          ],
+          "education": [
+            {
+              "qualification": "Bachelor of Computer Science",
+              "institution": "Demo Institute of Applied Studies",
+              "graduationYear": 2022
+            }
+          ],
+          "certifications": [
+            {
+              "name": "Backend Engineer professional training",
+              "issuer": "Demo Learning Academy",
+              "year": 2024
+            }
+          ],
+          "languages": [
+            {
+              "language": "English",
+              "level": "Fluent"
+            },
+            {
+              "language": "Japanese",
+              "level": "Business"
+            }
+          ]
+        },
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {
+          "currentSalary": 0,
+          "desiredTitle": "a03000000000001",
+          "okToRelocate": false,
+          "highestEducationalQualification": "Computer Science",
+          "peopleManager": true
+        },
+        "resolvedDetails": {
+          "desiredTitle": "Principal Engineer"
+        },
+        "employer": {
+          "id": "001000000000001",
+          "name": "Example & Co",
+          "industry": "Technology",
+          "city": "Tokyo",
+          "country": "Japan",
+          "description": "Employer context, not candidate experience",
+          "website": "https://example.invalid"
+        },
+        "tags": [
+          {
+            "id": "a02000000000001",
+            "label": "Java",
+            "type": "Systems",
+            "parentId": "a02000000000003",
+            "category": "systems"
+          },
+          {
+            "id": "a02000000000003",
+            "label": "Software Engineering",
+            "type": "SkillCategory",
+            "parentId": "a02000000000004",
+            "category": "skillCategories"
+          },
+          {
+            "id": "a02000000000004",
+            "label": "Technology",
+            "type": "SkillCategory",
+            "category": "skillCategories"
+          },
+          {
+            "id": "a02000000000002",
+            "label": "REST API design",
+            "type": "SkillCode",
+            "category": "skills"
+          },
+          {
+            "id": "a02000000000005",
+            "label": "Japanese",
+            "type": "Language",
+            "category": "language"
+          },
+          {
+            "id": "a02000000000006",
+            "label": "Business level",
+            "type": "Proficiency",
+            "category": "proficiency"
+          }
+        ],
+        "associations": [
+          {
+            "id": "a01000000000001",
+            "firstTagId": "a02000000000001",
+            "secondTagId": "a02000000000002",
+            "score": 0,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          },
+          {
+            "id": "a01000000000002",
+            "firstTagId": "a02000000000005",
+            "secondTagId": "a02000000000006",
+            "score": 4,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          },
+          {
+            "id": "a01000000000003",
+            "firstTagId": "a02000000000001",
+            "score": 3,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          }
+        ],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c"
+        ]
+      },
+      "skills": [
+        "REST API design"
+      ],
+      "skillCategories": [
+        "Software Engineering",
+        "Technology"
+      ],
+      "systems": [
+        "Java"
+      ],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": [
+        {
+          "code": "Japanese",
+          "level": "Business level"
+        }
+      ]
+    },
+    {
+      "id": "003000000000002",
+      "name": "Jordan Smith",
+      "title": "JavaScript Developer",
+      "enrichment": {
+        "cvProfile": {
+          "source": {
+            "kind": "synthetic",
+            "generatorVersion": 1,
+            "seed": "contract-seed",
+            "archetype": "frontend"
+          },
+          "summary": "Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration.",
+          "technicalSkills": {
+            "languages": [
+              "TypeScript",
+              "JavaScript",
+              "HTML",
+              "CSS"
+            ],
+            "frameworks": [
+              "Angular",
+              "RxJS"
+            ],
+            "databases": [],
+            "tools": [
+              "Playwright",
+              "Git",
+              "Figma"
+            ]
+          },
+          "employmentHistory": [
+            {
+              "employer": "Demo Maple Services",
+              "role": "Frontend Engineer",
+              "location": "Demo regional office",
+              "start": "2020-04",
+              "end": "2023-03",
+              "responsibilities": [
+                "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
+                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+              ]
+            },
+            {
+              "employer": "Demo River Group",
+              "role": "Frontend Engineer",
+              "location": "Demo Tokyo office",
+              "start": "2023-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Implemented reusable UI components, chart filtering and browser performance improvements.",
+                "Collaborated with colleagues on testing, issue resolution and handover."
+              ]
+            }
+          ],
+          "projects": [
+            {
+              "name": "Operations dashboard",
+              "description": "Interactive monitoring of service queues and workload.",
+              "role": "Frontend Engineer",
+              "technologies": [
+                "TypeScript",
+                "JavaScript",
+                "HTML",
+                "CSS",
+                "Angular",
+                "RxJS",
+                "Playwright",
+                "Git",
+                "Figma"
+              ],
+              "contributions": [
+                "Implemented reusable UI components, chart filtering and browser performance improvements.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            },
+            {
+              "name": "Customer self-service portal",
+              "description": "Accessible browser workflows for account servicing.",
+              "role": "Frontend Engineer",
+              "technologies": [
+                "TypeScript",
+                "JavaScript",
+                "HTML",
+                "CSS",
+                "Angular",
+                "RxJS",
+                "Playwright",
+                "Git",
+                "Figma"
+              ],
+              "contributions": [
+                "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            }
+          ],
+          "education": [
+            {
+              "qualification": "Bachelor of Software Engineering",
+              "institution": "Demo Institute of Applied Studies",
+              "graduationYear": 2020
+            }
+          ],
+          "certifications": [
+            {
+              "name": "Frontend Engineer professional training",
+              "issuer": "Demo Learning Academy",
+              "year": 2024
+            }
+          ],
+          "languages": [
+            {
+              "language": "English",
+              "level": "Business"
+            },
+            {
+              "language": "Japanese",
+              "level": "Conversational"
+            }
+          ]
+        },
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "CandidatePreReg",
+        "details": {},
+        "tags": [
+          {
+            "id": "a02000000000007",
+            "label": "JavaScript",
+            "type": "Systems",
+            "category": "systems"
+          }
+        ],
+        "associations": [
+          {
+            "id": "a01000000000004",
+            "firstTagId": "a02000000000007",
+            "score": 1,
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          }
+        ],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [
+        "JavaScript"
+      ],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    },
+    {
+      "id": "003000000000003",
+      "name": "Priya Rao",
+      "title": "Data Engineer",
+      "enrichment": {
+        "cvProfile": {
+          "source": {
+            "kind": "synthetic",
+            "generatorVersion": 1,
+            "seed": "contract-seed",
+            "archetype": "data-engineering"
+          },
+          "summary": "Data Engineer with 6 years of experience. Focus on warehouse ingestion and event data lake, with responsibility for delivery, documentation and cross-team collaboration.",
+          "technicalSkills": {
+            "languages": [
+              "Python",
+              "SQL"
+            ],
+            "frameworks": [
+              "Apache Spark"
+            ],
+            "databases": [
+              "Snowflake",
+              "PostgreSQL"
+            ],
+            "tools": [
+              "AWS S3",
+              "AWS Athena",
+              "Airflow"
+            ]
+          },
+          "employmentHistory": [
+            {
+              "employer": "Demo Maple Services",
+              "role": "Data Engineer",
+              "location": "Demo regional office",
+              "start": "2020-04",
+              "end": "2023-03",
+              "responsibilities": [
+                "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
+                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+              ]
+            },
+            {
+              "employer": "Demo River Group",
+              "role": "Data Engineer",
+              "location": "Demo Tokyo office",
+              "start": "2023-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
+                "Collaborated with colleagues on testing, issue resolution and handover."
+              ]
+            }
+          ],
+          "projects": [
+            {
+              "name": "Warehouse ingestion",
+              "description": "Daily ingestion of operational data into an analytics warehouse.",
+              "role": "Data Engineer",
+              "technologies": [
+                "Python",
+                "SQL",
+                "Apache Spark",
+                "Snowflake",
+                "PostgreSQL",
+                "AWS S3",
+                "AWS Athena",
+                "Airflow"
+              ],
+              "contributions": [
+                "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            },
+            {
+              "name": "Event data lake",
+              "description": "Partitioned event storage for customer activity reporting.",
+              "role": "Data Engineer",
+              "technologies": [
+                "Python",
+                "SQL",
+                "Apache Spark",
+                "Snowflake",
+                "PostgreSQL",
+                "AWS S3",
+                "AWS Athena",
+                "Airflow"
+              ],
+              "contributions": [
+                "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            }
+          ],
+          "education": [
+            {
+              "qualification": "Bachelor of Computer Science",
+              "institution": "Demo Institute of Applied Studies",
+              "graduationYear": 2020
+            }
+          ],
+          "certifications": [
+            {
+              "name": "Data Engineer professional training",
+              "issuer": "Demo Learning Academy",
+              "year": 2024
+            }
+          ],
+          "languages": [
+            {
+              "language": "English",
+              "level": "Fluent"
+            },
+            {
+              "language": "Japanese",
+              "level": "Conversational"
+            }
+          ]
+        },
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {
+          "currentSalary": null,
+          "desiredTitle": null
+        },
+        "tags": [
+          {
+            "id": "a02000000000008",
+            "label": "Unclassified evidence",
+            "type": "UnmappedType",
+            "parentId": "a02000000000009"
+          },
+          {
+            "id": "a02000000000009",
+            "label": "Cyclic parent",
+            "type": "SkillCategory",
+            "parentId": "a02000000000008",
+            "category": "skillCategories"
+          }
+        ],
+        "associations": [
+          {
+            "id": "a01000000000005",
+            "firstTagId": "a02000000000008",
+            "secondTagId": "a02000000000099",
+            "modifiedAt": "2026-10-01T12:34:56.000Z"
+          }
+        ],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "Unclassified tag type: UnmappedType (a02000000000008)",
+          "Tag hierarchy cycle: a02000000000008",
+          "Unresolved tag: a02000000000099",
+          "Unresolved employer: 001000000000099"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [
+        "Cyclic parent"
+      ],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    }
+  ]
+}

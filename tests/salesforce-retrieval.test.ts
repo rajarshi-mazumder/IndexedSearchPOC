@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { Connection } from "jsforce";
-import { SalesforceQueryClient } from "../infrastructure/salesforce/salesforce-query-client";
-import { SalesforceCandidateRepository } from "../infrastructure/salesforce/salesforce-candidate-repository";
-import { SalesforceCliAuthentication } from "../infrastructure/salesforce/salesforce-cli-authentication";
-import { loadSalesforceConfig } from "../infrastructure/config/salesforce-config";
+import { SalesforceQueryClient } from "../backend/dataPreparation/infrastructure/repositories/salesforceQueryClient";
+import { SalesforceCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/salesforceCandidateRepository";
+import { SalesforceCliAuthentication } from "../backend/dataPreparation/infrastructure/repositories/salesforceCliAuthentication";
+import { loadSalesforceConfig } from "../backend/dataPreparation/infrastructure/config/salesforceConfig";
 import { profileClient, profileRepository } from "./salesforce-profile-fixtures";
 
 test("Salesforce retrieval follows every query continuation", async () => {

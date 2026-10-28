@@ -1,0 +1,123 @@
+{
+  "version": 2,
+  "exportedAt": "2026-10-28T00:00:00.000Z",
+  "candidates": [
+    {
+      "id": "003000000000004",
+      "name": "Morgan Lee",
+      "title": "Analytics Specialist",
+      "enrichment": {
+        "cvProfileRemoved": true,
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {},
+        "tags": [],
+        "associations": [],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "No candidate tag associations returned"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    },
+    {
+      "id": "003000000000005",
+      "name": "Dana Chen",
+      "title": "Financial Accountant",
+      "enrichment": {
+        "cvProfileRemoved": true,
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {},
+        "tags": [],
+        "associations": [],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "No candidate tag associations returned"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    },
+    {
+      "id": "003000000000006",
+      "name": "Sam Patel",
+      "title": "Operations Specialist",
+      "enrichment": {
+        "cvProfileRemoved": true,
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {},
+        "tags": [],
+        "associations": [],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "No candidate tag associations returned"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    }
+  ]
+}

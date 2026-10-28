@@ -47,8 +47,8 @@ test("actual CLI commands fetch/resume files and select the same explicit index 
   const endpoint = `http://127.0.0.1:${address.port}`;
   const log = join(directory, "requests.jsonl");
   const preload = join(directory, "external-adapters.mjs");
-  const authModule = pathToFileURL(resolve("infrastructure/salesforce/salesforce-cli-command.ts")).href;
-  const awsModule = pathToFileURL(resolve("infrastructure/opensearch/open-search-serverless-client.ts")).href;
+  const authModule = pathToFileURL(resolve("backend/dataPreparation/infrastructure/repositories/salesforceCliCommand.ts")).href;
+  const awsModule = pathToFileURL(resolve("backend/infrastructure/opensearch/openSearchServerlessClient.ts")).href;
   // Test-only adapter replacement: actual CLI parsing/bootstrap/use cases/storage
   // run in child processes, Salesforce HTTP stays local, AWS calls are recorded.
   await writeFile(preload, `
@@ -98,7 +98,7 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
 `);
   const environment = { ...process.env, ...setupConfig, SF_TARGET_ORG: "wrong-default-org", SF_CANDIDATE_RECORD_TYPES: "Candidate", SF_TAG_TYPE_MAP: "{}", AWS_PROFILE: "offline" };
   const command = (script: string, args: string[]) => run(process.execPath,
-    ["--import", "tsx", "--import", pathToFileURL(preload).href, `presentation/cli/${script}.ts`, ...args],
+    ["--import", "tsx", "--import", pathToFileURL(preload).href, `backend/host/cli/${script.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())}.ts`, ...args],
     { env: environment, windowsHide: true, timeout: 30_000, maxBuffer: 2_000_000 });
   const output = join(directory, "export");
   const fetchArgs = ["--org", "full", "--output-dir", output, "--batch-size", "1000", "--max-batches", "1"];

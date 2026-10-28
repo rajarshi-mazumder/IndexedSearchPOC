@@ -1,0 +1,289 @@
+{
+  "version": 2,
+  "exportedAt": "2026-10-28T00:00:00.000Z",
+  "candidates": [
+    {
+      "id": "003000000000007",
+      "name": "Alex Kim",
+      "title": "Cloud Engineer",
+      "enrichment": {
+        "cvProfile": {
+          "source": {
+            "kind": "synthetic",
+            "generatorVersion": 1,
+            "seed": "contract-seed",
+            "archetype": "cloud-platform"
+          },
+          "summary": "Senior Platform Engineer with 10 years of experience. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration.",
+          "technicalSkills": {
+            "languages": [
+              "Python",
+              "Bash"
+            ],
+            "frameworks": [],
+            "databases": [
+              "Redis"
+            ],
+            "tools": [
+              "AWS",
+              "Terraform",
+              "Kubernetes",
+              "Prometheus"
+            ]
+          },
+          "employmentHistory": [
+            {
+              "employer": "Demo Cedar Services",
+              "role": "Platform Engineer",
+              "location": "Demo regional office",
+              "start": "2016-04",
+              "end": "2023-03",
+              "responsibilities": [
+                "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
+                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+              ]
+            },
+            {
+              "employer": "Demo Summit Group",
+              "role": "Senior Platform Engineer",
+              "location": "Demo Tokyo office",
+              "start": "2023-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Created infrastructure modules, delivery pipelines and rollback procedures.",
+                "Mentored colleagues and reviewed solution designs."
+              ]
+            }
+          ],
+          "projects": [
+            {
+              "name": "Deployment automation",
+              "description": "Repeatable application releases across test and production environments.",
+              "role": "Senior Platform Engineer",
+              "technologies": [
+                "Python",
+                "Bash",
+                "Redis",
+                "AWS",
+                "Terraform",
+                "Kubernetes",
+                "Prometheus"
+              ],
+              "contributions": [
+                "Created infrastructure modules, delivery pipelines and rollback procedures.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            },
+            {
+              "name": "Service reliability",
+              "description": "Monitoring and recovery practices for customer-facing systems.",
+              "role": "Senior Platform Engineer",
+              "technologies": [
+                "Python",
+                "Bash",
+                "Redis",
+                "AWS",
+                "Terraform",
+                "Kubernetes",
+                "Prometheus"
+              ],
+              "contributions": [
+                "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            }
+          ],
+          "education": [
+            {
+              "qualification": "Bachelor of Information Technology",
+              "institution": "Demo Institute of Applied Studies",
+              "graduationYear": 2016
+            }
+          ],
+          "certifications": [
+            {
+              "name": "Platform Engineer professional training",
+              "issuer": "Demo Learning Academy",
+              "year": 2024
+            }
+          ],
+          "languages": [
+            {
+              "language": "English",
+              "level": "Fluent"
+            },
+            {
+              "language": "Japanese",
+              "level": "Business"
+            }
+          ]
+        },
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {},
+        "tags": [],
+        "associations": [],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "No candidate tag associations returned"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    },
+    {
+      "id": "003000000000008",
+      "name": "Empty Profile",
+      "enrichment": {
+        "cvProfile": {
+          "source": {
+            "kind": "synthetic",
+            "generatorVersion": 1,
+            "seed": "contract-seed",
+            "archetype": "finance"
+          },
+          "summary": "Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration.",
+          "technicalSkills": {
+            "languages": [],
+            "frameworks": [],
+            "databases": [],
+            "tools": [
+              "Excel",
+              "SAP",
+              "Financial modelling"
+            ]
+          },
+          "employmentHistory": [
+            {
+              "employer": "Demo Cedar Services",
+              "role": "Financial Analyst",
+              "location": "Demo regional office",
+              "start": "2019-04",
+              "end": "2023-03",
+              "responsibilities": [
+                "Built financial models, investigated cost variances and supported management reviews.",
+                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+              ]
+            },
+            {
+              "employer": "Demo Summit Group",
+              "role": "Financial Analyst",
+              "location": "Demo Tokyo office",
+              "start": "2023-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
+                "Collaborated with colleagues on testing, issue resolution and handover."
+              ]
+            }
+          ],
+          "projects": [
+            {
+              "name": "Close process improvement",
+              "description": "Monthly reconciliation and financial reporting controls.",
+              "role": "Financial Analyst",
+              "technologies": [
+                "Excel",
+                "SAP",
+                "Financial modelling"
+              ],
+              "contributions": [
+                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            },
+            {
+              "name": "Budget planning",
+              "description": "Annual budgets and rolling forecasts across business units.",
+              "role": "Financial Analyst",
+              "technologies": [
+                "Excel",
+                "SAP",
+                "Financial modelling"
+              ],
+              "contributions": [
+                "Built financial models, investigated cost variances and supported management reviews.",
+                "Participated in requirements, validation and delivery reviews."
+              ]
+            }
+          ],
+          "education": [
+            {
+              "qualification": "Bachelor of Accounting",
+              "institution": "Demo Institute of Applied Studies",
+              "graduationYear": 2019
+            }
+          ],
+          "certifications": [
+            {
+              "name": "Financial Analyst professional training",
+              "issuer": "Demo Learning Academy",
+              "year": 2024
+            }
+          ],
+          "languages": [
+            {
+              "language": "English",
+              "level": "Business"
+            },
+            {
+              "language": "Japanese",
+              "level": "Business"
+            }
+          ]
+        },
+        "version": 2,
+        "modifiedAt": "2026-10-01T12:34:56.000Z",
+        "recordType": "Candidate",
+        "details": {},
+        "tags": [],
+        "associations": [],
+        "warnings": [
+          "Unavailable field: Contact.MailingState",
+          "Unavailable field: Contact.currentPositionStartDate__c",
+          "Unavailable field: Contact.positionLevel__c",
+          "Unavailable field: Contact.jobType__c",
+          "Unavailable field: Contact.currentMonthlySalary__c",
+          "Unavailable field: Contact.desiredSalary__c",
+          "Unavailable field: Contact.noticePeriod__c",
+          "Unavailable field: Contact.location__c",
+          "Unavailable field: Contact.relocateTo__c",
+          "Unavailable field: Contact.highestEducationalInstitute__c",
+          "Unavailable field: Contact.educationalSpecialization__c",
+          "Unavailable field: Contact.currentPeopleManaged__c",
+          "Unavailable field: Contact.maxPeopleManaged__c",
+          "Unavailable field: Contact.status__c",
+          "Unavailable field: Contact.isDummyCandidate__c",
+          "No candidate tag associations returned"
+        ]
+      },
+      "skills": [],
+      "skillCategories": [],
+      "systems": [],
+      "industries": [],
+      "subIndustries": [],
+      "jobFunctions": [],
+      "languages": []
+    }
+  ]
+}

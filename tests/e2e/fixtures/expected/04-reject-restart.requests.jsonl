@@ -1,0 +1,2 @@
+{"service":"salesforce","operation":"cli","request":["org","display","--target-org","fixture","--json"]}
+{"service":"salesforce","operation":"cli","request":["org","auth","show-access-token","--json","-o","fixture"]}

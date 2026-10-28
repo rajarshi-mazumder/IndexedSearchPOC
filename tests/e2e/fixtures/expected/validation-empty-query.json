@@ -1,0 +1,6 @@
+{
+  "status": 400,
+  "body": {
+    "error": "query: Too small: expected string to have >=1 characters"
+  }
+}

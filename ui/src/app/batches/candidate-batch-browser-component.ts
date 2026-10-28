@@ -2,7 +2,7 @@ import { Component, computed, effect, input, output, signal, untracked } from "@
 import { DatePipe, DecimalPipe } from "@angular/common";
 import { CandidateConsoleStore } from "../candidate-console-store";
 import { CandidateTableComponent } from "../candidate-table-component";
-import type { CandidatePreview, ConsoleConfiguration, ConsoleSearchResult, DatasetListing } from "../../../../shared/candidate-console-contracts";
+import type { CandidatePreview, ConsoleConfiguration, ConsoleSearchResult, DatasetListing } from "../../../../shared/candidateConsoleContracts";
 
 @Component({ selector: "candidate-batch-browser", standalone: true, imports: [DatePipe, DecimalPipe, CandidateTableComponent], template: `
   <section class="card batch-library"><div class="section-heading"><div><span class="eyebrow">Dataset · {{configuration().dataset}}</span><h2>Batch library <span class="count">{{listing()?.totalFiles ?? 0}}</span></h2>

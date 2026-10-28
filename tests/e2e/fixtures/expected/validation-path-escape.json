@@ -1,0 +1,6 @@
+{
+  "status": 400,
+  "body": {
+    "error": "files.0: Invalid string: must match pattern /^batch-\\d{6,}\\.json$/"
+  }
+}

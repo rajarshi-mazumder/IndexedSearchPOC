@@ -5,23 +5,23 @@ import { tmpdir } from "node:os";
 import { join, resolve, sep } from "node:path";
 import { candidateFixture } from "./candidate-fixtures";
 import { consoleConfiguration } from "./console-fixtures";
-import { DeterministicCandidateCvGenerator } from "../infrastructure/dummy/deterministic-candidate-cv-generator";
-import { candidateCvProfileSchema } from "../infrastructure/json/candidate-cv-profile-schema";
-import { CandidateSnapshotSerializer } from "../infrastructure/json/candidate-snapshot-serializer";
-import { JsonCandidateBatchEditor } from "../infrastructure/json/json-candidate-batch-editor";
-import { LocalCandidateBatchCatalog } from "../infrastructure/json/local-candidate-batch-catalog";
-import { LocalCandidateDatasetLock } from "../infrastructure/json/local-candidate-dataset-lock";
-import { JsonCandidateBatchExportStore } from "../infrastructure/json/json-candidate-batch-export-store";
-import { EnrichCandidateBatchFiles } from "../application/usecases/enrich-candidate-batch-files";
-import { TemplateCandidateProfileGenerator } from "../application/services/template-candidate-profile-generator";
-import { CandidateConsoleEnvironment } from "../infrastructure/config/candidate-console-environment";
-import { CandidateConsoleValidation } from "../application/services/candidate-console-validation";
-import { CandidateDocumentFactory } from "../application/services/candidate-document-factory";
-import { OpenSearchCandidateDocumentMapper } from "../infrastructure/opensearch/open-search-candidate-document-mapper";
-import { IndexCandidates } from "../application/usecases/index-candidates";
-import { DummyCandidateRepository } from "../infrastructure/dummy/dummy-candidate-repository";
+import { GenerateDemoCvForCandidateService } from "../backend/dataPreparation/application/services/generateDemoCvForCandidateService";
+import { candidateCvProfileSchema } from "../backend/candidateData/repositories/candidateCvProfileSchema";
+import { CandidateSnapshotSerializer } from "../backend/candidateData/repositories/candidateSnapshotSerializer";
+import { CandidateDemoCvFileRepository } from "../backend/candidateData/repositories/candidateDemoCvFileRepository";
+import { LocalCandidateBatchCatalog } from "../backend/candidateData/repositories/localCandidateBatchCatalog";
+import { LocalCandidateDatasetLock } from "../backend/candidateData/repositories/localCandidateDatasetLock";
+import { CandidateBatchFileRepository } from "../backend/candidateData/repositories/candidateBatchFileRepository";
+import { UpdateCandidateDemoCvTestDriver as EnrichCandidateBatchFiles } from "./support/updateCandidateDemoCvTestDriver";
+import { GenerateCandidateProfileTestDriver as TemplateCandidateProfileGenerator } from "./support/generateCandidateProfileTestDriver";
+import { CandidateConsoleEnvironment } from "../backend/host/config/candidateConsoleEnvironment";
+import { CandidateConsoleValidation } from "../backend/host/services/candidateConsoleValidation";
+import { PrepareCandidateDocumentTestDriver as CandidateDocumentFactory } from "./support/prepareCandidateDocumentTestDriver";
+import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
+import { EmbedCandidatesTestDriver as IndexCandidates } from "./support/embedCandidatesTestDriver";
+import { DummyCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/dummyCandidateRepository";
 
-const generator = new DeterministicCandidateCvGenerator();
+const generator = new GenerateDemoCvForCandidateService();
 const file = "batch-000001.json";
 const signal = () => new AbortController().signal;
 async function fixture(t: TestContext, count = 25) {
@@ -36,7 +36,7 @@ async function fixture(t: TestContext, count = 25) {
   const checkpoint = JSON.stringify({ version: 1, org: "full", sourceId: "org-id", extractionKey: "scope-v2", batchSize: count,
     batchNumber: 1, fetched: count, lastId: candidates.at(-1)!.id, complete: false });
   await writeFile(join(directory, "checkpoint.json"), checkpoint);
-  const editor = new JsonCandidateBatchEditor(catalog, "cv-test");
+  const editor = new CandidateDemoCvFileRepository(catalog, "cv-test");
   return { directory, candidates: CandidateSnapshotSerializer.deserialize(original), original, checkpoint, editor, usecase: new EnrichCandidateBatchFiles(editor, generator) };
 }
 
@@ -74,7 +74,7 @@ test("preview leaves files untouched; add backs up original, preserves cursor an
     assert.deepEqual(candidate, f.candidates[index]);
   }
   assert.equal(await readFile(join(f.directory, "checkpoint.json"), "utf8"), f.checkpoint);
-  assert.equal((await new JsonCandidateBatchExportStore(f.directory).loadCheckpoint())!.fetched, 25);
+  assert.equal((await new CandidateBatchFileRepository(f.directory).loadCheckpoint())!.fetched, 25);
   const again = await f.usecase.execute([file], "add", "different-seed", () => {}, signal());
   assert.equal(again.changed, 0); assert.equal(again.skipped, 25);
   assert.equal(await readFile(join(f.directory, file), "utf8"), enriched);
@@ -111,7 +111,7 @@ test("enrichment and export share a cross-process dataset lock, including after 
   const f = await fixture(t, 1);
   await new LocalCandidateDatasetLock(f.directory).withLock(async () => {
     await assert.rejects(f.usecase.execute([file], "add", "a", () => {}, signal()), /locked/);
-    await assert.rejects(new JsonCandidateBatchExportStore(f.directory).withLock(async () => {}), /locked/);
+    await assert.rejects(new CandidateBatchFileRepository(f.directory).withLock(async () => {}), /locked/);
   });
   await assert.rejects(f.usecase.execute(["batch-000002.json"], "add", "a", () => {}, signal()), /not committed/);
   assert.equal((await f.usecase.execute([file], "add", "a", () => {}, signal())).changed, 1);

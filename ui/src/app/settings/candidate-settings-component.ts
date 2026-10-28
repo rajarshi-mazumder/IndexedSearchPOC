@@ -1,7 +1,7 @@
 import { Component, effect, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CandidateConsoleStore } from "../candidate-console-store";
-import type { ConsoleConfiguration } from "../../../../shared/candidate-console-contracts";
+import type { ConsoleConfiguration } from "../../../../shared/candidateConsoleContracts";
 
 @Component({ selector: "candidate-settings", standalone: true, imports: [FormsModule], template: `
   <div class="page-heading"><div><span class="eyebrow">Workspace configuration</span><h1>Connect your data.</h1><p>Save the Salesforce and OpenSearch settings you want each operation to use.</p></div>

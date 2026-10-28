@@ -9,18 +9,20 @@
   "scripts": {
     "ui": "npm run ui:build && npm run ui:serve",
     "ui:build": "npm --workspace ui run build",
-    "ui:serve": "node --import tsx presentation/http/start-candidate-console.ts",
+    "ui:serve": "node --import tsx backend/host/http/startCandidateConsole.ts",
     "test:ui": "npm run ui:build && node node_modules/playwright/cli.js test --config tests/ui/playwright.config.ts",
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/typescript/bin/tsc --noEmit -p tsconfig.tests.json",
     "build": "node node_modules/typescript/bin/tsc",
     "test": "node --import tsx --test tests/*.test.ts",
-    "full-index": "node --import tsx presentation/cli/index-candidates.ts --source salesforce",
-    "index-candidates": "node --import tsx presentation/cli/index-candidates.ts",
-    "fetch-candidates": "node --import tsx presentation/cli/fetch-candidates.ts",
-    "index-json": "node --import tsx presentation/cli/index-candidates.ts --source json",
-    "search": "node --import tsx presentation/cli/search.ts",
-    "setup-opensearch": "node --import tsx presentation/cli/setup-opensearch.ts",
-    "index-demo": "node --import tsx presentation/cli/index-candidates.ts --source dummy",
+    "test:contracts": "node --import tsx --test tests/e2e/*.test.ts",
+    "test:baseline": "npm run typecheck && npm test && npm run test:contracts && npm run test:ui",
+    "full-index": "node --import tsx backend/host/cli/indexCandidates.ts --source salesforce",
+    "index-candidates": "node --import tsx backend/host/cli/indexCandidates.ts",
+    "fetch-candidates": "node --import tsx backend/host/cli/fetchCandidates.ts",
+    "index-json": "node --import tsx backend/host/cli/indexCandidates.ts --source json",
+    "search": "node --import tsx backend/host/cli/search.ts",
+    "setup-opensearch": "node --import tsx backend/host/cli/setupOpensearch.ts",
+    "index-demo": "node --import tsx backend/host/cli/indexCandidates.ts --source dummy",
     "node-version": "node --version",
     "verify-demo": "node --import tsx tests/demo-search.integration.ts",
     "test:e2e": "node --import tsx tests/demo-search.integration.ts --reindex"
@@ -28,7 +30,9 @@
   "engines": {
     "node": ">=22.19.0"
   },
-  "overrides": { "vite": "8.3.3" },
+  "overrides": {
+    "vite": "8.3.3"
+  },
   "dependencies": {
     "@aws-sdk/credential-provider-node": "3.972.88",
     "@aws-sdk/types": "3.975.0",
