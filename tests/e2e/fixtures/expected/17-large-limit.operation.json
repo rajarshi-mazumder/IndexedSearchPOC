@@ -30,182 +30,12 @@
     "candidates": [
       {
         "rank": 1,
-        "score": 0.9,
-        "candidate": {
-          "id": "003000000000002",
-          "name": "Jordan Smith",
-          "title": "JavaScript Developer",
-          "enrichment": {
-            "cvProfile": {
-              "source": {
-                "kind": "synthetic",
-                "generatorVersion": 1,
-                "seed": "contract-seed",
-                "archetype": "frontend"
-              },
-              "summary": "Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration.",
-              "technicalSkills": {
-                "languages": [
-                  "TypeScript",
-                  "JavaScript",
-                  "HTML",
-                  "CSS"
-                ],
-                "frameworks": [
-                  "Angular",
-                  "RxJS"
-                ],
-                "databases": [],
-                "tools": [
-                  "Playwright",
-                  "Git",
-                  "Figma"
-                ]
-              },
-              "employmentHistory": [
-                {
-                  "employer": "Demo Maple Services",
-                  "role": "Frontend Engineer",
-                  "location": "Demo regional office",
-                  "start": "2020-04",
-                  "end": "2023-03",
-                  "responsibilities": [
-                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
-                  ]
-                },
-                {
-                  "employer": "Demo River Group",
-                  "role": "Frontend Engineer",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
-                  "end": "2026-10",
-                  "responsibilities": [
-                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
-                  ]
-                }
-              ],
-              "projects": [
-                {
-                  "name": "Operations dashboard",
-                  "description": "Interactive monitoring of service queues and workload.",
-                  "role": "Frontend Engineer",
-                  "technologies": [
-                    "TypeScript",
-                    "JavaScript",
-                    "HTML",
-                    "CSS",
-                    "Angular",
-                    "RxJS",
-                    "Playwright",
-                    "Git",
-                    "Figma"
-                  ],
-                  "contributions": [
-                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
-                  "name": "Customer self-service portal",
-                  "description": "Accessible browser workflows for account servicing.",
-                  "role": "Frontend Engineer",
-                  "technologies": [
-                    "TypeScript",
-                    "JavaScript",
-                    "HTML",
-                    "CSS",
-                    "Angular",
-                    "RxJS",
-                    "Playwright",
-                    "Git",
-                    "Figma"
-                  ],
-                  "contributions": [
-                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                }
-              ],
-              "education": [
-                {
-                  "qualification": "Bachelor of Software Engineering",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2020
-                }
-              ],
-              "certifications": [
-                {
-                  "name": "Frontend Engineer professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
-                }
-              ],
-              "languages": [
-                {
-                  "language": "English",
-                  "level": "Business"
-                },
-                {
-                  "language": "Japanese",
-                  "level": "Conversational"
-                }
-              ]
-            },
-            "version": 2,
-            "modifiedAt": "2026-10-01T12:34:56.000Z",
-            "recordType": "CandidatePreReg",
-            "details": {},
-            "tags": [
-              {
-                "id": "a02000000000007",
-                "label": "JavaScript",
-                "type": "Systems",
-                "category": "systems"
-              }
-            ],
-            "associations": [
-              {
-                "id": "a01000000000004",
-                "firstTagId": "a02000000000007",
-                "score": 1,
-                "modifiedAt": "2026-10-01T12:34:56.000Z"
-              }
-            ],
-            "warnings": [
-              "Unavailable field: Contact.MailingState",
-              "Unavailable field: Contact.currentPositionStartDate__c",
-              "Unavailable field: Contact.positionLevel__c",
-              "Unavailable field: Contact.jobType__c",
-              "Unavailable field: Contact.currentMonthlySalary__c",
-              "Unavailable field: Contact.desiredSalary__c",
-              "Unavailable field: Contact.noticePeriod__c",
-              "Unavailable field: Contact.location__c",
-              "Unavailable field: Contact.relocateTo__c",
-              "Unavailable field: Contact.highestEducationalInstitute__c",
-              "Unavailable field: Contact.educationalSpecialization__c",
-              "Unavailable field: Contact.currentPeopleManaged__c",
-              "Unavailable field: Contact.maxPeopleManaged__c",
-              "Unavailable field: Contact.status__c",
-              "Unavailable field: Contact.isDummyCandidate__c"
-            ]
-          },
-          "skills": [],
-          "skillCategories": [],
-          "systems": [
-            "JavaScript"
-          ],
-          "industries": [],
-          "subIndustries": [],
-          "jobFunctions": [],
-          "languages": []
-        },
-        "profile": "Jordan Smith works as a JavaScript Developer. They have experience working with JavaScript. Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration. languages: TypeScript, JavaScript, HTML, CSS frameworks: Angular, RxJS tools: Playwright, Git, Figma Frontend Engineer, 2020-04 to 2023-03: Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Worked with stakeholders to clarify requirements and maintain delivery documentation. Frontend Engineer, 2023-04 to 2026-10: Implemented reusable UI components, chart filtering and browser performance improvements. Collaborated with colleagues on testing, issue resolution and handover. Project: Operations dashboard. Interactive monitoring of service queues and workload. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Implemented reusable UI components, chart filtering and browser performance improvements. Participated in requirements, validation and delivery reviews. Project: Customer self-service portal. Accessible browser workflows for account servicing. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Participated in requirements, validation and delivery reviews. Education: Bachelor of Software Engineering, 2020 Training: Frontend Engineer professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
-      },
-      {
-        "rank": 2,
-        "score": 0.9,
+        "score": 0.03252247488101534,
+        "rankingMethod": "rrf",
+        "lexicalScore": 19,
+        "vectorScore": 0.91,
+        "lexicalRank": 2,
+        "vectorRank": 1,
         "candidate": {
           "id": "003000000000001",
           "name": "Aki 佐藤",
@@ -454,94 +284,120 @@
         "profile": "Aki 佐藤 works as a Java Engineer at Example & Co. Aki 佐藤's primary skills include REST API design. Their broader areas of expertise include Software Engineering and Technology. They have experience working with Java. They are based in 東京, Japan. Languages include Japanese (Business level). Their current salary is 0. Desired role: Principal Engineer Education: Computer Science Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration. languages: Java, SQL frameworks: Spring Boot, JUnit databases: PostgreSQL tools: Kafka, Docker, Git Backend Engineer, 2022-04 to 2023-03: Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates. Worked with stakeholders to clarify requirements and maintain delivery documentation. Backend Engineer, 2023-04 to 2026-10: Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests. Collaborated with colleagues on testing, issue resolution and handover. Project: Payment reconciliation. Banking services matching payment events with settlement records. Role: Backend Engineer. Technologies: Java, SQL, Spring Boot, JUnit, PostgreSQL, Kafka, Docker, Git. Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests. Participated in requirements, validation and delivery reviews. Project: Order management. Inventory reservation and order tracking for a retail platform. Role: Backend Engineer. Technologies: Java, SQL, Spring Boot, JUnit, PostgreSQL, Kafka, Docker, Git. Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates. Participated in requirements, validation and delivery reviews. Education: Bachelor of Computer Science, 2022 Training: Backend Engineer professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)"
       },
       {
-        "rank": 3,
-        "score": 0,
+        "rank": 2,
+        "score": 0.032266458495966696,
+        "rankingMethod": "rrf",
+        "lexicalScore": 24,
+        "vectorScore": 0.82,
+        "lexicalRank": 1,
+        "vectorRank": 3,
         "candidate": {
-          "id": "003000000000008",
-          "name": "Empty Profile",
+          "id": "003000000000002",
+          "name": "Jordan Smith",
+          "title": "JavaScript Developer",
           "enrichment": {
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
                 "generatorVersion": 1,
                 "seed": "contract-seed",
-                "archetype": "finance"
+                "archetype": "frontend"
               },
-              "summary": "Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration.",
               "technicalSkills": {
-                "languages": [],
-                "frameworks": [],
+                "languages": [
+                  "TypeScript",
+                  "JavaScript",
+                  "HTML",
+                  "CSS"
+                ],
+                "frameworks": [
+                  "Angular",
+                  "RxJS"
+                ],
                 "databases": [],
                 "tools": [
-                  "Excel",
-                  "SAP",
-                  "Financial modelling"
+                  "Playwright",
+                  "Git",
+                  "Figma"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Cedar Services",
-                  "role": "Financial Analyst",
+                  "employer": "Demo Maple Services",
+                  "role": "Frontend Engineer",
                   "location": "Demo regional office",
-                  "start": "2019-04",
+                  "start": "2020-04",
                   "end": "2023-03",
                   "responsibilities": [
-                    "Built financial models, investigated cost variances and supported management reviews.",
+                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
                     "Worked with stakeholders to clarify requirements and maintain delivery documentation."
                   ]
                 },
                 {
-                  "employer": "Demo Summit Group",
-                  "role": "Financial Analyst",
+                  "employer": "Demo River Group",
+                  "role": "Frontend Engineer",
                   "location": "Demo Tokyo office",
                   "start": "2023-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
+                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
                     "Collaborated with colleagues on testing, issue resolution and handover."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Close process improvement",
-                  "description": "Monthly reconciliation and financial reporting controls.",
-                  "role": "Financial Analyst",
+                  "name": "Operations dashboard",
+                  "description": "Interactive monitoring of service queues and workload.",
+                  "role": "Frontend Engineer",
                   "technologies": [
-                    "Excel",
-                    "SAP",
-                    "Financial modelling"
+                    "TypeScript",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "Angular",
+                    "RxJS",
+                    "Playwright",
+                    "Git",
+                    "Figma"
                   ],
                   "contributions": [
-                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
+                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
                     "Participated in requirements, validation and delivery reviews."
                   ]
                 },
                 {
-                  "name": "Budget planning",
-                  "description": "Annual budgets and rolling forecasts across business units.",
-                  "role": "Financial Analyst",
+                  "name": "Customer self-service portal",
+                  "description": "Accessible browser workflows for account servicing.",
+                  "role": "Frontend Engineer",
                   "technologies": [
-                    "Excel",
-                    "SAP",
-                    "Financial modelling"
+                    "TypeScript",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "Angular",
+                    "RxJS",
+                    "Playwright",
+                    "Git",
+                    "Figma"
                   ],
                   "contributions": [
-                    "Built financial models, investigated cost variances and supported management reviews.",
+                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
                     "Participated in requirements, validation and delivery reviews."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Accounting",
+                  "qualification": "Bachelor of Software Engineering",
                   "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2019
+                  "graduationYear": 2020
                 }
               ],
               "certifications": [
                 {
-                  "name": "Financial Analyst professional training",
+                  "name": "Frontend Engineer professional training",
                   "issuer": "Demo Learning Academy",
                   "year": 2024
                 }
@@ -553,16 +409,30 @@
                 },
                 {
                   "language": "Japanese",
-                  "level": "Business"
+                  "level": "Conversational"
                 }
               ]
             },
             "version": 2,
             "modifiedAt": "2026-10-01T12:34:56.000Z",
-            "recordType": "Candidate",
+            "recordType": "CandidatePreReg",
             "details": {},
-            "tags": [],
-            "associations": [],
+            "tags": [
+              {
+                "id": "a02000000000007",
+                "label": "JavaScript",
+                "type": "Systems",
+                "category": "systems"
+              }
+            ],
+            "associations": [
+              {
+                "id": "a01000000000004",
+                "firstTagId": "a02000000000007",
+                "score": 1,
+                "modifiedAt": "2026-10-01T12:34:56.000Z"
+              }
+            ],
             "warnings": [
               "Unavailable field: Contact.MailingState",
               "Unavailable field: Contact.currentPositionStartDate__c",
@@ -578,23 +448,29 @@
               "Unavailable field: Contact.currentPeopleManaged__c",
               "Unavailable field: Contact.maxPeopleManaged__c",
               "Unavailable field: Contact.status__c",
-              "Unavailable field: Contact.isDummyCandidate__c",
-              "No candidate tag associations returned"
+              "Unavailable field: Contact.isDummyCandidate__c"
             ]
           },
           "skills": [],
           "skillCategories": [],
-          "systems": [],
+          "systems": [
+            "JavaScript"
+          ],
           "industries": [],
           "subIndustries": [],
           "jobFunctions": [],
           "languages": []
         },
-        "profile": "Candidate Empty Profile. Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, SAP, Financial modelling Financial Analyst, 2019-04 to 2023-03: Built financial models, investigated cost variances and supported management reviews. Worked with stakeholders to clarify requirements and maintain delivery documentation. Financial Analyst, 2023-04 to 2026-10: Documented controls, reconciled ledger balances and streamlined approval schedules. Collaborated with colleagues on testing, issue resolution and handover. Project: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews. Project: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews. Education: Bachelor of Accounting, 2019 Training: Financial Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Business)"
+        "profile": "Jordan Smith works as a JavaScript Developer. They have experience working with JavaScript. Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration. languages: TypeScript, JavaScript, HTML, CSS frameworks: Angular, RxJS tools: Playwright, Git, Figma Frontend Engineer, 2020-04 to 2023-03: Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Worked with stakeholders to clarify requirements and maintain delivery documentation. Frontend Engineer, 2023-04 to 2026-10: Implemented reusable UI components, chart filtering and browser performance improvements. Collaborated with colleagues on testing, issue resolution and handover. Project: Operations dashboard. Interactive monitoring of service queues and workload. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Implemented reusable UI components, chart filtering and browser performance improvements. Participated in requirements, validation and delivery reviews. Project: Customer self-service portal. Accessible browser workflows for account servicing. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Participated in requirements, validation and delivery reviews. Education: Bachelor of Software Engineering, 2020 Training: Frontend Engineer professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
       },
       {
-        "rank": 4,
-        "score": 0.34,
+        "rank": 3,
+        "score": 0.03200204813108039,
+        "rankingMethod": "rrf",
+        "lexicalScore": 9,
+        "vectorScore": 0.87,
+        "lexicalRank": 3,
+        "vectorRank": 2,
         "candidate": {
           "id": "003000000000003",
           "name": "Priya Rao",
@@ -780,8 +656,166 @@
         "profile": "Priya Rao works as a Data Engineer. Their broader areas of expertise include Cyclic parent. Data Engineer with 6 years of experience. Focus on warehouse ingestion and event data lake, with responsibility for delivery, documentation and cross-team collaboration. languages: Python, SQL frameworks: Apache Spark databases: Snowflake, PostgreSQL tools: AWS S3, AWS Athena, Airflow Data Engineer, 2020-04 to 2023-03: Optimized SQL transformations, file partitioning and scheduled data quality checks. Worked with stakeholders to clarify requirements and maintain delivery documentation. Data Engineer, 2023-04 to 2026-10: Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking. Collaborated with colleagues on testing, issue resolution and handover. Project: Warehouse ingestion. Daily ingestion of operational data into an analytics warehouse. Role: Data Engineer. Technologies: Python, SQL, Apache Spark, Snowflake, PostgreSQL, AWS S3, AWS Athena, Airflow. Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking. Participated in requirements, validation and delivery reviews. Project: Event data lake. Partitioned event storage for customer activity reporting. Role: Data Engineer. Technologies: Python, SQL, Apache Spark, Snowflake, PostgreSQL, AWS S3, AWS Athena, Airflow. Optimized SQL transformations, file partitioning and scheduled data quality checks. Participated in requirements, validation and delivery reviews. Education: Bachelor of Computer Science, 2020 Training: Data Engineer professional training, 2024 Spoken languages: English (Fluent), Japanese (Conversational)"
       },
       {
+        "rank": 4,
+        "score": 0.015625,
+        "rankingMethod": "rrf",
+        "lexicalScore": 4,
+        "vectorScore": null,
+        "lexicalRank": 4,
+        "vectorRank": null,
+        "candidate": {
+          "id": "003000000000004",
+          "name": "Morgan Lee",
+          "title": "Analytics Specialist",
+          "enrichment": {
+            "cvProfile": {
+              "source": {
+                "kind": "synthetic",
+                "generatorVersion": 1,
+                "seed": "contract-seed",
+                "archetype": "analytics"
+              },
+              "summary": "Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration.",
+              "technicalSkills": {
+                "languages": [
+                  "SQL"
+                ],
+                "frameworks": [],
+                "databases": [
+                  "SQL Server"
+                ],
+                "tools": [
+                  "Qlik Sense",
+                  "Power BI",
+                  "Excel"
+                ]
+              },
+              "employmentHistory": [
+                {
+                  "employer": "Demo Harbor Services",
+                  "role": "Business Intelligence Analyst",
+                  "location": "Demo regional office",
+                  "start": "2021-04",
+                  "end": "2023-03",
+                  "responsibilities": [
+                    "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
+                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                  ]
+                },
+                {
+                  "employer": "Demo Orchard Group",
+                  "role": "Business Intelligence Analyst",
+                  "location": "Demo Tokyo office",
+                  "start": "2023-04",
+                  "end": "2026-10",
+                  "responsibilities": [
+                    "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
+                    "Collaborated with colleagues on testing, issue resolution and handover."
+                  ]
+                }
+              ],
+              "projects": [
+                {
+                  "name": "Service demand forecasting",
+                  "description": "Workload forecasts for support planning.",
+                  "role": "Business Intelligence Analyst",
+                  "technologies": [
+                    "SQL",
+                    "SQL Server",
+                    "Qlik Sense",
+                    "Power BI",
+                    "Excel"
+                  ],
+                  "contributions": [
+                    "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                },
+                {
+                  "name": "Revenue reporting",
+                  "description": "Shared business metrics for regional sales teams.",
+                  "role": "Business Intelligence Analyst",
+                  "technologies": [
+                    "SQL",
+                    "SQL Server",
+                    "Qlik Sense",
+                    "Power BI",
+                    "Excel"
+                  ],
+                  "contributions": [
+                    "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                }
+              ],
+              "education": [
+                {
+                  "qualification": "Bachelor of Statistics",
+                  "institution": "Demo Institute of Applied Studies",
+                  "graduationYear": 2021
+                }
+              ],
+              "certifications": [
+                {
+                  "name": "Business Intelligence Analyst professional training",
+                  "issuer": "Demo Learning Academy",
+                  "year": 2024
+                }
+              ],
+              "languages": [
+                {
+                  "language": "English",
+                  "level": "Business"
+                },
+                {
+                  "language": "Japanese",
+                  "level": "Conversational"
+                }
+              ]
+            },
+            "version": 2,
+            "modifiedAt": "2026-10-01T12:34:56.000Z",
+            "recordType": "Candidate",
+            "details": {},
+            "tags": [],
+            "associations": [],
+            "warnings": [
+              "Unavailable field: Contact.MailingState",
+              "Unavailable field: Contact.currentPositionStartDate__c",
+              "Unavailable field: Contact.positionLevel__c",
+              "Unavailable field: Contact.jobType__c",
+              "Unavailable field: Contact.currentMonthlySalary__c",
+              "Unavailable field: Contact.desiredSalary__c",
+              "Unavailable field: Contact.noticePeriod__c",
+              "Unavailable field: Contact.location__c",
+              "Unavailable field: Contact.relocateTo__c",
+              "Unavailable field: Contact.highestEducationalInstitute__c",
+              "Unavailable field: Contact.educationalSpecialization__c",
+              "Unavailable field: Contact.currentPeopleManaged__c",
+              "Unavailable field: Contact.maxPeopleManaged__c",
+              "Unavailable field: Contact.status__c",
+              "Unavailable field: Contact.isDummyCandidate__c",
+              "No candidate tag associations returned"
+            ]
+          },
+          "skills": [],
+          "skillCategories": [],
+          "systems": [],
+          "industries": [],
+          "subIndustries": [],
+          "jobFunctions": [],
+          "languages": []
+        },
+        "profile": "Morgan Lee works as a Analytics Specialist. Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration. languages: SQL databases: SQL Server tools: Qlik Sense, Power BI, Excel Business Intelligence Analyst, 2021-04 to 2023-03: Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Worked with stakeholders to clarify requirements and maintain delivery documentation. Business Intelligence Analyst, 2023-04 to 2026-10: Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Collaborated with colleagues on testing, issue resolution and handover. Project: Service demand forecasting. Workload forecasts for support planning. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Participated in requirements, validation and delivery reviews. Project: Revenue reporting. Shared business metrics for regional sales teams. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Participated in requirements, validation and delivery reviews. Education: Bachelor of Statistics, 2021 Training: Business Intelligence Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
+      },
+      {
         "rank": 5,
-        "score": 0.3,
+        "score": 0.015625,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.75,
+        "lexicalRank": null,
+        "vectorRank": 4,
         "candidate": {
           "id": "003000000000007",
           "name": "Alex Kim",
@@ -935,155 +969,12 @@
       },
       {
         "rank": 6,
-        "score": 0.2,
-        "candidate": {
-          "id": "003000000000004",
-          "name": "Morgan Lee",
-          "title": "Analytics Specialist",
-          "enrichment": {
-            "cvProfile": {
-              "source": {
-                "kind": "synthetic",
-                "generatorVersion": 1,
-                "seed": "contract-seed",
-                "archetype": "analytics"
-              },
-              "summary": "Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration.",
-              "technicalSkills": {
-                "languages": [
-                  "SQL"
-                ],
-                "frameworks": [],
-                "databases": [
-                  "SQL Server"
-                ],
-                "tools": [
-                  "Qlik Sense",
-                  "Power BI",
-                  "Excel"
-                ]
-              },
-              "employmentHistory": [
-                {
-                  "employer": "Demo Harbor Services",
-                  "role": "Business Intelligence Analyst",
-                  "location": "Demo regional office",
-                  "start": "2021-04",
-                  "end": "2023-03",
-                  "responsibilities": [
-                    "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
-                  ]
-                },
-                {
-                  "employer": "Demo Orchard Group",
-                  "role": "Business Intelligence Analyst",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
-                  "end": "2026-10",
-                  "responsibilities": [
-                    "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
-                  ]
-                }
-              ],
-              "projects": [
-                {
-                  "name": "Service demand forecasting",
-                  "description": "Workload forecasts for support planning.",
-                  "role": "Business Intelligence Analyst",
-                  "technologies": [
-                    "SQL",
-                    "SQL Server",
-                    "Qlik Sense",
-                    "Power BI",
-                    "Excel"
-                  ],
-                  "contributions": [
-                    "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
-                  "name": "Revenue reporting",
-                  "description": "Shared business metrics for regional sales teams.",
-                  "role": "Business Intelligence Analyst",
-                  "technologies": [
-                    "SQL",
-                    "SQL Server",
-                    "Qlik Sense",
-                    "Power BI",
-                    "Excel"
-                  ],
-                  "contributions": [
-                    "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                }
-              ],
-              "education": [
-                {
-                  "qualification": "Bachelor of Statistics",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2021
-                }
-              ],
-              "certifications": [
-                {
-                  "name": "Business Intelligence Analyst professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
-                }
-              ],
-              "languages": [
-                {
-                  "language": "English",
-                  "level": "Business"
-                },
-                {
-                  "language": "Japanese",
-                  "level": "Conversational"
-                }
-              ]
-            },
-            "version": 2,
-            "modifiedAt": "2026-10-01T12:34:56.000Z",
-            "recordType": "Candidate",
-            "details": {},
-            "tags": [],
-            "associations": [],
-            "warnings": [
-              "Unavailable field: Contact.MailingState",
-              "Unavailable field: Contact.currentPositionStartDate__c",
-              "Unavailable field: Contact.positionLevel__c",
-              "Unavailable field: Contact.jobType__c",
-              "Unavailable field: Contact.currentMonthlySalary__c",
-              "Unavailable field: Contact.desiredSalary__c",
-              "Unavailable field: Contact.noticePeriod__c",
-              "Unavailable field: Contact.location__c",
-              "Unavailable field: Contact.relocateTo__c",
-              "Unavailable field: Contact.highestEducationalInstitute__c",
-              "Unavailable field: Contact.educationalSpecialization__c",
-              "Unavailable field: Contact.currentPeopleManaged__c",
-              "Unavailable field: Contact.maxPeopleManaged__c",
-              "Unavailable field: Contact.status__c",
-              "Unavailable field: Contact.isDummyCandidate__c",
-              "No candidate tag associations returned"
-            ]
-          },
-          "skills": [],
-          "skillCategories": [],
-          "systems": [],
-          "industries": [],
-          "subIndustries": [],
-          "jobFunctions": [],
-          "languages": []
-        },
-        "profile": "Morgan Lee works as a Analytics Specialist. Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration. languages: SQL databases: SQL Server tools: Qlik Sense, Power BI, Excel Business Intelligence Analyst, 2021-04 to 2023-03: Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Worked with stakeholders to clarify requirements and maintain delivery documentation. Business Intelligence Analyst, 2023-04 to 2026-10: Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Collaborated with colleagues on testing, issue resolution and handover. Project: Service demand forecasting. Workload forecasts for support planning. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Participated in requirements, validation and delivery reviews. Project: Revenue reporting. Shared business metrics for regional sales teams. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Participated in requirements, validation and delivery reviews. Education: Bachelor of Statistics, 2021 Training: Business Intelligence Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
-      },
-      {
-        "rank": 7,
-        "score": 0.1,
+        "score": 0.015384615384615385,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.62,
+        "lexicalRank": null,
+        "vectorRank": 5,
         "candidate": {
           "id": "003000000000005",
           "name": "Dana Chen",
@@ -1222,8 +1113,157 @@
         "profile": "Dana Chen works as a Financial Accountant. Financial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, SAP, Financial modelling Financial Analyst, 2019-04 to 2023-03: Documented controls, reconciled ledger balances and streamlined approval schedules. Worked with stakeholders to clarify requirements and maintain delivery documentation. Financial Analyst, 2023-04 to 2026-10: Built financial models, investigated cost variances and supported management reviews. Collaborated with colleagues on testing, issue resolution and handover. Project: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews. Project: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews. Education: Bachelor of Accounting, 2019 Training: Financial Analyst professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)"
       },
       {
+        "rank": 7,
+        "score": 0.015384615384615385,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": null,
+        "lexicalRank": 5,
+        "vectorRank": null,
+        "candidate": {
+          "id": "003000000000008",
+          "name": "Empty Profile",
+          "enrichment": {
+            "cvProfile": {
+              "source": {
+                "kind": "synthetic",
+                "generatorVersion": 1,
+                "seed": "contract-seed",
+                "archetype": "finance"
+              },
+              "summary": "Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration.",
+              "technicalSkills": {
+                "languages": [],
+                "frameworks": [],
+                "databases": [],
+                "tools": [
+                  "Excel",
+                  "SAP",
+                  "Financial modelling"
+                ]
+              },
+              "employmentHistory": [
+                {
+                  "employer": "Demo Cedar Services",
+                  "role": "Financial Analyst",
+                  "location": "Demo regional office",
+                  "start": "2019-04",
+                  "end": "2023-03",
+                  "responsibilities": [
+                    "Built financial models, investigated cost variances and supported management reviews.",
+                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                  ]
+                },
+                {
+                  "employer": "Demo Summit Group",
+                  "role": "Financial Analyst",
+                  "location": "Demo Tokyo office",
+                  "start": "2023-04",
+                  "end": "2026-10",
+                  "responsibilities": [
+                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
+                    "Collaborated with colleagues on testing, issue resolution and handover."
+                  ]
+                }
+              ],
+              "projects": [
+                {
+                  "name": "Close process improvement",
+                  "description": "Monthly reconciliation and financial reporting controls.",
+                  "role": "Financial Analyst",
+                  "technologies": [
+                    "Excel",
+                    "SAP",
+                    "Financial modelling"
+                  ],
+                  "contributions": [
+                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                },
+                {
+                  "name": "Budget planning",
+                  "description": "Annual budgets and rolling forecasts across business units.",
+                  "role": "Financial Analyst",
+                  "technologies": [
+                    "Excel",
+                    "SAP",
+                    "Financial modelling"
+                  ],
+                  "contributions": [
+                    "Built financial models, investigated cost variances and supported management reviews.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                }
+              ],
+              "education": [
+                {
+                  "qualification": "Bachelor of Accounting",
+                  "institution": "Demo Institute of Applied Studies",
+                  "graduationYear": 2019
+                }
+              ],
+              "certifications": [
+                {
+                  "name": "Financial Analyst professional training",
+                  "issuer": "Demo Learning Academy",
+                  "year": 2024
+                }
+              ],
+              "languages": [
+                {
+                  "language": "English",
+                  "level": "Business"
+                },
+                {
+                  "language": "Japanese",
+                  "level": "Business"
+                }
+              ]
+            },
+            "version": 2,
+            "modifiedAt": "2026-10-01T12:34:56.000Z",
+            "recordType": "Candidate",
+            "details": {},
+            "tags": [],
+            "associations": [],
+            "warnings": [
+              "Unavailable field: Contact.MailingState",
+              "Unavailable field: Contact.currentPositionStartDate__c",
+              "Unavailable field: Contact.positionLevel__c",
+              "Unavailable field: Contact.jobType__c",
+              "Unavailable field: Contact.currentMonthlySalary__c",
+              "Unavailable field: Contact.desiredSalary__c",
+              "Unavailable field: Contact.noticePeriod__c",
+              "Unavailable field: Contact.location__c",
+              "Unavailable field: Contact.relocateTo__c",
+              "Unavailable field: Contact.highestEducationalInstitute__c",
+              "Unavailable field: Contact.educationalSpecialization__c",
+              "Unavailable field: Contact.currentPeopleManaged__c",
+              "Unavailable field: Contact.maxPeopleManaged__c",
+              "Unavailable field: Contact.status__c",
+              "Unavailable field: Contact.isDummyCandidate__c",
+              "No candidate tag associations returned"
+            ]
+          },
+          "skills": [],
+          "skillCategories": [],
+          "systems": [],
+          "industries": [],
+          "subIndustries": [],
+          "jobFunctions": [],
+          "languages": []
+        },
+        "profile": "Candidate Empty Profile. Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, SAP, Financial modelling Financial Analyst, 2019-04 to 2023-03: Built financial models, investigated cost variances and supported management reviews. Worked with stakeholders to clarify requirements and maintain delivery documentation. Financial Analyst, 2023-04 to 2026-10: Documented controls, reconciled ledger balances and streamlined approval schedules. Collaborated with colleagues on testing, issue resolution and handover. Project: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews. Project: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews. Education: Bachelor of Accounting, 2019 Training: Financial Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Business)"
+      },
+      {
         "rank": 8,
-        "score": 0.01,
+        "score": 0.015151515151515152,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.4,
+        "lexicalRank": null,
+        "vectorRank": 6,
         "candidate": {
           "id": "003000000000006",
           "name": "Sam Patel",

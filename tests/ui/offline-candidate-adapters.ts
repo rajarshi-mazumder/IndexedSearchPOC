@@ -5,6 +5,21 @@ import { SalesforceCliCommand } from "../../backend/dataPreparation/infrastructu
 import { SalesforceQueryClient } from "../../backend/dataPreparation/infrastructure/repositories/salesforceQueryClient";
 import { OpenSearchConfig } from "../../backend/infrastructure/config/opensearchConfig";
 import { metadataFields, candidateRecordType, systemRecordType } from "../salesforce-profile-fixtures";
+import { OperationRequest } from "../../shared/candidateConsoleContracts";
+
+// Hold the stop/resume scenario's first query until the real Stop IPC arrives.
+// This tests an in-flight batch deterministically instead of racing a 350 ms delay.
+let waitForStop = false;
+let releaseStoppedBatch!: () => void;
+const stopReceived = new Promise<void>((resolve) => { releaseStoppedBatch = resolve; });
+process.on("message", (message: { type: string; request?: OperationRequest }) => {
+  if (message.type === "start" && message.request?.kind === "fetch") {
+    waitForStop = message.request.configuration.dataset === "stop-test" && !message.request.resume;
+  }
+  if (message.type === "stop") {
+    releaseStoppedBatch();
+  }
+});
 SalesforceQueryClient.prototype.describe = async function(object: string) {
   return { queryable: true, fields: metadataFields[object].map((name) => ({ name, type: "string" })) };
 };
@@ -26,6 +41,10 @@ SalesforceCliCommand.prototype.execute = function(args: string[]) {
   return JSON.stringify({ status: 0, result: args.includes("display") ? { instanceUrl: "https://offline.invalid", id: "offline-full-org" } : { accessToken: "offline-token" } });
 };
 SalesforceQueryClient.prototype.queryBatch = async function(query: string) {
+  if (waitForStop) {
+    await stopReceived;
+    waitForStop = false;
+  }
   await delay(350);
   const start = Number(/Id > '003(\d+)'/.exec(query)?.[1] ?? "0") + 1;
   const limit = Number(/LIMIT (\d+)/.exec(query)?.[1]);
@@ -59,7 +78,7 @@ require.cache[awsModule]!.exports = { OpenSearchServerlessClient: class {
       },
       search: async (request: { body: any }) => {
         await delay(250);
-        const query = request.body.query.hybrid.queries[0].multi_match.query;
+        const query = (request.body.query.multi_match?.query ?? request.body.query.neural?.embedding.query_text);
         if (query === "simulate failure") throw new Error("Offline fixture: search request failed");
         const entries = Object.entries(await read()).slice(0, request.body.size);
         return { body: { hits: { hits: entries.map(([id, source], index) => ({ _id: id, _score: 0.98 - index * 0.021, _source: source })) } } };

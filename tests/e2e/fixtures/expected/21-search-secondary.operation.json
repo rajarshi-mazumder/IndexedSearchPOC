@@ -30,7 +30,12 @@
     "candidates": [
       {
         "rank": 1,
-        "score": 0.2,
+        "score": 0.01639344262295082,
+        "rankingMethod": "rrf",
+        "lexicalScore": 4,
+        "vectorScore": null,
+        "lexicalRank": 1,
+        "vectorRank": null,
         "candidate": {
           "id": "003000000000004",
           "name": "Morgan Lee",
@@ -178,7 +183,12 @@
       },
       {
         "rank": 2,
-        "score": 0.1,
+        "score": 0.01639344262295082,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.62,
+        "lexicalRank": null,
+        "vectorRank": 1,
         "candidate": {
           "id": "003000000000005",
           "name": "Dana Chen",
@@ -318,7 +328,12 @@
       },
       {
         "rank": 3,
-        "score": 0.01,
+        "score": 0.016129032258064516,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.4,
+        "lexicalRank": null,
+        "vectorRank": 2,
         "candidate": {
           "id": "003000000000006",
           "name": "Sam Patel",

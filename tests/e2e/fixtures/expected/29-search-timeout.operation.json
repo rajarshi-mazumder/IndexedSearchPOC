@@ -26,10 +26,10 @@
   "progress": {
     "message": "Searching contract-main"
   },
-  "error": "OpenSearch did not complete the hybrid search; refusing partial results.",
+  "error": "OpenSearch did not complete a search branch; refusing partial results.",
   "messages": [
     "Starting operation",
     "Searching contract-main",
-    "OpenSearch did not complete the hybrid search; refusing partial results."
+    "OpenSearch did not complete a search branch; refusing partial results."
   ]
 }

@@ -15,7 +15,9 @@ async function main() {
       const candidate = result.document.candidate;
       console.log("-".repeat(80));
       console.log("#" + (index + 1));
-      console.log("Hybrid Score:", result.score.toFixed(6));
+      console.log("RRF score (not confidence):", result.score.toFixed(6));
+      console.log("Lexical score:", result.lexicalScore, "Position:", result.lexicalRank);
+      console.log("Vector score:", result.vectorScore, "Position:", result.vectorRank);
       console.log("Name:", candidate.name);
       console.log("Salesforce ID:", candidate.id);
       if (candidate.enrichment?.cvProfile) console.log("Demo CV: synthetic professional details included (seed " + candidate.enrichment.cvProfile.source.seed + ")");

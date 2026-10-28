@@ -1,18 +1,24 @@
 import { API, Client } from "@opensearch-project/opensearch";
 import { CandidateSearchRepository } from "../../application/ports/candidateSearchRepository";
-import { CandidateSearchResult } from "../../application/models/candidateSearchResult";
-import { CandidateHybridSearchRequestMapping } from "../ports/candidateHybridSearchRequestMapping";
+import { CandidateSearchHit } from "../../application/models/candidateSearchHit";
+import { CandidateIndependentSearchRequestMapping } from "../ports/candidateIndependentSearchRequestMapping";
 import { CandidateSearchResponseMapping } from "../ports/candidateSearchResponseMapping";
 
 export class CandidateOpenSearchSearchRepository implements CandidateSearchRepository {
   public constructor(
     private readonly client: Pick<Client, "search">,
-    private readonly requests: CandidateHybridSearchRequestMapping,
+    private readonly requests: CandidateIndependentSearchRequestMapping,
     private readonly responses: CandidateSearchResponseMapping
   ) { }
 
-  public async search(query: string, limit: number): Promise<CandidateSearchResult[]> {
-    const request = this.requests.map(query, limit);
+  public async searchLexical(query: string, poolSize: number): Promise<CandidateSearchHit[]> {
+    const request = this.requests.mapLexical(query, poolSize);
+    const response = await this.executeSearchRequest(request);
+    return this.responses.map(response);
+  }
+
+  public async searchVector(query: string, poolSize: number): Promise<CandidateSearchHit[]> {
+    const request = this.requests.mapVector(query, poolSize);
     const response = await this.executeSearchRequest(request);
     return this.responses.map(response);
   }

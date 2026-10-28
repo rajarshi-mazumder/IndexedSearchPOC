@@ -91,16 +91,23 @@ test("selected indexing batches large selections and skips unsearchable candidat
   assert.deepEqual(recording.batches, [100, 100, 5]);
 });
 
-test("search validates input and delegates plain text through its port", async () => {
+test("search validates input, fetches both pools, and delegates ranking through its port", async () => {
   const calls: unknown[] = [];
-  const result = [{ score: 0.75, document: documentFixture() }];
-  const search = new SearchCandidates({ search: async (...args) => { calls.push(args); return result; } });
+  const hits = [{ score: 0.75, document: documentFixture() }];
+  const result = [{ score: 2 / 61, rankingMethod: "rrf" as const, lexicalScore: 0.75, vectorScore: 0.75,
+    lexicalRank: 1, vectorRank: 1, document: documentFixture() }];
+  const search = new SearchCandidates({
+    searchLexical: async (...args) => { calls.push(["lexical", ...args]); return hits; },
+    searchVector: async (...args) => { calls.push(["vector", ...args]); return hits; },
+  }, { rank: (lexical, vector, limit) => {
+    assert.equal(lexical, hits); assert.equal(vector, hits); assert.equal(limit, 5); return result;
+  } });
   assert.deepEqual(await search.execute(" TypeScript engineer ", 5), result);
-  assert.deepEqual(calls, [["TypeScript engineer", 5]]);
+  assert.deepEqual(calls, [["lexical", "TypeScript engineer", 50], ["vector", "TypeScript engineer", 50]]);
   await assert.rejects(search.execute("   "));
   await assert.rejects(search.execute("Engineer", 0));
   await assert.rejects(search.execute("Engineer", 101));
-  assert.equal(calls.length, 1);
+  assert.equal(calls.length, 2);
 });
 
 test("stopping indexing finishes the current bulk batch and does not start the next", async () => {

@@ -29,6 +29,8 @@ export class CandidateConsoleOperationExecutor {
       report({ type: "progress", progress: { message: `Searching ${settings.index}` } });
       const results = await this.operations.search(request.query, request.limit);
       return { candidates: results.map((result, index) => ({ rank: index + 1, score: result.score,
+        rankingMethod: result.rankingMethod, lexicalScore: result.lexicalScore, vectorScore: result.vectorScore,
+        lexicalRank: result.lexicalRank, vectorRank: result.vectorRank,
         candidate: result.document.candidate, profile: result.document.profile })) };
     }
     for (const [index, file] of [...request.files].sort().entries()) {

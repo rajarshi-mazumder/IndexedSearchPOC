@@ -9,9 +9,9 @@ export async function calculateCandidateSearchCodeHash(): Promise<string> {
     "infrastructure/repositories/candidateOpenSearchSearchRepository.ts",
     "infrastructure/lexicalSearch/candidateLexicalQueryMapper.ts",
     "infrastructure/vectorSearch/candidateVectorQueryMapper.ts",
-    "infrastructure/mappers/candidateHybridSearchRequestMapper.ts",
+    "infrastructure/mappers/candidateIndependentSearchRequestMapper.ts",
     "infrastructure/mappers/candidateSearchResponseMapper.ts",
-    "infrastructure/config/candidateHybridSearchPipeline.json",
+    "application/services/rankCandidatesByReciprocalRankService.ts",
   ];
   const hash = createHash("sha256");
   for (const file of sourceFiles) {

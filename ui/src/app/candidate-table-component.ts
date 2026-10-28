@@ -6,14 +6,28 @@ import { CandidateCvDetailsComponent } from "./batches/candidate-cv-details-comp
 @Component({ selector: "candidate-table", standalone: true, imports: [DecimalPipe, KeyValuePipe, CandidateCvDetailsComponent], template: `
   @if (rows().length) {
     <div class="table-scroll"><table class="candidate-table"><thead><tr>
-      @if (ranked()) { <th>#</th><th><button class="sort" (click)="sortBy('score')">Score ↕</button></th> }
+      @if (ranked()) { <th>#</th><th><button class="sort" (click)="sortBy('score')">Ranking score ↕</button></th><th>Lexical score</th><th>Vector score</th> }
       <th><button class="sort" (click)="sortBy('name')">Candidate ↕</button></th>
       <th><button class="sort" (click)="sortBy('title')">Title ↕</button></th>
       <th><button class="sort" (click)="sortBy('company')">Company ↕</button></th><th>Skills / technologies</th><th>Job functions</th><th></th>
     </tr></thead><tbody>
       @for (row of sorted(); track row.candidate.id) {
         <tr>
-          @if (ranked()) { <td class="muted mono">{{row.rank}}</td><td class="score">{{row.score | number:'1.3-3'}}</td> }
+          @if (ranked()) { <td class="muted mono">{{row.rank}}</td><td class="mono">{{row.score | number:'1.6-6'}}<span class="subtext">{{row.rankingMethod || 'Legacy score'}}</span></td>
+            <td class="lexical-score">@if (row.rankingMethod === 'rrf') {
+              @if (row.lexicalRank !== null) {
+                @if (row.lexicalScore === null) { Score unavailable } @else { {{row.lexicalScore | number:'1.4-4'}} }
+                <span class="subtext">Position {{row.lexicalRank}}</span>
+              }
+              @else { <span class="muted">Not returned</span> }
+            } @else { <span class="muted">Not recorded</span> }</td>
+            <td class="vector-score">@if (row.rankingMethod === 'rrf') {
+              @if (row.vectorRank !== null) {
+                @if (row.vectorScore === null) { Score unavailable } @else { {{row.vectorScore | number:'1.4-4'}} }
+                <span class="subtext">Position {{row.vectorRank}}</span>
+              }
+              @else { <span class="muted">Not returned</span> }
+            } @else { <span class="muted">Not recorded</span> }</td> }
           <td><strong>{{row.candidate.name}}</strong><span class="subtext mono">{{row.candidate.id}}</span>@if (row.candidate.enrichment?.cvProfile) { <span class="status stopping">Demo CV</span> }</td>
           <td>{{row.candidate.title || '—'}}</td><td>{{row.candidate.company || '—'}}</td>
           <td><div class="tags">@for (skill of expertise(row).slice(0,3); track $index) { <span class="tag">{{skill}}</span> }
@@ -23,7 +37,7 @@ import { CandidateCvDetailsComponent } from "./batches/candidate-cv-details-comp
           <td><button class="button text small" [attr.aria-expanded]="expanded() === row.candidate.id" (click)="expanded.set(expanded() === row.candidate.id ? '' : row.candidate.id)">{{expanded() === row.candidate.id ? 'Close' : 'Details'}}</button></td>
         </tr>
         @if (expanded() === row.candidate.id) {
-          <tr class="detail-row"><td [attr.colspan]="ranked() ? 8 : 6"><div class="detail-grid">
+          <tr class="detail-row"><td [attr.colspan]="ranked() ? 10 : 6"><div class="detail-grid">
             @if (row.candidate.enrichment?.cvProfile; as cv) { <candidate-cv-details class="span-all" [cv]="cv" /> }
             <div><span class="eyebrow">Skills</span><p>{{row.candidate.skills.join(', ') || 'Not provided'}}</p></div>
             <div><span class="eyebrow">Expertise</span><p>{{row.candidate.skillCategories.join(', ') || 'Not provided'}}</p></div>

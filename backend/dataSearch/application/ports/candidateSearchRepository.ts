@@ -1,5 +1,6 @@
-import { CandidateSearchResult } from "../models/candidateSearchResult";
+import { CandidateSearchHit } from "../models/candidateSearchHit";
 
 export interface CandidateSearchRepository {
-  search(query: string, limit: number): Promise<CandidateSearchResult[]>;
+  searchLexical(query: string, poolSize: number): Promise<CandidateSearchHit[]>;
+  searchVector(query: string, poolSize: number): Promise<CandidateSearchHit[]>;
 }

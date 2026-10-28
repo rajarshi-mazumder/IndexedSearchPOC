@@ -73,6 +73,24 @@ test("failed workers keep completed file receipts, and prior active runs become 
   const restarted = new CandidateOperationService(new ControlledCandidateOperationRunner(), history); await restarted.initialize();
   assert.equal(restarted.get(job.id).status, "interrupted"); await restarted.close();
 });
+test("search history preserves raw scores and ranks while reading legacy results", async (t) => {
+  const history = new JsonOperationHistoryStore(new AtomicJsonFileStore(join(await temporary(t), "history.json")));
+  const runner = new ControlledCandidateOperationRunner();
+  const service = new CandidateOperationService(runner, history);
+  await service.initialize();
+  const job = await service.start({ kind: "search", configuration, query: "Java", limit: 10 });
+  const candidates = [
+    { rank: 1, score: 1 / 61, rankingMethod: "rrf" as const, lexicalScore: 0, vectorScore: null,
+      lexicalRank: 1, vectorRank: null, candidate: candidateFixture(), profile: "Java" },
+    { rank: 2, score: 0.959, candidate: candidateFixture({ id: "legacy" }), profile: "Legacy profile" },
+  ];
+  runner.calls[0].report({ type: "result", result: { candidates }, cancelled: false });
+  runner.calls[0].exited();
+  await service.close();
+  const restored = (await history.read()).find((record) => record.id === job.id)!;
+  assert.deepEqual(restored.result?.candidates, JSON.parse(JSON.stringify(candidates)));
+});
+
 test("catalog paginates files and records, rejects escape paths and marks only checkpointed files", async (t) => {
   const directory = await temporary(t); const catalog = new LocalCandidateBatchCatalog(directory); const path = await catalog.datasetPath("fsb", true);
   const candidates = Array.from({ length: 25 }, (_, index) => candidateFixture({ id: String(index), name: `Person ${index}` }));

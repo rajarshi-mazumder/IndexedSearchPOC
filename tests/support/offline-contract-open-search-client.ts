@@ -49,7 +49,8 @@ export class OfflineContractOpenSearchClient {
         const fault = control();
         if (fault.searchError) throw new Error("Fixture search unavailable");
         const documents = state().documents[request.index] ?? {};
-        const hits = responses.hits.filter((hit) => documents[hit.id]).slice(0, request.body.size)
+        const branchHits = request.body.query.multi_match ? responses.lexical : responses.vector;
+        const hits = branchHits.filter((hit) => documents[hit.id]).slice(0, request.body.size)
           .map((hit) => ({ _id: hit.id, _score: hit.score, _source: { ...documents[hit.id], embedding: [0.123] } }));
         return { body: { timed_out: !!fault.timedOut, _shards: { failed: fault.failedShards ?? 0 }, hits: { hits } } };
       },

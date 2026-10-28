@@ -81,7 +81,7 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
         return {body:{errors:false,items:Array.from({length:request.body.length/2},()=>({index:{status:200}}))}};
       },
       search: async request => {
-        record({operation:'search',index:request.index,pipeline:request.search_pipeline,query:request.body.query.hybrid.queries[0].multi_match.query});
+        record({operation:'search',index:request.index,pipeline:request.search_pipeline,query:(request.body.query.multi_match?.query ?? request.body.query.neural?.embedding.query_text)});
         return {body:{hits:{hits:[]}}};
       },
       transport: {request:async request => {
@@ -134,6 +134,6 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
   assert.equal(new Set(bulk.flatMap((r) => r.ids)).size, 1003);
   assert.ok(requests.some((r) => r.path === "/_ingest/pipeline/candidates-fsb-ingest" && r.method === "PUT"));
   assert.ok(requests.some((r) => r.path === "/_search/pipeline/candidates-fsb-hybrid" && r.method === "PUT"));
-  assert.ok(requests.some((r) => r.operation === "search" && r.pipeline === "candidates-fsb-hybrid" && r.query === "Java Spring Boot"));
+  assert.ok(requests.some((r) => r.operation === "search" && r.pipeline === "_none" && r.query === "Java Spring Boot"));
   assert.equal(environment.OPENSEARCH_INDEX, config.OPENSEARCH_INDEX);
 });

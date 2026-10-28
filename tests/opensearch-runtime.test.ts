@@ -89,20 +89,29 @@ test("missing bulk acknowledgements fail indexing", async () => {
   await assert.rejects(new OpenSearchCandidateDocumentIndex(client, config).indexMany([documentFixture()]), /incomplete bulk/);
 });
 
-test("hybrid search sends keyword and neural queries with the configured model and restores results", async () => {
-  let request: any;
+test("independent searches bypass pipelines, preserve raw scores and rank locally", async () => {
+  const requests: any[] = [];
   const document = documentFixture();
   const client = { search: async (input: any) => {
-    request = input;
+    requests.push(input);
     return { body: { timed_out: false, hits: { hits: [{ _score: 0.8, _source: OpenSearchCandidateDocumentMapper.toDocument(document) }] } } };
   } } as unknown as Client;
   const results = await new OpenSearchHybridSearch(client, config).search("TypeScript engineer", 10);
-  assert.equal(request.search_pipeline, config.OPENSEARCH_SEARCH_PIPELINE);
-  assert.equal(request.body.query.hybrid.queries[0].multi_match.query, "TypeScript engineer");
-  assert.deepEqual(request.body.query.hybrid.queries[1].neural.embedding, {
+  assert.equal(requests.length, 2);
+  for (const request of requests) {
+    assert.equal(request.index, config.OPENSEARCH_INDEX);
+    assert.equal(request.search_pipeline, "_none");
+    assert.equal(request.body.size, 50);
+    assert.equal(request.allow_partial_search_results, false);
+    assert.deepEqual(request.body._source, { excludes: ["embedding"] });
+    assert.equal(request.body.query.hybrid, undefined);
+  }
+  assert.equal(requests[0].body.query.multi_match.query, "TypeScript engineer");
+  assert.deepEqual(requests[1].body.query.neural.embedding, {
     query_text: "TypeScript engineer", model_id: config.OPENSEARCH_MODEL_ID, k: 50,
   });
-  assert.deepEqual(results, [{ score: 0.8, document }]);
+  assert.deepEqual(results, [{ score: 2 / 61, rankingMethod: "rrf", lexicalScore: 0.8, vectorScore: 0.8,
+    lexicalRank: 1, vectorRank: 1, document }]);
 });
 
 test("search refuses timed out or partially failed results", async () => {

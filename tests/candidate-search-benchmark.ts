@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Client } from "@opensearch-project/opensearch";
-import { CandidateSearchRepository as CandidateSearch } from "../backend/dataSearch/application/ports/candidateSearchRepository";
+import { SearchCandidatesUseCase } from "../backend/dataSearch/application/useCases/searchCandidatesUseCase";
 import { OpenSearchConfig } from "../backend/infrastructure/config/opensearchConfig";
 import { DUMMY_CANDIDATES } from "../backend/dataPreparation/infrastructure/fixtures/dummyCandidates";
 import { CANDIDATE_SEARCH_BENCHMARK_CASES } from "./candidate-search-benchmark-cases";
@@ -27,7 +27,7 @@ export class CandidateSearchBenchmark {
   constructor(
     private readonly client: Client,
     private readonly config: OpenSearchConfig,
-    private readonly search: CandidateSearch,
+    private readonly search: Pick<SearchCandidatesUseCase, "execute">,
   ) {}
 
   async run(split: "development" | "validation" | "all") {
@@ -71,9 +71,7 @@ export class CandidateSearchBenchmark {
       candidateHash: createHash("sha256").update(JSON.stringify(DUMMY_CANDIDATES)).digest("hex"),
       caseHash: createHash("sha256").update(JSON.stringify(CANDIDATE_SEARCH_BENCHMARK_CASES)).digest("hex"),
       searchCodeHash: await calculateCandidateSearchCodeHash(),
-      searchPipeline: (await this.client.transport.request({
-        method: "GET", path: "/_search/pipeline/" + this.config.OPENSEARCH_SEARCH_PIPELINE,
-      })).body,
+      ranking: { method: "rrf", rankConstant: 60, weights: "equal", searchPipeline: "_none" },
       total: results.length, passed: results.filter((item) => item.passed).length, groups, results,
     };
     const directory = join(process.cwd(), ".cache", "search-benchmarks");
@@ -87,9 +85,9 @@ export class CandidateSearchBenchmark {
 
   private async query(mode: BenchmarkResult["mode"], query: string) {
     if (mode === "hybrid") {
-      return (await this.search.search(query, 10)).map((hit) => ({ id: hit.document.salesforceId, score: hit.score }));
+      return (await this.search.execute(query, 10)).map((hit) => ({ id: hit.document.salesforceId, score: hit.score }));
     }
-    const response = await this.client.search({ index: this.config.OPENSEARCH_INDEX, allow_partial_search_results: false, body: {
+    const response = await this.client.search({ index: this.config.OPENSEARCH_INDEX, search_pipeline: "_none", allow_partial_search_results: false, body: {
       size: 10, _source: false,
       query: mode === "lexical" ? { match_phrase: { title: query } } : {
         neural: { embedding: { query_text: query, model_id: this.config.OPENSEARCH_MODEL_ID, k: 100 } },

@@ -41,6 +41,12 @@ test("settings, progressive fetch, embedding and ranked search work through real
   await page.getByRole("button", { name: "Search candidates →", exact: true }).click();
   await expect(page.locator(".results-card tbody tr")).toHaveCount(10);
   await expect(page.locator(".results-card tbody tr").first()).toContainText("Java");
+  await expect(page.getByRole("columnheader", { name: "Lexical score", exact: true })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Vector score", exact: true })).toBeVisible();
+  await expect(page.locator(".results-card tbody tr").first().locator(".lexical-score")).toContainText("0.9800");
+  await expect(page.locator(".results-card tbody tr").first().locator(".vector-score")).toContainText("Position 1");
+  await expect(page.locator(".results-card tbody tr").first()).toContainText("0.032787");
+
   await expect(page.getByText("Maya Chen 1", { exact: true })).toBeVisible();
   await page.locator(".results-card").getByRole("button", { name: "Details", exact: true }).first().click();
   await expect(page.getByText("Candidate profile", { exact: true })).toBeVisible();

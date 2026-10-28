@@ -2,6 +2,16 @@
 
 Production baseline: `ce48f4d589931a7c0196fa2f91bb1ed57e958b8e`.
 
+**Post-refactor search revision:** Independent lexical and vector requests now feed
+backend equal-weight RRF (rank constant 60). This is an approved behavior change.
+The search response input, 16 search-related expected artifacts and their manifest
+hashes were intentionally revised. All other frozen artifacts, including data
+preparation and embedding requests/documents, remain unchanged. The scenario now
+asserts both raw scores, branch positions, and the independently calculated RRF
+score. Historical 25%/75% details below describe the original refactor baseline;
+see [current search behavior](dataSearchRefactor.md) for the active implementation.
+
+
 The refactor must preserve data preparation, embedding and search behavior. These
 tests run the existing implementation before any production files are moved or
 changed. No Salesforce login, AWS credentials, collection or live service is

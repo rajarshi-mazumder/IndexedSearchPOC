@@ -21,7 +21,13 @@ export interface FileEmbeddingResult {
   deleted?: number;
   file: string; indexed: number; skipped: number; hash: string; size: number; modifiedAt: string;
 }
-export interface ConsoleSearchResult { rank: number; score: number; candidate: Candidate; profile: string }
+export interface ConsoleSearchResult {
+  rank: number; score: number; candidate: Candidate; profile: string;
+  // Optional for batch previews and previously saved search operations.
+  rankingMethod?: "rrf";
+  lexicalScore?: number | null; vectorScore?: number | null;
+  lexicalRank?: number | null; vectorRank?: number | null;
+}
 export interface OperationResult {
   enrichment?: { changed: number; skipped: number; completedFiles: number };
   modelId?: string; fetched?: number; batchNumber?: number; complete?: boolean;

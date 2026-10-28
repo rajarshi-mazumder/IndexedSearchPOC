@@ -1,177 +1,120 @@
-# Candidate search: Clean Architecture
+# Candidate search: independent retrieval and backend ranking
 
 Start with [SearchCandidatesUseCase](../backend/dataSearch/application/useCases/searchCandidatesUseCase.ts).
-It validates the query and result limit, calls the injected search repository,
-and returns its results. Lexical and vector searches are clauses in one OpenSearch
-hybrid request. OpenSearch normalizes and combines their scores through the
-configured search pipeline. The backend restores documents in the returned order.
-
-## Structure and responsibilities
-
-```text
-backend/dataSearch/
-  application/
-    useCases/
-      searchCandidatesUseCase.ts
-    ports/
-      candidateSearchRepository.ts
-    models/
-      candidateSearchResult.ts
-  infrastructure/
-    repositories/
-      candidateOpenSearchSearchRepository.ts
-    lexicalSearch/
-      candidateLexicalQueryMapper.ts
-    vectorSearch/
-      candidateVectorQueryMapper.ts
-    mappers/
-      candidateHybridSearchRequestMapper.ts
-      candidateSearchResponseMapper.ts
-    ports/
-      candidateLexicalQueryMapping.ts
-      candidateVectorQueryMapping.ts
-      candidateHybridSearchRequestMapping.ts
-      candidateSearchResponseMapping.ts
-    config/
-      candidateHybridSearchPipeline.json
-```
-
-| Component | Owns |
-| --- | --- |
-| `SearchCandidatesUseCase` | Existing input validation and calling the application repository port |
-| `CandidateLexicalQueryMapper` | Keyword query fields, boosts, match type and match threshold |
-| `CandidateVectorQueryMapper` | Neural query text, configured model ID and neighbor count |
-| `CandidateHybridSearchRequestMapper` | Index/pipeline selection, lexical-then-vector clause order and request options |
-| `CandidateOpenSearchSearchRepository` | Executing the SDK request and passing its response to the mapper |
-| `CandidateSearchResponseMapper` | Rejecting incomplete searches and restoring scores/documents in returned order |
-| `candidateHybridSearchPipeline.json` | OpenSearch score normalization and combination settings |
-
-The use case imports application contracts and the existing pure Zod validator.
-It does not import the OpenSearch SDK, environment configuration or infrastructure.
-SDK-specific query shapes and response processing stay in infrastructure. The
-repository receives the client, request mapper and response mapper through its
-constructor; request construction receives lexical/vector mapping interfaces.
-
-The candidate domain remains in `shared/domain/models/`. Search results are
-application output models because they pair a candidate document with a search
-score. There is no new domain entity or local ranking algorithm.
-
-## Request and response flow
+It validates the query and limit, retrieves lexical and vector pools concurrently,
+and passes both lists to an injected pure ranking service. The ranking service
+merges candidates by Salesforce ID, calculates equal-weight reciprocal rank fusion
+(RRF), sorts, and then applies the requested result limit.
 
 ```mermaid
-flowchart TD
-    Host[Existing CLI or console worker] --> UseCase[SearchCandidatesUseCase]
-    Composition[createCandidateSearch.ts] -. injects .-> UseCase
-    UseCase --> Port[CandidateSearchRepository port]
-    Repository[CandidateOpenSearchSearchRepository] -. implements .-> Port
-    Repository --> Request[Hybrid request mapper]
-    Request --> Lexical[Lexical query mapper]
-    Request --> Vector[Vector query mapper]
-    Repository --> SDK[OpenSearch SDK: one search request]
-    SDK --> Engine[OpenSearch hybrid query and scoring pipeline]
-    Engine --> Response[Response mapper]
-    Response --> Results[Existing scores and document order]
+flowchart LR
+    UI[UI or CLI] --> UseCase[SearchCandidatesUseCase]
+    UseCase --> Repository[CandidateSearchRepository port]
+    Repository --> Lexical[OpenSearch lexical search]
+    Repository --> Vector[OpenSearch neural search]
+    Lexical --> Hits[Independent hits and raw scores]
+    Vector --> Hits
+    Hits --> UseCase
+    UseCase --> Ranking[CandidateSearchRanking port]
+    Ranking --> RRF[RankCandidatesByReciprocalRankService]
+    RRF --> Results[Final order and both branch scores]
 ```
 
-[createCandidateSearch.ts](../backend/composition/createCandidateSearch.ts) wires
-the mappers, repository and use case. The existing application composition still
-loads configuration, creates the signed client and supplies the close callback.
-Client lifetime, CLI arguments, UI controls and API payloads are unchanged.
+## Responsibilities and dependencies
 
-The request excludes `embedding` from returned source fields and sets
-`allow_partial_search_results: false`. Response mapping also rejects `timed_out`
-or a positive failed-shard count with the existing error message. It delegates
-document restoration to the existing shared `OpenSearchCandidateDocumentMapper`.
-Missing/null scores still become zero. Hits are neither re-sorted nor deduplicated.
-Search does not install pipelines, register models, retry requests or perform
-additional Salesforce/Bedrock calls from the application.
-
-## Where each search setting lives
-
-### Lexical search
-
-[CandidateLexicalQueryMapper](../backend/dataSearch/infrastructure/lexicalSearch/candidateLexicalQueryMapper.ts)
-builds the existing `multi_match` query:
-
-| Parameter | Unchanged value |
+| File/class | Responsibility |
 | --- | --- |
-| Query type | `cross_fields` |
-| Fields in order | `skills^10`, `title^8`, `jobFunctions^6`, `systems^5`, `skillCategories^4`, `profile` |
-| Minimum match | `2<30%` |
+| `application/useCases/searchCandidatesUseCase.ts` | Validate input, select retrieval pool size, coordinate retrieval and ranking |
+| `application/ports/candidateSearchRepository.ts` | Independent lexical/vector retrieval contract |
+| `application/ports/candidateSearchRanking.ts` | Pure ranking contract |
+| `application/services/rankCandidatesByReciprocalRankService.ts` | Merge by ID and calculate final order |
+| `application/models/candidateSearchHit.ts` | Raw branch score and candidate document |
+| `application/models/candidateSearchResult.ts` | Combined score, branch positions, raw scores and document |
+| `infrastructure/repositories/candidateOpenSearchSearchRepository.ts` | Execute SDK requests and map responses |
+| `infrastructure/mappers/candidateIndependentSearchRequestMapper.ts` | Build independent requests and explicitly bypass search pipelines |
+| `infrastructure/lexicalSearch/candidateLexicalQueryMapper.ts` | Pure lexical query configuration |
+| `infrastructure/vectorSearch/candidateVectorQueryMapper.ts` | Pure neural query configuration |
+| `infrastructure/mappers/candidateSearchResponseMapper.ts` | Reject incomplete responses and restore raw hits |
+| `backend/composition/createCandidateSearch.ts` | Constructor injection of repository, mappers and ranker |
 
-The field boosts are separate from the 25% lexical weight applied later by the
-hybrid pipeline. Candidate evidence may span multiple fields, so the current
-query does not require all evidence to occur within one field. No new analyzer,
-synonym expansion, filter or score threshold is introduced.
+The application depends on ports, pure candidate models and its existing Zod input
+validator. It does not import the OpenSearch SDK or read environment variables.
+The ranking service has no I/O, clock, network or UI dependencies. Routers remain
+HTTP-only. Host mapping exposes results; it does not calculate scores.
 
-### Vector search
+## Retrieval settings
 
-[CandidateVectorQueryMapper](../backend/dataSearch/infrastructure/vectorSearch/candidateVectorQueryMapper.ts)
-builds the existing `neural.embedding` query:
+The query is trimmed and must contain 1-10,000 characters. The result limit is
+1-100, default 20 in the use case. Each branch requests `max(limit * 3, 50)` hits
+(50-300). A request for 10 results therefore retrieves up to 50 from each branch.
+The union can contain up to twice that count before deduplication and final limiting.
 
-| Parameter | Unchanged value |
+Lexical configuration remains `multi_match`, `type: cross_fields`, and
+`minimum_should_match: "2<30%"`. Field boosts remain:
+
+| Field | Boost |
 | --- | --- |
-| `query_text` | The validated query |
-| `model_id` | `OPENSEARCH_MODEL_ID` |
-| `k` | `Math.max(limit * 3, 50)` |
+| skills | 10 |
+| title | 8 |
+| jobFunctions | 6 |
+| systems | 5 |
+| skillCategories | 4 |
+| profile (including CV text) | 1 |
 
-For a result limit of 10, `k` is 50; for 20, it is 60; for 100, it is 300.
-The request's `size` remains the requested result limit. These are separate
-parameters: the vector clause's neighbor count and the final requested hit count.
+Vector retrieval uses the existing `embedding` field and `OPENSEARCH_MODEL_ID`.
+The neural query's `k` equals the retrieval pool size. Embedding contents, Titan
+model and index mapping are unchanged.
 
-### Scoring and ranking
+Both requests use the selected index, `allow_partial_search_results: false`,
+`search_pipeline: "_none"`, and exclude the stored vector from returned source.
+Explicit `_none` bypasses an index default search pipeline too. If either request
+fails, times out or reports failed shards, the operation fails; it does not silently
+rank only the successful branch.
 
-[candidateHybridSearchPipeline.json](../backend/dataSearch/infrastructure/config/candidateHybridSearchPipeline.json)
-contains the unchanged OpenSearch normalization processor:
+## Backend ranking formula
 
-```json
-{
-  "normalization": { "technique": "min_max" },
-  "combination": {
-    "technique": "arithmetic_mean",
-    "parameters": { "weights": [0.25, 0.75] }
-  }
-}
+Positions are one-based and follow each OpenSearch response's order:
+
+```text
+score = 1 / (60 + lexicalPosition) + 1 / (60 + vectorPosition)
 ```
 
-The weights correspond to the hybrid clauses' order: **25% lexical, 75% vector**.
-They combine normalized scores, not raw keyword/vector scores. The backend adds
-no second ranking pass. The pipeline file moved without changing its bytes.
+An absent branch contributes zero. Equal scores use ascending Salesforce ID as a
+stable tie-breaker. Repeated IDs within a branch contribute only their first hit.
+A candidate present in both lists keeps the lexical branch's document. Ranking
+does not mutate the input lists or candidate data.
 
-Setup composition supplies this configuration to the existing embedding setup
-repository, which installs it. Runtime search references the configured
-`OPENSEARCH_SEARCH_PIPELINE`; it does not reinstall the file on each request.
-Therefore, inspecting the file shows the settings this application's setup installs;
-it does not verify that a deployed pipeline has not been edited separately.
+Raw scores remain unchanged, including zero. An unavailable raw score is null;
+a missing position means the candidate was not returned in that branch's pool.
+These are different cases. RRF uses positions, not score magnitudes, so a large
+score gap is not preserved by the combination formula.
 
-### Input bounds
+The maximum combined score is `2 / 61` (about 0.032787), when first in both lists.
+It is not a probability, percentage, or acceptance threshold. This change adds no
+suitability rejection rule, reranker model, or guarantee that relevant candidates
+exist in the retrieved pool. Live relevance must be evaluated separately.
 
-The use case keeps the same Zod schema and error formatting: trim query whitespace,
-require 1–10,000 characters, and accept an integer result limit from 1 to 100.
-The default result limit remains 20. Validation runs before repository access.
+## Existing installations and UI
+
+No re-fetch, re-embedding or setup is needed for this ranking change. Restart the
+backend and rebuild the UI with `npm run ui`, then search the same index.
+
+The UI shows final rank, ranking score, raw lexical/vector scores and positions.
+A missing branch displays **Not returned**. Old saved results display **Legacy
+score** and **Not recorded** rather than pretending those scores came from RRF.
+New score metadata is preserved in search history. CLI output prints RRF and both
+branch scores and positions.
+
+Setup still installs the former hybrid pipeline for compatibility. Its existing
+25%/75% configuration and `OPENSEARCH_SEARCH_PIPELINE` no longer control this search
+path; requests explicitly bypass it. Preparation and embedding behavior is unchanged.
 
 ## Verification
 
-```powershell
-npm run test:baseline
-npm run build
-```
-
-The existing offline baseline covers actual CLI/HTTP/worker entry points, outgoing
-OpenSearch requests, restored results, empty results and search failures. Expected
-artifacts, inputs and assertions remain unchanged. Test imports follow moved files;
-one construction-only driver wires the production repository for existing tests.
-It contains no duplicate query or result-mapping logic.
-
-Validation passed: 93 backend tests, two contract tests, three browser workflows,
-type checking, the Angular build and the backend build. All 88 frozen artifacts
-match byte-for-byte, and all 92 fixture files remain unchanged.
-
-Additional architecture checks enforce inward application dependencies, explicit
-method access, braces, camelCase class filenames and separate pure lexical/vector
-mappers. The frozen baseline compares application behavior and request bytes;
-it does not test live service availability or real-world relevance.
-
-See [offline baseline coverage](offline-refactor-baseline.md),
-[preparation architecture](dataPreparationRefactor.md), and
-[embedding architecture](dataEmbeddingRefactor.md).
+`npm run test:baseline` exercises the offline system, browser and architecture tests.
+Focused tests cover overlap, missing branches, zero/null scores, ties, input
+immutability, bounded pools, and rejecting partial searches. Contract fixtures now
+provide different lexical/vector hits and assert final ranks and raw scores.
+Only search-specific frozen artifacts were revised; preparation and embedding
+artifacts remain byte-identical. Offline tests verify the algorithm and contracts,
+not relevance on a live Salesforce dataset.

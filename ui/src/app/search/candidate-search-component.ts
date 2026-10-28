@@ -12,6 +12,7 @@ import { OperationProgressComponent } from "../operation-progress-component";
   </form></section>
   <operation-progress [job]="job()" />
   <section class="card results-card"><div class="section-heading"><div><span class="eyebrow">Ranked matches</span><h2>Search results <span class="count">{{rows().length}}</span></h2><p>{{job()?.status === 'succeeded' ? 'Results from ' + job()!.index + '. Open details to inspect the candidate profile.' : 'Results appear here after a search completes.'}}</p></div></div>
+    <p>Results use equal-weight reciprocal rank fusion. Scores indicate ordering, not suitability or confidence. Raw lexical and vector scores use different scales.</p>
     <candidate-table [rows]="rows()" [ranked]="true" [emptyTitle]="job()?.status === 'succeeded' ? 'No matching candidates' : 'Your next hire starts with a search'" [emptyDescription]="job()?.status === 'succeeded' ? 'Try a broader skill or job function, or check that this index contains embedded records.' : 'Enter a skill, role, or combination of expertise above.'" />
   </section>
 ` })

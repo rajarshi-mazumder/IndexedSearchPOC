@@ -123,7 +123,7 @@ npm run index-json -- --file .cache/candidates/java-check.json --index candidate
 Check that its Java tag resolves to `systems` or `skills`, that the selected file
 was embedded into the same index being searched, and that there are no unresolved
 tag-type warnings. The document's `searchText` includes those technology labels.
-The hybrid ranking weights are unchanged; live relevance must be evaluated on
+Search now combines independent lexical/vector results with backend RRF; live relevance must be evaluated on
 your real candidate data after re-exporting and re-embedding.
 
 Employment-history, education-history, resume-attachment and recruitment-process
@@ -274,7 +274,8 @@ Salesforce CLI login -> SalesforceQueryClient (all query pages)
 
 Search text -> SearchCandidatesUseCase -> CandidateOpenSearchSearchRepository
             -> multi_match (BM25) + neural query (same Titan model)
-            -> min_max normalization + weighted arithmetic mean (25% lexical / 75% semantic)
+            -> independent result pools with raw scores
+            -> backend equal-weight RRF: 1/(60 + lexical rank) + 1/(60 + vector rank)
             -> CandidateSearchResult[]
 ```
 
@@ -307,12 +308,12 @@ coordinates preview, add, regenerate and remove operations on existing batch fil
 | `backend/dataEmbedding/setup/` | Use case and ports for setup; infrastructure owns model, connector, pipeline and index SDK calls |
 | `backend/dataEmbedding/indexing/` | Use case, pure document/text services and ports; infrastructure owns bulk writes, acknowledgements and retries |
 | `backend/dataSearch/application/` | Search use case, repository port and result model |
-| `backend/dataSearch/infrastructure/` | Independent lexical/vector query mappers, hybrid request/response mapping, SDK repository and scoring configuration |
+| `backend/dataSearch/infrastructure/` | Independent lexical/vector request/response mappers and SDK repository |
 | `backend/host/` | HTTP/CLI/worker entry points, operation lifecycle, settings and progress/history |
 | `backend/infrastructure/` | Shared OpenSearch client and connection configuration |
 | `backend/composition/createCandidatePreparation.ts` | Inject preparation use cases, service implementations, repositories and stop scheduling |
 | `backend/composition/createCandidateEmbedding.ts` | Inject setup/indexing repositories, pure services and the indexing clock |
-| `backend/composition/createCandidateSearch.ts` | Inject lexical/vector mappers, request/response mappers and the search repository |
+| `backend/composition/createCandidateSearch.ts` | Inject lexical/vector mappers, search repository and pure RRF ranking service |
 | `backend/composition/createCandidateApplication.ts` | Wire console operations, indexing, setup and search |
 | `shared/domain/models/` | Framework-independent candidate, enrichment and CV models |
 | `shared/candidateConsoleContracts.ts` | Browser/API/worker contracts outside the domain |
@@ -322,7 +323,7 @@ Commands, environment variables, dataset paths and API payloads remain unchanged
 For setup and indexing, see the [data embedding guide](docs/dataEmbeddingRefactor.md),
 including the two use cases, dependency boundaries and preserved behavior.
 For search, see the [search architecture and settings guide](docs/dataSearchRefactor.md),
-including lexical boosts, vector neighbor counts and the unchanged 25%/75% scoring pipeline.
+including lexical boosts, retrieval pool sizes, raw scores and the backend RRF formula.
 
 Run `npm run test:baseline` to compare against the same frozen pre-refactor outputs.
 
@@ -373,7 +374,7 @@ This command operates on the already-provisioned collection. It:
 1. Creates or reuses a named Bedrock connector and registered remote model.
 2. Verifies the remote model by simulating an ingest document and checking that
    1024 finite vector values are returned.
-3. Installs the embedding ingest pipeline and hybrid normalization pipeline.
+3. Installs the embedding ingest pipeline and legacy hybrid normalization pipeline (the current search bypasses the latter).
 4. Creates the index with its default ingest pipeline and model metadata.
 
 Copy the printed `OPENSEARCH_MODEL_ID` into `.env`. It is the OpenSearch model ID,
@@ -526,12 +527,19 @@ job functions, systems, expertise categories, then profile). Lexical queries use
 `minimum_should_match: "2<30%"`: all terms for queries of up to two terms,
 otherwise 30% of terms (rounded down, with at least one match). The earlier per-field 75% requirement
 excluded useful lexical evidence from longer natural-language queries.
-The two result sets
-use 25% lexical and 75% semantic weight after score normalization. This keeps
-useful lexical evidence while reducing the influence of weak word matches.
-This replaces the recovered RRF
-pipeline, so rankings and score values will differ. Relevance still needs checking
-against representative candidate queries.
+The backend retrieves `max(limit * 3, 50)` results independently from each branch,
+merges by candidate ID, and calculates equal-weight reciprocal rank fusion:
+`1 / (60 + lexicalPosition) + 1 / (60 + vectorPosition)`. A missing branch contributes
+nothing. Equal combined scores use candidate ID as a tie-breaker; the final result
+limit is applied after merging. Raw scores and positions are shown in the UI and CLI.
+The combined score is a ranking value, not confidence or candidate suitability.
+
+Both searches explicitly use `search_pipeline: "_none"`. The setup-created 25%/75%
+pipeline is retained for compatibility but is no longer used by this search path.
+This is an intentional ranking behavior change, not part of the earlier refactor.
+Existing indexed documents work without re-embedding: restart/rebuild with
+`npm run ui`, then run the same query and compare both branch scores and final order.
+No live relevance improvement is claimed by the offline tests.
 
 ## Current synchronization boundaries
 
@@ -560,7 +568,7 @@ npm run test:baseline
 This runs type checking, backend tests, exact-byte input/output contracts and the
 three browser workflows. `npm run test:contracts` runs only the new offline
 contracts. See [baseline coverage and frozen search settings](docs/offline-refactor-baseline.md)
-for the fixture rules, 25%/75% weighting, limitations and the existing CV-history
+for the fixture rules, the search-only RRF revision, limitations and the existing CV-history
 restart defect. The older `test:e2e` command below uses live AWS and is **not** part
 of this baseline.
 

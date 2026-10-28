@@ -40,7 +40,16 @@ export async function currentSystemScenario(): Promise<Record<string, string>> {
     assert.equal(Object.keys((await documents())["contract-main"]).length, 8);
     h.record("14-indexed-documents.json", await documents());
     for (const [name, query, limit] of [["15-java", "  candidates with Java experience  ", 1], ["16-unicode", "東京 Java 開発", 20], ["17-large-limit", "JavaScript", 100]] as const) {
-      await h.operation(name, { kind: "search", query, limit });
+      const search = await h.operation(name, { kind: "search", query, limit });
+      const best = search.result.candidates[0];
+      assert.equal(best.candidate.id, "003000000000001");
+      assert.equal(best.lexicalScore, 19);
+      assert.equal(best.vectorScore, 0.91);
+      assert.equal(best.lexicalRank, 2);
+      assert.equal(best.vectorRank, 1);
+      assert.equal(best.score, 1 / 62 + 1 / 61);
+      assert.equal(best.rankingMethod, "rrf");
+      assert.equal(search.result.candidates.length, Math.min(limit, 8));
     }
     h.outputs["18-cli-search.txt"] = await h.cli("search", ["--index", "contract-main", "Java", "experience"]);
     await h.recordRequests("18-cli-search");

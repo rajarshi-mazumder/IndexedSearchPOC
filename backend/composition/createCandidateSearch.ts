@@ -5,18 +5,19 @@ import { CandidateSearchRepository } from "../dataSearch/application/ports/candi
 import { CandidateOpenSearchSearchRepository } from "../dataSearch/infrastructure/repositories/candidateOpenSearchSearchRepository";
 import { CandidateLexicalQueryMapper } from "../dataSearch/infrastructure/lexicalSearch/candidateLexicalQueryMapper";
 import { CandidateVectorQueryMapper } from "../dataSearch/infrastructure/vectorSearch/candidateVectorQueryMapper";
-import { CandidateHybridSearchRequestMapper } from "../dataSearch/infrastructure/mappers/candidateHybridSearchRequestMapper";
+import { CandidateIndependentSearchRequestMapper } from "../dataSearch/infrastructure/mappers/candidateIndependentSearchRequestMapper";
 import { CandidateSearchResponseMapper } from "../dataSearch/infrastructure/mappers/candidateSearchResponseMapper";
+import { RankCandidatesByReciprocalRankService } from "../dataSearch/application/services/rankCandidatesByReciprocalRankService";
 
 export function createCandidateSearchRepository(client: Client, config: OpenSearchConfig): CandidateSearchRepository {
   const lexicalQuery = new CandidateLexicalQueryMapper();
   const vectorQuery = new CandidateVectorQueryMapper(config);
-  const requests = new CandidateHybridSearchRequestMapper(config, lexicalQuery, vectorQuery);
+  const requests = new CandidateIndependentSearchRequestMapper(config, lexicalQuery, vectorQuery);
   const responses = new CandidateSearchResponseMapper();
   return new CandidateOpenSearchSearchRepository(client, requests, responses);
 }
 
 export function createCandidateSearchUseCase(client: Client, config: OpenSearchConfig): SearchCandidatesUseCase {
   const repository = createCandidateSearchRepository(client, config);
-  return new SearchCandidatesUseCase(repository);
+  return new SearchCandidatesUseCase(repository, new RankCandidatesByReciprocalRankService());
 }

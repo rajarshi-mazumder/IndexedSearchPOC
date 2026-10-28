@@ -1,3 +1,4 @@
+import { createCandidateSearchUseCase } from "../backend/composition/createCandidateSearch";
 // Explicit live AWS verification. --reindex also exercises the real indexing CLI.
 import "dotenv/config";
 import assert from "node:assert/strict";
@@ -9,8 +10,6 @@ import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { z } from "zod";
 import { loadOpenSearchConfig } from "../backend/infrastructure/config/opensearchConfig";
 import { OpenSearchServerlessClient } from "../backend/infrastructure/opensearch/openSearchServerlessClient";
-import { SearchOpenSearchCandidatesTestDriver as OpenSearchHybridSearch } from "./support/searchOpenSearchCandidatesTestDriver";
-import { SearchCandidatesUseCase as SearchCandidates } from "../backend/dataSearch/application/useCases/searchCandidatesUseCase";
 import { DUMMY_CANDIDATES } from "../backend/dataPreparation/infrastructure/fixtures/dummyCandidates";
 import { TITAN_DIMENSIONS } from "../backend/infrastructure/opensearch/titanEmbeddingConfig";
 import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
@@ -109,7 +108,7 @@ async function main() {
     assert.ok(semantic.body.hits.hits.some((hit) => hit._id === "demo-site-reliability"));
     console.log("PASS: semantic query finds the Site Reliability Engineer in the top five.");
 
-    const search = new SearchCandidates(new OpenSearchHybridSearch(client, config));
+    const search = createCandidateSearchUseCase(client, config);
     for (const [query, expectedId] of [
       ["Java Spring Boot Kafka microservices", "demo-java-platform"],
       ["React TypeScript accessible web interfaces", "demo-react-frontend"],
@@ -122,9 +121,9 @@ async function main() {
     const { stdout } = await runFile(process.execPath, [
       "--import", "tsx", resolve(__dirname, "../backend/host/cli/search.ts"), "Java Spring Boot Kafka microservices",
     ], { timeout: 180000, windowsHide: true });
-    assert.match(stdout, /#1\s+Hybrid Score: [\d.]+\s+Name: Alex Demo/);
+    assert.match(stdout, /#1\s+RRF score \(not confidence\): [\d.]+\s+Lexical score:[^\n]+\s+Vector score:[^\n]+\s+Name: Alex Demo/);
     console.log("PASS: the search CLI displays Alex Demo as the first Java/Kafka result.");
-    const report = await new CandidateSearchBenchmark(client, config, new OpenSearchHybridSearch(client, config)).run(benchmarkSplit);
+    const report = await new CandidateSearchBenchmark(client, config, search).run(benchmarkSplit);
     assert.equal(report.passed, report.total, "Relevance benchmark failures; inspect the saved report before changing ranking");
   } finally {
     await client.close();

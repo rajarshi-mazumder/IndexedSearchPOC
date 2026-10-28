@@ -13,7 +13,11 @@ const recordSchema = z.object({ id: z.string(), kind: z.enum(["fetch", "embed", 
     fileNumber: z.number().optional(), fileTotal: z.number().optional() }),
   result: z.object({ modelId: z.string().optional(), fetched: z.number().optional(), batchNumber: z.number().optional(), complete: z.boolean().optional(),
     files: z.array(z.object({ file: z.string(), indexed: z.number(), skipped: z.number(), hash: z.string(), size: z.number(), modifiedAt: z.string() })).max(1000).optional(),
-    candidates: z.array(z.object({ rank: z.number(), score: z.number(), candidate: candidateSchema, profile: z.string() })).max(100).optional(),
+    candidates: z.array(z.object({ rank: z.number(), score: z.number(), candidate: candidateSchema, profile: z.string(),
+      rankingMethod: z.literal("rrf").optional(),
+      lexicalScore: z.number().finite().nullable().optional(), vectorScore: z.number().finite().nullable().optional(),
+      lexicalRank: z.number().int().positive().nullable().optional(), vectorRank: z.number().int().positive().nullable().optional(),
+    })).max(100).optional(),
   }).optional(),
 });
 export class JsonOperationHistoryStore implements CandidateOperationHistoryStore {

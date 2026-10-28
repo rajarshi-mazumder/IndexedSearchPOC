@@ -3,19 +3,9 @@ Query: "Java experience"
 
 --------------------------------------------------------------------------------
 #1
-Hybrid Score: 0.900000
-Name: Jordan Smith
-Salesforce ID: 003000000000002
-Demo CV: synthetic professional details included (seed contract-seed)
-Title: JavaScript Developer
-Skills: 
-Systems / technologies: JavaScript
-Job Functions: 
-Languages: 
-Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c
---------------------------------------------------------------------------------
-#2
-Hybrid Score: 0.900000
+RRF score (not confidence): 0.032522
+Lexical score: 19 Position: 2
+Vector score: 0.91 Position: 1
 Name: Aki 佐藤
 Salesforce ID: 003000000000001
 Demo CV: synthetic professional details included (seed contract-seed)
@@ -26,20 +16,24 @@ Job Functions:
 Languages: Japanese (Business level)
 Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c
 --------------------------------------------------------------------------------
-#3
-Hybrid Score: 0.000000
-Name: Empty Profile
-Salesforce ID: 003000000000008
+#2
+RRF score (not confidence): 0.032266
+Lexical score: 24 Position: 1
+Vector score: 0.82 Position: 3
+Name: Jordan Smith
+Salesforce ID: 003000000000002
 Demo CV: synthetic professional details included (seed contract-seed)
-Title: Not provided
+Title: JavaScript Developer
 Skills: 
-Systems / technologies: 
+Systems / technologies: JavaScript
 Job Functions: 
 Languages: 
-Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c
 --------------------------------------------------------------------------------
-#4
-Hybrid Score: 0.340000
+#3
+RRF score (not confidence): 0.032002
+Lexical score: 9 Position: 3
+Vector score: 0.87 Position: 2
 Name: Priya Rao
 Salesforce ID: 003000000000003
 Demo CV: synthetic professional details included (seed contract-seed)
@@ -50,8 +44,24 @@ Job Functions:
 Languages: 
 Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; Unclassified tag type: UnmappedType (a02000000000008); Tag hierarchy cycle: a02000000000008; Unresolved tag: a02000000000099; Unresolved employer: 001000000000099
 --------------------------------------------------------------------------------
+#4
+RRF score (not confidence): 0.015625
+Lexical score: 4 Position: 4
+Vector score: null Position: null
+Name: Morgan Lee
+Salesforce ID: 003000000000004
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Analytics Specialist
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+--------------------------------------------------------------------------------
 #5
-Hybrid Score: 0.300000
+RRF score (not confidence): 0.015625
+Lexical score: null Position: null
+Vector score: 0.75 Position: 4
 Name: Alex Kim
 Salesforce ID: 003000000000007
 Demo CV: synthetic professional details included (seed contract-seed)
@@ -63,19 +73,9 @@ Languages:
 Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
 --------------------------------------------------------------------------------
 #6
-Hybrid Score: 0.200000
-Name: Morgan Lee
-Salesforce ID: 003000000000004
-Demo CV: synthetic professional details included (seed contract-seed)
-Title: Analytics Specialist
-Skills: 
-Systems / technologies: 
-Job Functions: 
-Languages: 
-Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
---------------------------------------------------------------------------------
-#7
-Hybrid Score: 0.100000
+RRF score (not confidence): 0.015385
+Lexical score: null Position: null
+Vector score: 0.62 Position: 5
 Name: Dana Chen
 Salesforce ID: 003000000000005
 Demo CV: synthetic professional details included (seed contract-seed)
@@ -86,8 +86,24 @@ Job Functions:
 Languages: 
 Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
 --------------------------------------------------------------------------------
+#7
+RRF score (not confidence): 0.015385
+Lexical score: null Position: 5
+Vector score: null Position: null
+Name: Empty Profile
+Salesforce ID: 003000000000008
+Demo CV: synthetic professional details included (seed contract-seed)
+Title: Not provided
+Skills: 
+Systems / technologies: 
+Job Functions: 
+Languages: 
+Data quality notes: Unavailable field: Contact.MailingState; Unavailable field: Contact.currentPositionStartDate__c; Unavailable field: Contact.positionLevel__c; Unavailable field: Contact.jobType__c; Unavailable field: Contact.currentMonthlySalary__c; Unavailable field: Contact.desiredSalary__c; Unavailable field: Contact.noticePeriod__c; Unavailable field: Contact.location__c; Unavailable field: Contact.relocateTo__c; Unavailable field: Contact.highestEducationalInstitute__c; Unavailable field: Contact.educationalSpecialization__c; Unavailable field: Contact.currentPeopleManaged__c; Unavailable field: Contact.maxPeopleManaged__c; Unavailable field: Contact.status__c; Unavailable field: Contact.isDummyCandidate__c; No candidate tag associations returned
+--------------------------------------------------------------------------------
 #8
-Hybrid Score: 0.010000
+RRF score (not confidence): 0.015152
+Lexical score: null Position: null
+Vector score: 0.4 Position: 6
 Name: Sam Patel
 Salesforce ID: 003000000000006
 Demo CV: synthetic professional details included (seed contract-seed)
