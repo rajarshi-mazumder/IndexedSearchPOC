@@ -6,6 +6,9 @@ import { FormatCandidateCvTextService } from "../dataEmbedding/indexing/applicat
 import { FormatCandidateProfessionalDetailsService } from "../dataEmbedding/indexing/application/services/formatCandidateProfessionalDetailsService";
 import { GenerateCandidateDisplayProfileService } from "../dataEmbedding/indexing/application/services/generateCandidateDisplayProfileService";
 import { GenerateCandidateSearchTextService } from "../dataEmbedding/indexing/application/services/generateCandidateSearchTextService";
+import { GenerateCandidateSkillsTextService } from "../dataEmbedding/indexing/application/services/generateCandidateSkillsTextService";
+import { GenerateCandidateLanguagesTextService } from "../dataEmbedding/indexing/application/services/generateCandidateLanguagesTextService";
+import { GenerateCandidateRegionTextService } from "../dataEmbedding/indexing/application/services/generateCandidateRegionTextService";
 import { EmbedCandidatesIntoOpenSearchUseCase } from "../dataEmbedding/indexing/application/useCases/embedCandidatesIntoOpenSearchUseCase";
 import { CandidateOpenSearchDocumentRepository } from "../dataEmbedding/indexing/infrastructure/repositories/candidateOpenSearchDocumentRepository";
 import { SetupCandidateOpenSearchResourcesUseCase } from "../dataEmbedding/setup/application/useCases/setupCandidateOpenSearchResourcesUseCase";
@@ -20,7 +23,8 @@ export function createCandidateDocumentPreparation(): PrepareCandidateOpenSearch
   const cvText = new FormatCandidateCvTextService();
   const displayProfile = new GenerateCandidateDisplayProfileService(professionalDetails, cvText);
   const searchText = new GenerateCandidateSearchTextService(professionalDetails, cvText);
-  return new PrepareCandidateOpenSearchDocumentService(displayProfile, searchText);
+  return new PrepareCandidateOpenSearchDocumentService(displayProfile, searchText,
+    new GenerateCandidateSkillsTextService(), new GenerateCandidateLanguagesTextService(), new GenerateCandidateRegionTextService());
 }
 
 export function createCandidateIndexingUseCase(

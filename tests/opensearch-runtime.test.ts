@@ -5,6 +5,7 @@ import { CandidateOpenSearchDocumentRepository as OpenSearchCandidateDocumentInd
 import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mappers/openSearchCandidateDocumentMapper";
 import { SearchOpenSearchCandidatesTestDriver as OpenSearchHybridSearch } from "./support/searchOpenSearchCandidatesTestDriver";
 import { config, documentFixture } from "./candidate-fixtures";
+import { CANDIDATE_SCHEMA_VERSION } from "../backend/infrastructure/opensearch/titanEmbeddingConfig";
 
 test("enriched documents reject an old index before bulk writes and verify compatible mapping once", async () => {
   let version = 2; let reads = 0; let writes = 0;
@@ -16,7 +17,7 @@ test("enriched documents reject an old index before bulk writes and verify compa
   const index = new OpenSearchCandidateDocumentIndex(client, config);
   await assert.rejects(index.indexMany([document]), /Enriched candidates require a new index/);
   assert.equal(writes, 0);
-  version = 3;
+  version = CANDIDATE_SCHEMA_VERSION;
   await index.indexMany([document]); await index.indexMany([document]);
   assert.equal(writes, 2); assert.equal(reads, 2);
 });
@@ -103,7 +104,7 @@ test("independent searches bypass pipelines, preserve raw scores and rank locall
     assert.equal(request.search_pipeline, "_none");
     assert.equal(request.body.size, 50);
     assert.equal(request.allow_partial_search_results, false);
-    assert.deepEqual(request.body._source, { excludes: ["embedding"] });
+    assert.deepEqual(request.body._source, { excludes: ["embedding", "skillsEmbedding", "languagesEmbedding", "regionEmbedding"] });
     assert.equal(request.body.query.hybrid, undefined);
   }
   assert.equal(requests[0].body.query.multi_match.query, "TypeScript engineer");
@@ -111,7 +112,19 @@ test("independent searches bypass pipelines, preserve raw scores and rank locall
     query_text: "TypeScript engineer", model_id: config.OPENSEARCH_MODEL_ID, k: 50,
   });
   assert.deepEqual(results, [{ score: 2 / 61, rankingMethod: "rrf", lexicalScore: 0.8, vectorScore: 0.8,
-    lexicalRank: 1, vectorRank: 1, document }]);
+    lexicalRank: 1, vectorRank: 1, aspectRanks: {}, document }]);
+});
+
+test("aspect searches run a neural query on their own vector field", async () => {
+  const requests: any[] = [];
+  const client = { search: async (input: any) => {
+    requests.push(input);
+    return { body: { timed_out: false, hits: { hits: [] } } };
+  } } as unknown as Client;
+  await new OpenSearchHybridSearch(client, config).search({ query: "Backend engineer", skills: "Kafka", languages: "Japanese", region: "East Asia" }, 10);
+  assert.deepEqual(requests.map((request) => Object.keys(request.body.query.neural ?? { lexical: true })),
+    [["lexical"], ["embedding"], ["skillsEmbedding"], ["languagesEmbedding"], ["regionEmbedding"]]);
+  assert.equal(requests[4].body.query.neural.regionEmbedding.query_text, "East Asia");
 });
 
 test("search refuses timed out or partially failed results", async () => {

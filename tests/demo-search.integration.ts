@@ -114,7 +114,7 @@ async function main() {
       ["React TypeScript accessible web interfaces", "demo-react-frontend"],
       ["budget forecasts financial modeling", "demo-financial-analyst"],
     ]) {
-      const results = await search.execute(query, 5);
+      const results = await search.execute({ query }, 5);
       assert.ok(results.some((result) => result.document.salesforceId === expectedId), "Expected demo candidate for: " + query);
       console.log("PASS: hybrid query " + JSON.stringify(query) + " -> " + results.map((result) => result.document.candidate.name).join(", "));
     }

@@ -1,6 +1,10 @@
 import { API } from "@opensearch-project/opensearch";
 import { OpenSearchConfig } from "../../../infrastructure/config/opensearchConfig";
+import { CANDIDATE_VECTOR_FIELDS } from "../../../infrastructure/opensearch/titanEmbeddingConfig";
+import { CandidateVectorTarget } from "../../application/models/candidateSearchAspect";
 import { CandidateIndependentSearchRequestMapping } from "../ports/candidateIndependentSearchRequestMapping";
+
+const VECTOR_FIELDS = Object.values(CANDIDATE_VECTOR_FIELDS).map((field) => field.vector);
 import { CandidateLexicalQueryMapping } from "../ports/candidateLexicalQueryMapping";
 import { CandidateVectorQueryMapping } from "../ports/candidateVectorQueryMapping";
 
@@ -15,8 +19,8 @@ export class CandidateIndependentSearchRequestMapper implements CandidateIndepen
     return this.createRequest(this.lexicalQuery.map(query), poolSize);
   }
 
-  public mapVector(query: string, poolSize: number): API.Search_Request {
-    return this.createRequest(this.vectorQuery.map(query, poolSize), poolSize);
+  public mapVector(target: CandidateVectorTarget, query: string, poolSize: number): API.Search_Request {
+    return this.createRequest(this.vectorQuery.map(target, query, poolSize), poolSize);
   }
 
   private createRequest(query: NonNullable<API.Search_RequestBody["query"]>, poolSize: number): API.Search_Request {
@@ -27,7 +31,7 @@ export class CandidateIndependentSearchRequestMapper implements CandidateIndepen
       allow_partial_search_results: false,
       body: {
         size: poolSize,
-        _source: { excludes: ["embedding"] },
+        _source: { excludes: [...VECTOR_FIELDS] },
         query,
       },
     };

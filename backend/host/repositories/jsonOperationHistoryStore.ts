@@ -19,6 +19,8 @@ const recordSchema = z.object({ id: z.string(), kind: z.enum(["fetch", "embed", 
       rankingMethod: z.literal("rrf").optional(),
       lexicalScore: z.number().finite().nullable().optional(), vectorScore: z.number().finite().nullable().optional(),
       lexicalRank: z.number().int().positive().nullable().optional(), vectorRank: z.number().int().positive().nullable().optional(),
+      aspectRanks: z.object({ skills: z.number().int().positive().optional(), languages: z.number().int().positive().optional(),
+        region: z.number().int().positive().optional() }).optional(),
     })).max(100).optional(),
   }).optional(),
 });

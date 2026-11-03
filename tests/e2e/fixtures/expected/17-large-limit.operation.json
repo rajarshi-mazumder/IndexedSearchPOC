@@ -36,6 +36,7 @@
         "vectorScore": 0.91,
         "lexicalRank": 2,
         "vectorRank": 1,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000001",
           "name": "Aki 佐藤",
@@ -291,6 +292,7 @@
         "vectorScore": 0.82,
         "lexicalRank": 1,
         "vectorRank": 3,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000002",
           "name": "Jordan Smith",
@@ -471,6 +473,7 @@
         "vectorScore": 0.87,
         "lexicalRank": 3,
         "vectorRank": 2,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000003",
           "name": "Priya Rao",
@@ -663,6 +666,7 @@
         "vectorScore": null,
         "lexicalRank": 4,
         "vectorRank": null,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000004",
           "name": "Morgan Lee",
@@ -816,6 +820,7 @@
         "vectorScore": 0.75,
         "lexicalRank": null,
         "vectorRank": 4,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000007",
           "name": "Alex Kim",
@@ -975,6 +980,7 @@
         "vectorScore": 0.62,
         "lexicalRank": null,
         "vectorRank": 5,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000005",
           "name": "Dana Chen",
@@ -1120,6 +1126,7 @@
         "vectorScore": null,
         "lexicalRank": 5,
         "vectorRank": null,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000008",
           "name": "Empty Profile",
@@ -1264,6 +1271,7 @@
         "vectorScore": 0.4,
         "lexicalRank": null,
         "vectorRank": 6,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000006",
           "name": "Sam Patel",

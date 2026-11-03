@@ -2,15 +2,22 @@ import "dotenv/config";
 import { createSearchContext } from "../../composition/createCandidateApplication";
 import { parseArgs } from "node:util";
 import { OpenSearchCommandEnvironment } from "./openSearchCommandEnvironment";
+import { CANDIDATE_SEARCH_ASPECTS } from "../../dataSearch/application/models/candidateSearchAspect";
 
 async function main() {
-  const { values, positionals } = parseArgs({ options: { index: { type: "string" } }, allowPositionals: true });
+  const { values, positionals } = parseArgs({ options: {
+    index: { type: "string" }, skills: { type: "string" }, languages: { type: "string" }, region: { type: "string" },
+  }, allowPositionals: true });
   const query = positionals.join(" ").trim() || "Business analysis experience";
   const context = createSearchContext(OpenSearchCommandEnvironment.create(process.env, values.index));
   try {
     console.log("OpenSearch index:", context.index);
-    console.log('Query: "' + query + '"\n');
-    const results = await context.searchCandidates.execute(query, 10);
+    console.log('Query: "' + query + '"');
+    for (const aspect of CANDIDATE_SEARCH_ASPECTS) {
+      if (values[aspect]) console.log(aspect + ': "' + values[aspect] + '"');
+    }
+    console.log();
+    const results = await context.searchCandidates.execute({ query, skills: values.skills, languages: values.languages, region: values.region }, 10);
     for (const [index, result] of results.entries()) {
       const candidate = result.document.candidate;
       console.log("-".repeat(80));
@@ -18,6 +25,7 @@ async function main() {
       console.log("RRF score (not confidence):", result.score.toFixed(6));
       console.log("Lexical score:", result.lexicalScore, "Position:", result.lexicalRank);
       console.log("Vector score:", result.vectorScore, "Position:", result.vectorRank);
+      for (const [aspect, rank] of Object.entries(result.aspectRanks)) console.log(aspect + " vector position:", rank);
       console.log("Name:", candidate.name);
       console.log("Salesforce ID:", candidate.id);
       if (candidate.enrichment?.cvProfile) console.log("Demo CV: synthetic professional details included (seed " + candidate.enrichment.cvProfile.source.seed + ")");

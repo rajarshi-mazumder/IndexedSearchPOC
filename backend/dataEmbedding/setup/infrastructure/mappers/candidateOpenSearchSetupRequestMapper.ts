@@ -1,23 +1,33 @@
 import { API } from "@opensearch-project/opensearch";
 import { OpenSearchSetupConfig } from "../../../../infrastructure/config/opensearchConfig";
-import { CANDIDATE_SCHEMA_VERSION, TITAN_MODEL_ID } from "../../../../infrastructure/opensearch/titanEmbeddingConfig";
+import { CANDIDATE_SCHEMA_VERSION, CANDIDATE_VECTOR_FIELDS, TITAN_MODEL_ID } from "../../../../infrastructure/opensearch/titanEmbeddingConfig";
 import mapping from "../config/candidateIndex.json";
 
 /** Pure SDK payload construction, kept outside the application layer. */
 export class CandidateOpenSearchSetupRequestMapper {
   public constructor(private readonly config: OpenSearchSetupConfig) {}
 
+  /** Text field → vector field for every candidate vector. */
+  public createEmbeddingFieldMap(): Record<string, string> {
+    const fieldMap: Record<string, string> = {};
+    for (const field of Object.values(CANDIDATE_VECTOR_FIELDS)) {
+      fieldMap[field.text] = field.vector;
+    }
+    return fieldMap;
+  }
+
   public createIngestPipeline(modelId: string) {
     return {
       description: "Generate candidate vectors with Amazon Bedrock Titan V2",
       processors: [{ text_embedding: {
         model_id: modelId,
-        field_map: { searchText: "embedding" },
+        field_map: this.createEmbeddingFieldMap(),
         batch_size: 1,
       } }],
     };
   }
 
+  /** Only searchText is present, which also proves the pipeline tolerates candidates without aspect texts. */
   public createSimulationRequest(modelId: string) {
     return {
       method: "POST",

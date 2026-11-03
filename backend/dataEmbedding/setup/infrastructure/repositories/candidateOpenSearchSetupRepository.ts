@@ -1,16 +1,22 @@
 import { Client } from "@opensearch-project/opensearch";
 import { z } from "zod";
 import { OpenSearchSetupConfig } from "../../../../infrastructure/config/opensearchConfig";
-import { CANDIDATE_SCHEMA_VERSION, TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../../../../infrastructure/opensearch/titanEmbeddingConfig";
+import { CANDIDATE_SCHEMA_VERSION, CANDIDATE_VECTOR_FIELDS, TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../../../../infrastructure/opensearch/titanEmbeddingConfig";
 import { CandidateIndexState, CandidateOpenSearchResources } from "../../application/ports/candidateOpenSearchResources";
 import { CandidateOpenSearchSetupRequestMapper } from "../mappers/candidateOpenSearchSetupRequestMapper";
 
+function createVectorPropertiesSchema() {
+  const properties: Record<string, z.ZodTypeAny> = {};
+  for (const field of Object.values(CANDIDATE_VECTOR_FIELDS)) {
+    properties[field.text] = z.object({ type: z.literal("text") });
+    properties[field.vector] = z.object({ type: z.literal("knn_vector"), dimension: z.literal(TITAN_DIMENSIONS) });
+  }
+  return z.object(properties);
+}
+
 const compatibleMappingSchema = z.object({
   _meta: z.object({ schema_version: z.literal(CANDIDATE_SCHEMA_VERSION), embedding_model: z.literal(TITAN_MODEL_ID) }),
-  properties: z.object({
-    embedding: z.object({ type: z.literal("knn_vector"), dimension: z.literal(TITAN_DIMENSIONS) }),
-    searchText: z.object({ type: z.literal("text") }),
-  }),
+  properties: createVectorPropertiesSchema(),
 });
 
 const simulationSchema = z.object({
@@ -21,7 +27,7 @@ const simulationSchema = z.object({
 
 interface TextEmbeddingProcessor {
   model_id?: unknown;
-  field_map?: { searchText?: unknown };
+  field_map?: Record<string, unknown>;
 }
 
 interface IngestPipeline {
@@ -99,9 +105,20 @@ export class CandidateOpenSearchSetupRepository implements CandidateOpenSearchRe
 
   private requireCompatiblePipeline(pipeline: IngestPipeline | undefined, modelId: string): void {
     const processor = this.findEmbeddingProcessor(pipeline);
-    if (processor?.model_id !== modelId || processor?.field_map?.searchText !== "embedding") {
+    if (!processor || processor.model_id !== modelId || !this.hasExpectedFieldMap(processor)) {
       throw new Error("The ingest pipeline has different embedding settings. Choose a new OPENSEARCH_INGEST_PIPELINE.");
     }
+  }
+
+  /** The whole map must match: a pipeline shared with an older index would otherwise be overwritten silently. */
+  private hasExpectedFieldMap(processor: TextEmbeddingProcessor): boolean {
+    const expected = this.requests.createEmbeddingFieldMap();
+    const actual = processor.field_map ?? {};
+    const expectedFields = Object.keys(expected);
+    if (Object.keys(actual).length !== expectedFields.length) {
+      return false;
+    }
+    return expectedFields.every((text) => actual[text] === expected[text]);
   }
 
   private findEmbeddingProcessor(pipeline: IngestPipeline | undefined): TextEmbeddingProcessor | undefined {

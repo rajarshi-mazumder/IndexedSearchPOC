@@ -8,6 +8,7 @@ import { OperationProgressComponent } from "../operation-progress-component";
   <div class="page-heading"><div><span class="eyebrow">03 / Explore your dataset</span><h1>Search candidates</h1><p>Test relevance with a mix of keyword and semantic matching.</p></div><span class="context-chip">Hybrid search</span></div>
   <section class="card search-card"><form (ngSubmit)="search()" #form="ngForm">
     <label class="search-label">What expertise are you looking for?<textarea name="query" [(ngModel)]="query" placeholder="e.g. Java Spring Boot Kafka microservices" rows="2" required maxlength="10000"></textarea></label>
+    <div class="search-controls"><label>Skills vector <span class="muted">(optional)</span><input name="skills" [(ngModel)]="skills" placeholder="e.g. Kafka event streaming" maxlength="10000" /></label><label>Languages vector <span class="muted">(optional)</span><input name="languages" [(ngModel)]="languages" placeholder="e.g. business-level Japanese" maxlength="10000" /></label><label>Region vector <span class="muted">(optional)</span><input name="region" [(ngModel)]="region" placeholder="e.g. East Asia" maxlength="10000" /></label></div>
     <div class="search-controls"><label>Index<input name="index" [(ngModel)]="index" required /></label><label class="limit-field">Results<input name="limit" type="number" [(ngModel)]="limit" min="1" max="100" required /></label><button type="submit" class="button primary" [disabled]="form.invalid || busy() || store.searchRunning()">{{store.searchRunning() ? 'Searching…' : 'Search candidates →'}}</button></div>
   </form></section>
   <operation-progress [job]="job()" />
@@ -17,13 +18,24 @@ import { OperationProgressComponent } from "../operation-progress-component";
   </section>
 ` })
 export class CandidateSearchComponent {
-  index = ""; query = ""; limit = 10; readonly busy = signal(false);
+  index = ""; query = ""; limit = 10; skills = ""; languages = ""; region = ""; readonly busy = signal(false);
   readonly job = computed(() => this.store.recordFor("search")); readonly rows = computed(() => this.job()?.result?.candidates ?? []);
   constructor(readonly store: CandidateConsoleStore) {
     effect(() => { this.index = this.store.configuration().index; });
-    const last = store.recordFor("search")?.request; if (last?.kind === "search") { this.query = last.query; this.limit = last.limit; }
+    const last = store.recordFor("search")?.request;
+    if (last?.kind === "search") { this.query = last.query; this.limit = last.limit; this.skills = last.skills ?? ""; this.languages = last.languages ?? ""; this.region = last.region ?? ""; }
   }
   async search(): Promise<void> {
-    this.busy.set(true); await this.store.start({ kind: "search", configuration: this.store.forTarget(this.store.configuration().dataset, this.index), query: this.query, limit: this.limit }); this.busy.set(false);
+    this.busy.set(true);
+    await this.store.start({ kind: "search", configuration: this.store.forTarget(this.store.configuration().dataset, this.index), query: this.query, limit: this.limit, ...this.aspectTexts() });
+    this.busy.set(false);
+  }
+  /** Blank aspect fields are left out so their vectors are not searched. */
+  private aspectTexts(): { skills?: string; languages?: string; region?: string } {
+    const texts: { skills?: string; languages?: string; region?: string } = {};
+    if (this.skills.trim()) texts.skills = this.skills.trim();
+    if (this.languages.trim()) texts.languages = this.languages.trim();
+    if (this.region.trim()) texts.region = this.region.trim();
+    return texts;
   }
 }

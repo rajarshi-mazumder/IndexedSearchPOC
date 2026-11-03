@@ -36,6 +36,7 @@
         "vectorScore": 0.91,
         "lexicalRank": 2,
         "vectorRank": 1,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000001",
           "name": "Aki 佐藤",

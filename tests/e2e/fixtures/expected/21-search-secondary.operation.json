@@ -36,6 +36,7 @@
         "vectorScore": null,
         "lexicalRank": 1,
         "vectorRank": null,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000004",
           "name": "Morgan Lee",
@@ -189,6 +190,7 @@
         "vectorScore": 0.62,
         "lexicalRank": null,
         "vectorRank": 1,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000005",
           "name": "Dana Chen",
@@ -334,6 +336,7 @@
         "vectorScore": 0.4,
         "lexicalRank": null,
         "vectorRank": 2,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000006",
           "name": "Sam Patel",

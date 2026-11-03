@@ -2,6 +2,9 @@ import { Candidate } from "../../shared/domain/models/candidate";
 import { CandidateDocument } from "../../backend/candidateData/models/candidateDocument";
 import { PrepareCandidateOpenSearchDocumentService } from "../../backend/dataEmbedding/indexing/application/services/prepareCandidateOpenSearchDocumentService";
 import { CandidateDocumentPreparation, PreparedCandidateDocument } from "../../backend/dataEmbedding/indexing/application/ports/candidateDocumentPreparation";
+import { GenerateCandidateSkillsTextService } from "../../backend/dataEmbedding/indexing/application/services/generateCandidateSkillsTextService";
+import { GenerateCandidateLanguagesTextService } from "../../backend/dataEmbedding/indexing/application/services/generateCandidateLanguagesTextService";
+import { GenerateCandidateRegionTextService } from "../../backend/dataEmbedding/indexing/application/services/generateCandidateRegionTextService";
 import { GenerateCandidateProfileTestDriver } from "./generateCandidateProfileTestDriver";
 
 /** Keeps the old construction and timestamp boundary in existing focused tests. */
@@ -13,7 +16,7 @@ export class PrepareCandidateDocumentTestDriver implements CandidateDocumentPrep
       generate: (candidate) => {
         return generator.generateSearchText(candidate);
       },
-    });
+    }, new GenerateCandidateSkillsTextService(), new GenerateCandidateLanguagesTextService(), new GenerateCandidateRegionTextService());
   }
 
   public prepare(candidate: Candidate): PreparedCandidateDocument | null {
