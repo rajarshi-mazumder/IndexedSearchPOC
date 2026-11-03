@@ -36,6 +36,7 @@
         "vectorScore": 0.91,
         "lexicalRank": 2,
         "vectorRank": 1,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000001",
           "name": "Aki 佐藤",
@@ -47,115 +48,143 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "java-backend"
+                "archetype": "java-enterprise-integration"
               },
-              "summary": "Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Detail-focused Senior Integration Engineer offering 11 years of experience in enterprise integration and message-based interfaces in Java, most recently on plant system integration and supplier EDI gateway. Comfortable working across international, multilingual teams.",
               "technicalSkills": {
                 "languages": [
                   "Java",
+                  "XML",
                   "SQL"
                 ],
                 "frameworks": [
-                  "Spring Boot",
-                  "JUnit"
+                  "Apache Camel",
+                  "Jakarta EE",
+                  "Spring Integration"
                 ],
                 "databases": [
-                  "PostgreSQL"
+                  "Oracle Database"
                 ],
                 "tools": [
-                  "Kafka",
-                  "Docker",
-                  "Git"
+                  "IBM MQ",
+                  "MuleSoft Anypoint",
+                  "Jenkins",
+                  "SoapUI"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Cedar Services",
-                  "role": "Backend Engineer",
-                  "location": "Demo regional office",
-                  "start": "2022-04",
-                  "end": "2023-03",
+                  "employer": "Demo Canyon Manufacturing",
+                  "role": "Integration Engineer",
+                  "location": "Austin, United States",
+                  "start": "2015-04",
+                  "end": "2019-03",
                   "responsibilities": [
-                    "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Mapped partner message formats and maintained interface specifications.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo Summit Group",
-                  "role": "Backend Engineer",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
+                  "employer": "Demo Yuzu Manufacturing",
+                  "role": "Senior Integration Engineer",
+                  "location": "Beijing, China",
+                  "start": "2019-04",
+                  "end": "2022-03",
+                  "responsibilities": [
+                    "Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails.",
+                    "Monitored integration queues and resolved failed message replays.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Aurora Electric",
+                  "role": "Senior Integration Engineer",
+                  "location": "Sendai, Japan",
+                  "start": "2022-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Mapped partner message formats and maintained interface specifications.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Payment reconciliation",
-                  "description": "Banking services matching payment events with settlement records.",
-                  "role": "Backend Engineer",
+                  "name": "Plant system integration",
+                  "description": "Real-time exchange between ERP and factory execution systems.",
+                  "role": "Senior Integration Engineer",
                   "technologies": [
                     "Java",
+                    "XML",
                     "SQL",
-                    "Spring Boot",
-                    "JUnit",
-                    "PostgreSQL",
-                    "Kafka",
-                    "Docker",
-                    "Git"
+                    "Apache Camel",
+                    "Jakarta EE",
+                    "Spring Integration",
+                    "Oracle Database",
+                    "IBM MQ",
+                    "MuleSoft Anypoint",
+                    "Jenkins",
+                    "SoapUI"
                   ],
                   "contributions": [
-                    "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
                   ]
                 },
                 {
-                  "name": "Order management",
-                  "description": "Inventory reservation and order tracking for a retail platform.",
-                  "role": "Backend Engineer",
+                  "name": "Supplier EDI gateway",
+                  "description": "Electronic order and invoice exchange with several hundred suppliers.",
+                  "role": "Senior Integration Engineer",
                   "technologies": [
                     "Java",
+                    "XML",
                     "SQL",
-                    "Spring Boot",
-                    "JUnit",
-                    "PostgreSQL",
-                    "Kafka",
-                    "Docker",
-                    "Git"
+                    "Apache Camel",
+                    "Jakarta EE",
+                    "Spring Integration",
+                    "Oracle Database",
+                    "IBM MQ",
+                    "MuleSoft Anypoint",
+                    "Jenkins",
+                    "SoapUI"
                   ],
                   "contributions": [
-                    "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
+                    "Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails.",
                     "Participated in requirements, validation and delivery reviews."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Computer Science",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2022
+                  "qualification": "Bachelor of Information Systems",
+                  "institution": "Demo Capital School of Law",
+                  "graduationYear": 2015
                 }
               ],
               "certifications": [
                 {
-                  "name": "Backend Engineer professional training",
+                  "name": "Java EE Application Developer Certificate",
                   "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "year": 2023
+                },
+                {
+                  "name": "Enterprise Integration Patterns Training",
+                  "issuer": "Demo Industry Skills Institute",
+                  "year": 2026
                 }
               ],
               "languages": [
                 {
-                  "language": "English",
-                  "level": "Fluent"
+                  "language": "Japanese",
+                  "level": "Native"
                 },
                 {
-                  "language": "Japanese",
-                  "level": "Business"
+                  "language": "English",
+                  "level": "Fluent"
                 }
               ]
             },
@@ -281,7 +310,7 @@
             }
           ]
         },
-        "profile": "Aki 佐藤 works as a Java Engineer at Example & Co. Aki 佐藤's primary skills include REST API design. Their broader areas of expertise include Software Engineering and Technology. They have experience working with Java. They are based in 東京, Japan. Languages include Japanese (Business level). Their current salary is 0. Desired role: Principal Engineer Education: Computer Science Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration. languages: Java, SQL frameworks: Spring Boot, JUnit databases: PostgreSQL tools: Kafka, Docker, Git Backend Engineer, 2022-04 to 2023-03: Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates. Worked with stakeholders to clarify requirements and maintain delivery documentation. Backend Engineer, 2023-04 to 2026-10: Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests. Collaborated with colleagues on testing, issue resolution and handover. Project: Payment reconciliation. Banking services matching payment events with settlement records. Role: Backend Engineer. Technologies: Java, SQL, Spring Boot, JUnit, PostgreSQL, Kafka, Docker, Git. Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests. Participated in requirements, validation and delivery reviews. Project: Order management. Inventory reservation and order tracking for a retail platform. Role: Backend Engineer. Technologies: Java, SQL, Spring Boot, JUnit, PostgreSQL, Kafka, Docker, Git. Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates. Participated in requirements, validation and delivery reviews. Education: Bachelor of Computer Science, 2022 Training: Backend Engineer professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)"
+        "profile": "Aki 佐藤 works as a Java Engineer at Example & Co. Aki 佐藤's primary skills include REST API design. Their broader areas of expertise include Software Engineering and Technology. They have experience working with Java. They are based in 東京, Japan. Languages include Japanese (Business level). Their current salary is 0. Desired role: Principal Engineer Education: Computer Science Detail-focused Senior Integration Engineer offering 11 years of experience in enterprise integration and message-based interfaces in Java, most recently on plant system integration and supplier EDI gateway. Comfortable working across international, multilingual teams. languages: Java, XML, SQL frameworks: Apache Camel, Jakarta EE, Spring Integration databases: Oracle Database tools: IBM MQ, MuleSoft Anypoint, Jenkins, SoapUI Integration Engineer, 2015-04 to 2019-03: Built MQ-based adapters, retry policies and reconciliation reports for production orders. Mapped partner message formats and maintained interface specifications. Collaborated with colleagues on reviews, issue resolution and handover. Senior Integration Engineer, 2019-04 to 2022-03: Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails. Monitored integration queues and resolved failed message replays. Mentored colleagues and reviewed work for quality, consistency and risk. Senior Integration Engineer, 2022-04 to 2026-10: Built MQ-based adapters, retry policies and reconciliation reports for production orders. Mapped partner message formats and maintained interface specifications. Mentored colleagues and reviewed work for quality, consistency and risk. Project: Plant system integration. Real-time exchange between ERP and factory execution systems. Role: Senior Integration Engineer. Technologies: Java, XML, SQL, Apache Camel, Jakarta EE, Spring Integration, Oracle Database, IBM MQ, MuleSoft Anypoint, Jenkins, SoapUI. Built MQ-based adapters, retry policies and reconciliation reports for production orders. Tracked issues to closure and shared lessons learned after go-live. Project: Supplier EDI gateway. Electronic order and invoice exchange with several hundred suppliers. Role: Senior Integration Engineer. Technologies: Java, XML, SQL, Apache Camel, Jakarta EE, Spring Integration, Oracle Database, IBM MQ, MuleSoft Anypoint, Jenkins, SoapUI. Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails. Participated in requirements, validation and delivery reviews. Education: Bachelor of Information Systems, 2015 Training: Java EE Application Developer Certificate, 2023 Training: Enterprise Integration Patterns Training, 2026 Spoken languages: Japanese (Native), English (Fluent)"
       },
       {
         "rank": 2,
@@ -291,6 +320,7 @@
         "vectorScore": 0.82,
         "lexicalRank": 1,
         "vectorRank": 3,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000002",
           "name": "Jordan Smith",
@@ -299,11 +329,11 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "frontend"
+                "archetype": "react-frontend"
               },
-              "summary": "Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Senior Frontend Engineer bringing 7 years of hands-on work in React single-page applications. Recent highlights include customer self-service portal and design system rollout; known for clear communication and dependable follow-through.",
               "technicalSkills": {
                 "languages": [
                   "TypeScript",
@@ -312,104 +342,148 @@
                   "CSS"
                 ],
                 "frameworks": [
-                  "Angular",
-                  "RxJS"
+                  "React",
+                  "Next.js",
+                  "Redux Toolkit",
+                  "Testing Library"
                 ],
                 "databases": [],
                 "tools": [
+                  "Vite",
+                  "Storybook",
                   "Playwright",
-                  "Git",
                   "Figma"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Maple Services",
+                  "employer": "Demo Yuzu Systems",
                   "role": "Frontend Engineer",
-                  "location": "Demo regional office",
-                  "start": "2020-04",
+                  "location": "Bangkok, Thailand",
+                  "start": "2019-04",
                   "end": "2023-03",
                   "responsibilities": [
-                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Implemented themable components with visual regression tests and usage guidelines.",
+                    "Measured Core Web Vitals and fixed regressions before release.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo River Group",
-                  "role": "Frontend Engineer",
-                  "location": "Demo Tokyo office",
+                  "employer": "Demo Aurora Platforms",
+                  "role": "Senior Frontend Engineer",
+                  "location": "Manila, Philippines",
                   "start": "2023-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation.",
+                    "Built shared component libraries documented in Storybook.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Operations dashboard",
-                  "description": "Interactive monitoring of service queues and workload.",
-                  "role": "Frontend Engineer",
+                  "name": "Customer self-service portal",
+                  "description": "Accessible browser workflows for account servicing.",
+                  "role": "Senior Frontend Engineer",
                   "technologies": [
                     "TypeScript",
                     "JavaScript",
                     "HTML",
                     "CSS",
-                    "Angular",
-                    "RxJS",
+                    "React",
+                    "Next.js",
+                    "Redux Toolkit",
+                    "Testing Library",
+                    "Vite",
+                    "Storybook",
                     "Playwright",
-                    "Git",
                     "Figma"
                   ],
                   "contributions": [
-                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation.",
+                    "Documented decisions and handed over operating procedures to the support team."
                   ]
                 },
                 {
-                  "name": "Customer self-service portal",
-                  "description": "Accessible browser workflows for account servicing.",
-                  "role": "Frontend Engineer",
+                  "name": "Design system rollout",
+                  "description": "Shared UI components adopted across five product teams.",
+                  "role": "Senior Frontend Engineer",
                   "technologies": [
                     "TypeScript",
                     "JavaScript",
                     "HTML",
                     "CSS",
-                    "Angular",
-                    "RxJS",
+                    "React",
+                    "Next.js",
+                    "Redux Toolkit",
+                    "Testing Library",
+                    "Vite",
+                    "Storybook",
                     "Playwright",
-                    "Git",
                     "Figma"
                   ],
                   "contributions": [
-                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Implemented themable components with visual regression tests and usage guidelines.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
+                  ]
+                },
+                {
+                  "name": "Server-rendered storefront",
+                  "description": "Fast product and campaign pages for an online retailer.",
+                  "role": "Senior Frontend Engineer",
+                  "technologies": [
+                    "TypeScript",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "React",
+                    "Next.js",
+                    "Redux Toolkit",
+                    "Testing Library",
+                    "Vite",
+                    "Storybook",
+                    "Playwright",
+                    "Figma"
+                  ],
+                  "contributions": [
+                    "Migrated pages to Next.js with incremental static regeneration and image optimisation.",
+                    "Coordinated acceptance criteria with business owners and confirmed sign-off."
                   ]
                 }
               ],
               "education": [
                 {
+                  "qualification": "Master of Software Engineering",
+                  "institution": "Demo Pacific Institute of Technology",
+                  "graduationYear": 2019
+                },
+                {
                   "qualification": "Bachelor of Software Engineering",
                   "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2020
+                  "graduationYear": 2017
                 }
               ],
               "certifications": [
                 {
-                  "name": "Frontend Engineer professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "name": "Web Accessibility Specialist Training",
+                  "issuer": "Demo Technical Certification Council",
+                  "year": 2020
+                },
+                {
+                  "name": "Frontend Performance Course",
+                  "issuer": "Demo Industry Skills Institute",
+                  "year": 2021
                 }
               ],
               "languages": [
                 {
-                  "language": "English",
-                  "level": "Business"
+                  "language": "Japanese",
+                  "level": "Native"
                 },
                 {
-                  "language": "Japanese",
-                  "level": "Conversational"
+                  "language": "English",
+                  "level": "Business"
                 }
               ]
             },
@@ -461,7 +535,7 @@
           "jobFunctions": [],
           "languages": []
         },
-        "profile": "Jordan Smith works as a JavaScript Developer. They have experience working with JavaScript. Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration. languages: TypeScript, JavaScript, HTML, CSS frameworks: Angular, RxJS tools: Playwright, Git, Figma Frontend Engineer, 2020-04 to 2023-03: Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Worked with stakeholders to clarify requirements and maintain delivery documentation. Frontend Engineer, 2023-04 to 2026-10: Implemented reusable UI components, chart filtering and browser performance improvements. Collaborated with colleagues on testing, issue resolution and handover. Project: Operations dashboard. Interactive monitoring of service queues and workload. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Implemented reusable UI components, chart filtering and browser performance improvements. Participated in requirements, validation and delivery reviews. Project: Customer self-service portal. Accessible browser workflows for account servicing. Role: Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, Angular, RxJS, Playwright, Git, Figma. Built responsive forms and tables, integrated REST APIs and tested keyboard navigation. Participated in requirements, validation and delivery reviews. Education: Bachelor of Software Engineering, 2020 Training: Frontend Engineer professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
+        "profile": "Jordan Smith works as a JavaScript Developer. They have experience working with JavaScript. Senior Frontend Engineer bringing 7 years of hands-on work in React single-page applications. Recent highlights include customer self-service portal and design system rollout; known for clear communication and dependable follow-through. languages: TypeScript, JavaScript, HTML, CSS frameworks: React, Next.js, Redux Toolkit, Testing Library tools: Vite, Storybook, Playwright, Figma Frontend Engineer, 2019-04 to 2023-03: Implemented themable components with visual regression tests and usage guidelines. Measured Core Web Vitals and fixed regressions before release. Collaborated with colleagues on reviews, issue resolution and handover. Senior Frontend Engineer, 2023-04 to 2026-10: Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation. Built shared component libraries documented in Storybook. Mentored colleagues and reviewed work for quality, consistency and risk. Project: Customer self-service portal. Accessible browser workflows for account servicing. Role: Senior Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, React, Next.js, Redux Toolkit, Testing Library, Vite, Storybook, Playwright, Figma. Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation. Documented decisions and handed over operating procedures to the support team. Project: Design system rollout. Shared UI components adopted across five product teams. Role: Senior Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, React, Next.js, Redux Toolkit, Testing Library, Vite, Storybook, Playwright, Figma. Implemented themable components with visual regression tests and usage guidelines. Tracked issues to closure and shared lessons learned after go-live. Project: Server-rendered storefront. Fast product and campaign pages for an online retailer. Role: Senior Frontend Engineer. Technologies: TypeScript, JavaScript, HTML, CSS, React, Next.js, Redux Toolkit, Testing Library, Vite, Storybook, Playwright, Figma. Migrated pages to Next.js with incremental static regeneration and image optimisation. Coordinated acceptance criteria with business owners and confirmed sign-off. Education: Master of Software Engineering, 2019 Education: Bachelor of Software Engineering, 2017 Training: Web Accessibility Specialist Training, 2020 Training: Frontend Performance Course, 2021 Spoken languages: Japanese (Native), English (Business)"
       },
       {
         "rank": 3,
@@ -471,6 +545,7 @@
         "vectorScore": 0.87,
         "lexicalRank": 3,
         "vectorRank": 2,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000003",
           "name": "Priya Rao",
@@ -479,11 +554,11 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
                 "archetype": "data-engineering"
               },
-              "summary": "Data Engineer with 6 years of experience. Focus on warehouse ingestion and event data lake, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Detail-focused Data Engineer offering 6 years of experience in batch data pipelines and cloud data lakes, most recently on customer 360 dataset and warehouse ingestion. Comfortable working across international, multilingual teams.",
               "technicalSkills": {
                 "languages": [
                   "Python",
@@ -499,34 +574,57 @@
                 "tools": [
                   "AWS S3",
                   "AWS Athena",
-                  "Airflow"
+                  "Airflow",
+                  "AWS Glue"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Maple Services",
+                  "employer": "Demo Cedar Retail",
                   "role": "Data Engineer",
-                  "location": "Demo regional office",
+                  "location": "Ho Chi Minh City, Vietnam",
                   "start": "2020-04",
                   "end": "2023-03",
                   "responsibilities": [
-                    "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
+                    "Documented datasets and lineage for analysts and data scientists.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo River Group",
+                  "employer": "Demo Birch Lifestyle",
                   "role": "Data Engineer",
-                  "location": "Demo Tokyo office",
+                  "location": "Milan, Italy",
                   "start": "2023-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built identity matching jobs in Spark and published a governed customer table.",
+                    "Owned pipeline SLAs and on-call for daily warehouse loads.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 }
               ],
               "projects": [
+                {
+                  "name": "Customer 360 dataset",
+                  "description": "Unified customer view across stores, app and call centre.",
+                  "role": "Data Engineer",
+                  "technologies": [
+                    "Python",
+                    "SQL",
+                    "Apache Spark",
+                    "Snowflake",
+                    "PostgreSQL",
+                    "AWS S3",
+                    "AWS Athena",
+                    "Airflow",
+                    "AWS Glue"
+                  ],
+                  "contributions": [
+                    "Built identity matching jobs in Spark and published a governed customer table.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
+                  ]
+                },
                 {
                   "name": "Warehouse ingestion",
                   "description": "Daily ingestion of operational data into an analytics warehouse.",
@@ -539,54 +637,54 @@
                     "PostgreSQL",
                     "AWS S3",
                     "AWS Athena",
-                    "Airflow"
+                    "Airflow",
+                    "AWS Glue"
                   ],
                   "contributions": [
                     "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
-                  "name": "Event data lake",
-                  "description": "Partitioned event storage for customer activity reporting.",
-                  "role": "Data Engineer",
-                  "technologies": [
-                    "Python",
-                    "SQL",
-                    "Apache Spark",
-                    "Snowflake",
-                    "PostgreSQL",
-                    "AWS S3",
-                    "AWS Athena",
-                    "Airflow"
-                  ],
-                  "contributions": [
-                    "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Tracked issues to closure and shared lessons learned after go-live."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Computer Science",
-                  "institution": "Demo Institute of Applied Studies",
+                  "qualification": "Master of Computer Science",
+                  "institution": "Demo Eastern Polytechnic",
                   "graduationYear": 2020
+                },
+                {
+                  "qualification": "Bachelor of Computer Science",
+                  "institution": "Demo Coastal Technical College",
+                  "graduationYear": 2018
                 }
               ],
               "certifications": [
                 {
-                  "name": "Data Engineer professional training",
-                  "issuer": "Demo Learning Academy",
+                  "name": "Apache Spark Developer Certificate",
+                  "issuer": "Demo Technical Certification Council",
                   "year": 2024
+                },
+                {
+                  "name": "Data Engineering on AWS Training",
+                  "issuer": "Demo Technical Certification Council",
+                  "year": 2025
                 }
               ],
               "languages": [
                 {
+                  "language": "Dutch",
+                  "level": "Native"
+                },
+                {
                   "language": "English",
-                  "level": "Fluent"
+                  "level": "Business"
                 },
                 {
                   "language": "Japanese",
+                  "level": "Basic"
+                },
+                {
+                  "language": "Korean",
                   "level": "Conversational"
                 }
               ]
@@ -653,7 +751,7 @@
           "jobFunctions": [],
           "languages": []
         },
-        "profile": "Priya Rao works as a Data Engineer. Their broader areas of expertise include Cyclic parent. Data Engineer with 6 years of experience. Focus on warehouse ingestion and event data lake, with responsibility for delivery, documentation and cross-team collaboration. languages: Python, SQL frameworks: Apache Spark databases: Snowflake, PostgreSQL tools: AWS S3, AWS Athena, Airflow Data Engineer, 2020-04 to 2023-03: Optimized SQL transformations, file partitioning and scheduled data quality checks. Worked with stakeholders to clarify requirements and maintain delivery documentation. Data Engineer, 2023-04 to 2026-10: Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking. Collaborated with colleagues on testing, issue resolution and handover. Project: Warehouse ingestion. Daily ingestion of operational data into an analytics warehouse. Role: Data Engineer. Technologies: Python, SQL, Apache Spark, Snowflake, PostgreSQL, AWS S3, AWS Athena, Airflow. Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking. Participated in requirements, validation and delivery reviews. Project: Event data lake. Partitioned event storage for customer activity reporting. Role: Data Engineer. Technologies: Python, SQL, Apache Spark, Snowflake, PostgreSQL, AWS S3, AWS Athena, Airflow. Optimized SQL transformations, file partitioning and scheduled data quality checks. Participated in requirements, validation and delivery reviews. Education: Bachelor of Computer Science, 2020 Training: Data Engineer professional training, 2024 Spoken languages: English (Fluent), Japanese (Conversational)"
+        "profile": "Priya Rao works as a Data Engineer. Their broader areas of expertise include Cyclic parent. Detail-focused Data Engineer offering 6 years of experience in batch data pipelines and cloud data lakes, most recently on customer 360 dataset and warehouse ingestion. Comfortable working across international, multilingual teams. languages: Python, SQL frameworks: Apache Spark databases: Snowflake, PostgreSQL tools: AWS S3, AWS Athena, Airflow, AWS Glue Data Engineer, 2020-04 to 2023-03: Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking. Documented datasets and lineage for analysts and data scientists. Collaborated with colleagues on reviews, issue resolution and handover. Data Engineer, 2023-04 to 2026-10: Built identity matching jobs in Spark and published a governed customer table. Owned pipeline SLAs and on-call for daily warehouse loads. Collaborated with colleagues on reviews, issue resolution and handover. Project: Customer 360 dataset. Unified customer view across stores, app and call centre. Role: Data Engineer. Technologies: Python, SQL, Apache Spark, Snowflake, PostgreSQL, AWS S3, AWS Athena, Airflow, AWS Glue. Built identity matching jobs in Spark and published a governed customer table. Tracked issues to closure and shared lessons learned after go-live. Project: Warehouse ingestion. Daily ingestion of operational data into an analytics warehouse. Role: Data Engineer. Technologies: Python, SQL, Apache Spark, Snowflake, PostgreSQL, AWS S3, AWS Athena, Airflow, AWS Glue. Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking. Tracked issues to closure and shared lessons learned after go-live. Education: Master of Computer Science, 2020 Education: Bachelor of Computer Science, 2018 Training: Apache Spark Developer Certificate, 2024 Training: Data Engineering on AWS Training, 2025 Spoken languages: Dutch (Native), English (Business), Japanese (Basic), Korean (Conversational)"
       },
       {
         "rank": 4,
@@ -663,6 +761,7 @@
         "vectorScore": null,
         "lexicalRank": 4,
         "vectorRank": null,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000004",
           "name": "Morgan Lee",
@@ -671,104 +770,525 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "analytics"
+                "archetype": "product-data-analyst"
               },
-              "summary": "Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Detail-focused Lead Data Analyst offering 19 years of experience in product and customer behaviour analysis, most recently on retention cohort analysis and tracking plan overhaul. Comfortable working across international, multilingual teams.",
               "technicalSkills": {
                 "languages": [
-                  "SQL"
+                  "SQL",
+                  "Python"
                 ],
-                "frameworks": [],
+                "frameworks": [
+                  "pandas"
+                ],
                 "databases": [
-                  "SQL Server"
+                  "BigQuery",
+                  "PostgreSQL"
                 ],
                 "tools": [
-                  "Qlik Sense",
-                  "Power BI",
+                  "Amplitude",
+                  "Google Analytics",
+                  "Looker Studio",
                   "Excel"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Harbor Services",
-                  "role": "Business Intelligence Analyst",
-                  "location": "Demo regional office",
-                  "start": "2021-04",
-                  "end": "2023-03",
+                  "employer": "Demo Nimbus Data Studio",
+                  "role": "Data Analyst",
+                  "location": "Chicago, United States",
+                  "start": "2007-04",
+                  "end": "2012-03",
                   "responsibilities": [
-                    "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Defined event taxonomy, validated implementations and removed duplicate events.",
+                    "Maintained event tracking plans with engineers and product managers.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo Orchard Group",
-                  "role": "Business Intelligence Analyst",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
+                  "employer": "Demo Umber Data Studio",
+                  "role": "Senior Data Analyst",
+                  "location": "Nagoya, Japan",
+                  "start": "2012-04",
+                  "end": "2017-03",
+                  "responsibilities": [
+                    "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                    "Answered ad hoc product questions with reproducible SQL analysis.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Mosaic Technologies",
+                  "role": "Lead Data Analyst",
+                  "location": "Manila, Philippines",
+                  "start": "2017-04",
+                  "end": "2021-03",
+                  "responsibilities": [
+                    "Defined event taxonomy, validated implementations and removed duplicate events.",
+                    "Maintained event tracking plans with engineers and product managers.",
+                    "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
+                  ]
+                },
+                {
+                  "employer": "Demo Harbor Platforms",
+                  "role": "Lead Data Analyst",
+                  "location": "Mexico City, Mexico",
+                  "start": "2021-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                    "Answered ad hoc product questions with reproducible SQL analysis.",
+                    "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Service demand forecasting",
-                  "description": "Workload forecasts for support planning.",
-                  "role": "Business Intelligence Analyst",
+                  "name": "Retention cohort analysis",
+                  "description": "User retention trends for a language-learning app.",
+                  "role": "Lead Data Analyst",
                   "technologies": [
                     "SQL",
-                    "SQL Server",
-                    "Qlik Sense",
-                    "Power BI",
+                    "Python",
+                    "pandas",
+                    "BigQuery",
+                    "PostgreSQL",
+                    "Amplitude",
+                    "Google Analytics",
+                    "Looker Studio",
                     "Excel"
                   ],
                   "contributions": [
-                    "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
                   ]
                 },
                 {
-                  "name": "Revenue reporting",
-                  "description": "Shared business metrics for regional sales teams.",
-                  "role": "Business Intelligence Analyst",
+                  "name": "Tracking plan overhaul",
+                  "description": "Consistent analytics events across web and mobile.",
+                  "role": "Lead Data Analyst",
                   "technologies": [
                     "SQL",
-                    "SQL Server",
-                    "Qlik Sense",
-                    "Power BI",
+                    "Python",
+                    "pandas",
+                    "BigQuery",
+                    "PostgreSQL",
+                    "Amplitude",
+                    "Google Analytics",
+                    "Looker Studio",
                     "Excel"
                   ],
                   "contributions": [
-                    "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Defined event taxonomy, validated implementations and removed duplicate events.",
+                    "Presented progress and risks to stakeholders at regular checkpoints."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Statistics",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2021
+                  "qualification": "Bachelor of Mathematics",
+                  "institution": "Demo Riverside College of Commerce",
+                  "graduationYear": 2007
                 }
               ],
               "certifications": [
                 {
-                  "name": "Business Intelligence Analyst professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "name": "Data Analytics Professional Certificate",
+                  "issuer": "Demo Continuing Education Centre",
+                  "year": 2016
+                },
+                {
+                  "name": "SQL for Data Analysis Course",
+                  "issuer": "Demo Professional Standards Board",
+                  "year": 2023
                 }
               ],
               "languages": [
                 {
+                  "language": "Japanese",
+                  "level": "Native"
+                },
+                {
                   "language": "English",
-                  "level": "Business"
+                  "level": "Conversational"
+                },
+                {
+                  "language": "French",
+                  "level": "Fluent"
+                }
+              ]
+            },
+            "version": 2,
+            "modifiedAt": "2026-10-01T12:34:56.000Z",
+            "recordType": "Candidate",
+            "details": {},
+            "tags": [],
+            "associations": [],
+            "warnings": [
+              "Unavailable field: Contact.MailingState",
+              "Unavailable field: Contact.currentPositionStartDate__c",
+              "Unavailable field: Contact.positionLevel__c",
+              "Unavailable field: Contact.jobType__c",
+              "Unavailable field: Contact.currentMonthlySalary__c",
+              "Unavailable field: Contact.desiredSalary__c",
+              "Unavailable field: Contact.noticePeriod__c",
+              "Unavailable field: Contact.location__c",
+              "Unavailable field: Contact.relocateTo__c",
+              "Unavailable field: Contact.highestEducationalInstitute__c",
+              "Unavailable field: Contact.educationalSpecialization__c",
+              "Unavailable field: Contact.currentPeopleManaged__c",
+              "Unavailable field: Contact.maxPeopleManaged__c",
+              "Unavailable field: Contact.status__c",
+              "Unavailable field: Contact.isDummyCandidate__c",
+              "No candidate tag associations returned"
+            ]
+          },
+          "skills": [],
+          "skillCategories": [],
+          "systems": [],
+          "industries": [],
+          "subIndustries": [],
+          "jobFunctions": [],
+          "languages": []
+        },
+        "profile": "Morgan Lee works as a Analytics Specialist. Detail-focused Lead Data Analyst offering 19 years of experience in product and customer behaviour analysis, most recently on retention cohort analysis and tracking plan overhaul. Comfortable working across international, multilingual teams. languages: SQL, Python frameworks: pandas databases: BigQuery, PostgreSQL tools: Amplitude, Google Analytics, Looker Studio, Excel Data Analyst, 2007-04 to 2012-03: Defined event taxonomy, validated implementations and removed duplicate events. Maintained event tracking plans with engineers and product managers. Collaborated with colleagues on reviews, issue resolution and handover. Senior Data Analyst, 2012-04 to 2017-03: Built cohort queries and dashboards that informed a redesigned reminder feature. Answered ad hoc product questions with reproducible SQL analysis. Mentored colleagues and reviewed work for quality, consistency and risk. Lead Data Analyst, 2017-04 to 2021-03: Defined event taxonomy, validated implementations and removed duplicate events. Maintained event tracking plans with engineers and product managers. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Lead Data Analyst, 2021-04 to 2026-10: Built cohort queries and dashboards that informed a redesigned reminder feature. Answered ad hoc product questions with reproducible SQL analysis. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Project: Retention cohort analysis. User retention trends for a language-learning app. Role: Lead Data Analyst. Technologies: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel. Built cohort queries and dashboards that informed a redesigned reminder feature. Tracked issues to closure and shared lessons learned after go-live. Project: Tracking plan overhaul. Consistent analytics events across web and mobile. Role: Lead Data Analyst. Technologies: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel. Defined event taxonomy, validated implementations and removed duplicate events. Presented progress and risks to stakeholders at regular checkpoints. Education: Bachelor of Mathematics, 2007 Training: Data Analytics Professional Certificate, 2016 Training: SQL for Data Analysis Course, 2023 Spoken languages: Japanese (Native), English (Conversational), French (Fluent)"
+      },
+      {
+        "rank": 5,
+        "score": 0.015625,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.75,
+        "lexicalRank": null,
+        "vectorRank": 4,
+        "aspectRanks": {},
+        "candidate": {
+          "id": "003000000000007",
+          "name": "Alex Kim",
+          "title": "Cloud Engineer",
+          "enrichment": {
+            "cvProfile": {
+              "source": {
+                "kind": "synthetic",
+                "generatorVersion": 2,
+                "seed": "contract-seed",
+                "archetype": "cloud-platform"
+              },
+              "summary": "Senior Platform Engineer with 8 years of experience in internal developer platforms on Kubernetes. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration.",
+              "technicalSkills": {
+                "languages": [
+                  "Python",
+                  "Bash",
+                  "Go"
+                ],
+                "frameworks": [],
+                "databases": [
+                  "Redis"
+                ],
+                "tools": [
+                  "AWS",
+                  "Terraform",
+                  "Kubernetes",
+                  "Prometheus",
+                  "ArgoCD"
+                ]
+              },
+              "employmentHistory": [
+                {
+                  "employer": "Demo Birch Systems",
+                  "role": "Platform Engineer",
+                  "location": "Dublin, Ireland",
+                  "start": "2018-04",
+                  "end": "2021-03",
+                  "responsibilities": [
+                    "Introduced ArgoCD, environment promotion rules and drift detection.",
+                    "Provided golden-path templates so teams could ship services safely.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
+                  ]
+                },
+                {
+                  "employer": "Demo Horizon Platforms",
+                  "role": "Platform Engineer",
+                  "location": "Warsaw, Poland",
+                  "start": "2021-04",
+                  "end": "2023-03",
+                  "responsibilities": [
+                    "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
+                    "Ran platform office hours and collected feedback from product teams.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
+                  ]
+                },
+                {
+                  "employer": "Demo Onyx Digital Labs",
+                  "role": "Senior Platform Engineer",
+                  "location": "Munich, Germany",
+                  "start": "2023-04",
+                  "end": "2026-10",
+                  "responsibilities": [
+                    "Created infrastructure modules, delivery pipelines and rollback procedures.",
+                    "Provided golden-path templates so teams could ship services safely.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                }
+              ],
+              "projects": [
+                {
+                  "name": "Deployment automation",
+                  "description": "Repeatable application releases across test and production environments.",
+                  "role": "Senior Platform Engineer",
+                  "technologies": [
+                    "Python",
+                    "Bash",
+                    "Go",
+                    "Redis",
+                    "AWS",
+                    "Terraform",
+                    "Kubernetes",
+                    "Prometheus",
+                    "ArgoCD"
+                  ],
+                  "contributions": [
+                    "Created infrastructure modules, delivery pipelines and rollback procedures.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
+                  ]
+                },
+                {
+                  "name": "Service reliability",
+                  "description": "Monitoring and recovery practices for customer-facing systems.",
+                  "role": "Senior Platform Engineer",
+                  "technologies": [
+                    "Python",
+                    "Bash",
+                    "Go",
+                    "Redis",
+                    "AWS",
+                    "Terraform",
+                    "Kubernetes",
+                    "Prometheus",
+                    "ArgoCD"
+                  ],
+                  "contributions": [
+                    "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
+                    "Coordinated acceptance criteria with business owners and confirmed sign-off."
+                  ]
+                },
+                {
+                  "name": "GitOps adoption",
+                  "description": "Declarative deployments for more than one hundred services.",
+                  "role": "Senior Platform Engineer",
+                  "technologies": [
+                    "Python",
+                    "Bash",
+                    "Go",
+                    "Redis",
+                    "AWS",
+                    "Terraform",
+                    "Kubernetes",
+                    "Prometheus",
+                    "ArgoCD"
+                  ],
+                  "contributions": [
+                    "Introduced ArgoCD, environment promotion rules and drift detection.",
+                    "Coordinated acceptance criteria with business owners and confirmed sign-off."
+                  ]
+                }
+              ],
+              "education": [
+                {
+                  "qualification": "Bachelor of Information Technology",
+                  "institution": "Demo Valley College of Health Sciences",
+                  "graduationYear": 2018
+                }
+              ],
+              "certifications": [
+                {
+                  "name": "Kubernetes Administration Certificate",
+                  "issuer": "Demo Professional Standards Board",
+                  "year": 2019
+                },
+                {
+                  "name": "Infrastructure as Code Practitioner Training",
+                  "issuer": "Demo Quality Assurance Society",
+                  "year": 2025
+                }
+              ],
+              "languages": [
+                {
+                  "language": "Vietnamese",
+                  "level": "Native"
+                },
+                {
+                  "language": "English",
+                  "level": "Basic"
                 },
                 {
                   "language": "Japanese",
+                  "level": "Business"
+                }
+              ]
+            },
+            "version": 2,
+            "modifiedAt": "2026-10-01T12:34:56.000Z",
+            "recordType": "Candidate",
+            "details": {},
+            "tags": [],
+            "associations": [],
+            "warnings": [
+              "Unavailable field: Contact.MailingState",
+              "Unavailable field: Contact.currentPositionStartDate__c",
+              "Unavailable field: Contact.positionLevel__c",
+              "Unavailable field: Contact.jobType__c",
+              "Unavailable field: Contact.currentMonthlySalary__c",
+              "Unavailable field: Contact.desiredSalary__c",
+              "Unavailable field: Contact.noticePeriod__c",
+              "Unavailable field: Contact.location__c",
+              "Unavailable field: Contact.relocateTo__c",
+              "Unavailable field: Contact.highestEducationalInstitute__c",
+              "Unavailable field: Contact.educationalSpecialization__c",
+              "Unavailable field: Contact.currentPeopleManaged__c",
+              "Unavailable field: Contact.maxPeopleManaged__c",
+              "Unavailable field: Contact.status__c",
+              "Unavailable field: Contact.isDummyCandidate__c",
+              "No candidate tag associations returned"
+            ]
+          },
+          "skills": [],
+          "skillCategories": [],
+          "systems": [],
+          "industries": [],
+          "subIndustries": [],
+          "jobFunctions": [],
+          "languages": []
+        },
+        "profile": "Alex Kim works as a Cloud Engineer. Senior Platform Engineer with 8 years of experience in internal developer platforms on Kubernetes. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration. languages: Python, Bash, Go databases: Redis tools: AWS, Terraform, Kubernetes, Prometheus, ArgoCD Platform Engineer, 2018-04 to 2021-03: Introduced ArgoCD, environment promotion rules and drift detection. Provided golden-path templates so teams could ship services safely. Collaborated with colleagues on reviews, issue resolution and handover. Platform Engineer, 2021-04 to 2023-03: Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis. Ran platform office hours and collected feedback from product teams. Collaborated with colleagues on reviews, issue resolution and handover. Senior Platform Engineer, 2023-04 to 2026-10: Created infrastructure modules, delivery pipelines and rollback procedures. Provided golden-path templates so teams could ship services safely. Mentored colleagues and reviewed work for quality, consistency and risk. Project: Deployment automation. Repeatable application releases across test and production environments. Role: Senior Platform Engineer. Technologies: Python, Bash, Go, Redis, AWS, Terraform, Kubernetes, Prometheus, ArgoCD. Created infrastructure modules, delivery pipelines and rollback procedures. Tracked issues to closure and shared lessons learned after go-live. Project: Service reliability. Monitoring and recovery practices for customer-facing systems. Role: Senior Platform Engineer. Technologies: Python, Bash, Go, Redis, AWS, Terraform, Kubernetes, Prometheus, ArgoCD. Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis. Coordinated acceptance criteria with business owners and confirmed sign-off. Project: GitOps adoption. Declarative deployments for more than one hundred services. Role: Senior Platform Engineer. Technologies: Python, Bash, Go, Redis, AWS, Terraform, Kubernetes, Prometheus, ArgoCD. Introduced ArgoCD, environment promotion rules and drift detection. Coordinated acceptance criteria with business owners and confirmed sign-off. Education: Bachelor of Information Technology, 2018 Training: Kubernetes Administration Certificate, 2019 Training: Infrastructure as Code Practitioner Training, 2025 Spoken languages: Vietnamese (Native), English (Basic), Japanese (Business)"
+      },
+      {
+        "rank": 6,
+        "score": 0.015384615384615385,
+        "rankingMethod": "rrf",
+        "lexicalScore": null,
+        "vectorScore": 0.62,
+        "lexicalRank": null,
+        "vectorRank": 5,
+        "aspectRanks": {},
+        "candidate": {
+          "id": "003000000000005",
+          "name": "Dana Chen",
+          "title": "Financial Accountant",
+          "enrichment": {
+            "cvProfile": {
+              "source": {
+                "kind": "synthetic",
+                "generatorVersion": 2,
+                "seed": "contract-seed",
+                "archetype": "management-accountant"
+              },
+              "summary": "Senior Management Accountant with 7 years of experience in cost accounting, product costing and business partnering. Focus on plant performance reporting and product cost review, with responsibility for delivery, documentation and cross-team collaboration.",
+              "technicalSkills": {
+                "languages": [],
+                "frameworks": [
+                  "Activity-based costing"
+                ],
+                "databases": [],
+                "tools": [
+                  "SAP CO",
+                  "Excel",
+                  "Power BI",
+                  "Anaplan"
+                ]
+              },
+              "employmentHistory": [
+                {
+                  "employer": "Demo Quartz Manufacturing",
+                  "role": "Management Accountant",
+                  "location": "Pune, India",
+                  "start": "2019-04",
+                  "end": "2023-03",
+                  "responsibilities": [
+                    "Built activity-based cost models that exposed loss-making variants.",
+                    "Advised plant managers on margin improvement options.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
+                  ]
+                },
+                {
+                  "employer": "Demo Zephyr Electric",
+                  "role": "Senior Management Accountant",
+                  "location": "San Francisco, United States",
+                  "start": "2023-04",
+                  "end": "2026-10",
+                  "responsibilities": [
+                    "Automated yield, scrap and labour efficiency reports for plant leadership.",
+                    "Calculated standard costs and analysed manufacturing variances.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                }
+              ],
+              "projects": [
+                {
+                  "name": "Plant performance reporting",
+                  "description": "Monthly KPI reporting for production sites.",
+                  "role": "Senior Management Accountant",
+                  "technologies": [
+                    "Activity-based costing",
+                    "SAP CO",
+                    "Excel",
+                    "Power BI",
+                    "Anaplan"
+                  ],
+                  "contributions": [
+                    "Automated yield, scrap and labour efficiency reports for plant leadership.",
+                    "Participated in requirements, validation and delivery reviews."
+                  ]
+                },
+                {
+                  "name": "Product cost review",
+                  "description": "Profitability analysis across several hundred product lines.",
+                  "role": "Senior Management Accountant",
+                  "technologies": [
+                    "Activity-based costing",
+                    "SAP CO",
+                    "Excel",
+                    "Power BI",
+                    "Anaplan"
+                  ],
+                  "contributions": [
+                    "Built activity-based cost models that exposed loss-making variants.",
+                    "Presented progress and risks to stakeholders at regular checkpoints."
+                  ]
+                }
+              ],
+              "education": [
+                {
+                  "qualification": "Bachelor of Business Administration",
+                  "institution": "Demo Institute of Applied Studies",
+                  "graduationYear": 2019
+                }
+              ],
+              "certifications": [
+                {
+                  "name": "Cost Accounting Practitioner Course",
+                  "issuer": "Demo Quality Assurance Society",
+                  "year": 2021
+                },
+                {
+                  "name": "Management Accounting Professional Training",
+                  "issuer": "Demo Continuing Education Centre",
+                  "year": 2026
+                }
+              ],
+              "languages": [
+                {
+                  "language": "Japanese",
+                  "level": "Native"
+                },
+                {
+                  "language": "English",
+                  "level": "Conversational"
+                },
+                {
+                  "language": "Vietnamese",
                   "level": "Conversational"
                 }
               ]
@@ -806,311 +1326,7 @@
           "jobFunctions": [],
           "languages": []
         },
-        "profile": "Morgan Lee works as a Analytics Specialist. Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration. languages: SQL databases: SQL Server tools: Qlik Sense, Power BI, Excel Business Intelligence Analyst, 2021-04 to 2023-03: Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Worked with stakeholders to clarify requirements and maintain delivery documentation. Business Intelligence Analyst, 2023-04 to 2026-10: Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Collaborated with colleagues on testing, issue resolution and handover. Project: Service demand forecasting. Workload forecasts for support planning. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Participated in requirements, validation and delivery reviews. Project: Revenue reporting. Shared business metrics for regional sales teams. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Participated in requirements, validation and delivery reviews. Education: Bachelor of Statistics, 2021 Training: Business Intelligence Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)"
-      },
-      {
-        "rank": 5,
-        "score": 0.015625,
-        "rankingMethod": "rrf",
-        "lexicalScore": null,
-        "vectorScore": 0.75,
-        "lexicalRank": null,
-        "vectorRank": 4,
-        "candidate": {
-          "id": "003000000000007",
-          "name": "Alex Kim",
-          "title": "Cloud Engineer",
-          "enrichment": {
-            "cvProfile": {
-              "source": {
-                "kind": "synthetic",
-                "generatorVersion": 1,
-                "seed": "contract-seed",
-                "archetype": "cloud-platform"
-              },
-              "summary": "Senior Platform Engineer with 10 years of experience. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration.",
-              "technicalSkills": {
-                "languages": [
-                  "Python",
-                  "Bash"
-                ],
-                "frameworks": [],
-                "databases": [
-                  "Redis"
-                ],
-                "tools": [
-                  "AWS",
-                  "Terraform",
-                  "Kubernetes",
-                  "Prometheus"
-                ]
-              },
-              "employmentHistory": [
-                {
-                  "employer": "Demo Cedar Services",
-                  "role": "Platform Engineer",
-                  "location": "Demo regional office",
-                  "start": "2016-04",
-                  "end": "2023-03",
-                  "responsibilities": [
-                    "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
-                  ]
-                },
-                {
-                  "employer": "Demo Summit Group",
-                  "role": "Senior Platform Engineer",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
-                  "end": "2026-10",
-                  "responsibilities": [
-                    "Created infrastructure modules, delivery pipelines and rollback procedures.",
-                    "Mentored colleagues and reviewed solution designs."
-                  ]
-                }
-              ],
-              "projects": [
-                {
-                  "name": "Deployment automation",
-                  "description": "Repeatable application releases across test and production environments.",
-                  "role": "Senior Platform Engineer",
-                  "technologies": [
-                    "Python",
-                    "Bash",
-                    "Redis",
-                    "AWS",
-                    "Terraform",
-                    "Kubernetes",
-                    "Prometheus"
-                  ],
-                  "contributions": [
-                    "Created infrastructure modules, delivery pipelines and rollback procedures.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
-                  "name": "Service reliability",
-                  "description": "Monitoring and recovery practices for customer-facing systems.",
-                  "role": "Senior Platform Engineer",
-                  "technologies": [
-                    "Python",
-                    "Bash",
-                    "Redis",
-                    "AWS",
-                    "Terraform",
-                    "Kubernetes",
-                    "Prometheus"
-                  ],
-                  "contributions": [
-                    "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                }
-              ],
-              "education": [
-                {
-                  "qualification": "Bachelor of Information Technology",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2016
-                }
-              ],
-              "certifications": [
-                {
-                  "name": "Platform Engineer professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
-                }
-              ],
-              "languages": [
-                {
-                  "language": "English",
-                  "level": "Fluent"
-                },
-                {
-                  "language": "Japanese",
-                  "level": "Business"
-                }
-              ]
-            },
-            "version": 2,
-            "modifiedAt": "2026-10-01T12:34:56.000Z",
-            "recordType": "Candidate",
-            "details": {},
-            "tags": [],
-            "associations": [],
-            "warnings": [
-              "Unavailable field: Contact.MailingState",
-              "Unavailable field: Contact.currentPositionStartDate__c",
-              "Unavailable field: Contact.positionLevel__c",
-              "Unavailable field: Contact.jobType__c",
-              "Unavailable field: Contact.currentMonthlySalary__c",
-              "Unavailable field: Contact.desiredSalary__c",
-              "Unavailable field: Contact.noticePeriod__c",
-              "Unavailable field: Contact.location__c",
-              "Unavailable field: Contact.relocateTo__c",
-              "Unavailable field: Contact.highestEducationalInstitute__c",
-              "Unavailable field: Contact.educationalSpecialization__c",
-              "Unavailable field: Contact.currentPeopleManaged__c",
-              "Unavailable field: Contact.maxPeopleManaged__c",
-              "Unavailable field: Contact.status__c",
-              "Unavailable field: Contact.isDummyCandidate__c",
-              "No candidate tag associations returned"
-            ]
-          },
-          "skills": [],
-          "skillCategories": [],
-          "systems": [],
-          "industries": [],
-          "subIndustries": [],
-          "jobFunctions": [],
-          "languages": []
-        },
-        "profile": "Alex Kim works as a Cloud Engineer. Senior Platform Engineer with 10 years of experience. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration. languages: Python, Bash databases: Redis tools: AWS, Terraform, Kubernetes, Prometheus Platform Engineer, 2016-04 to 2023-03: Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis. Worked with stakeholders to clarify requirements and maintain delivery documentation. Senior Platform Engineer, 2023-04 to 2026-10: Created infrastructure modules, delivery pipelines and rollback procedures. Mentored colleagues and reviewed solution designs. Project: Deployment automation. Repeatable application releases across test and production environments. Role: Senior Platform Engineer. Technologies: Python, Bash, Redis, AWS, Terraform, Kubernetes, Prometheus. Created infrastructure modules, delivery pipelines and rollback procedures. Participated in requirements, validation and delivery reviews. Project: Service reliability. Monitoring and recovery practices for customer-facing systems. Role: Senior Platform Engineer. Technologies: Python, Bash, Redis, AWS, Terraform, Kubernetes, Prometheus. Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis. Participated in requirements, validation and delivery reviews. Education: Bachelor of Information Technology, 2016 Training: Platform Engineer professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)"
-      },
-      {
-        "rank": 6,
-        "score": 0.015384615384615385,
-        "rankingMethod": "rrf",
-        "lexicalScore": null,
-        "vectorScore": 0.62,
-        "lexicalRank": null,
-        "vectorRank": 5,
-        "candidate": {
-          "id": "003000000000005",
-          "name": "Dana Chen",
-          "title": "Financial Accountant",
-          "enrichment": {
-            "cvProfile": {
-              "source": {
-                "kind": "synthetic",
-                "generatorVersion": 1,
-                "seed": "contract-seed",
-                "archetype": "finance"
-              },
-              "summary": "Financial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration.",
-              "technicalSkills": {
-                "languages": [],
-                "frameworks": [],
-                "databases": [],
-                "tools": [
-                  "Excel",
-                  "SAP",
-                  "Financial modelling"
-                ]
-              },
-              "employmentHistory": [
-                {
-                  "employer": "Demo Cedar Services",
-                  "role": "Financial Analyst",
-                  "location": "Demo regional office",
-                  "start": "2019-04",
-                  "end": "2023-03",
-                  "responsibilities": [
-                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
-                  ]
-                },
-                {
-                  "employer": "Demo Summit Group",
-                  "role": "Financial Analyst",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
-                  "end": "2026-10",
-                  "responsibilities": [
-                    "Built financial models, investigated cost variances and supported management reviews.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
-                  ]
-                }
-              ],
-              "projects": [
-                {
-                  "name": "Budget planning",
-                  "description": "Annual budgets and rolling forecasts across business units.",
-                  "role": "Financial Analyst",
-                  "technologies": [
-                    "Excel",
-                    "SAP",
-                    "Financial modelling"
-                  ],
-                  "contributions": [
-                    "Built financial models, investigated cost variances and supported management reviews.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
-                  "name": "Close process improvement",
-                  "description": "Monthly reconciliation and financial reporting controls.",
-                  "role": "Financial Analyst",
-                  "technologies": [
-                    "Excel",
-                    "SAP",
-                    "Financial modelling"
-                  ],
-                  "contributions": [
-                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                }
-              ],
-              "education": [
-                {
-                  "qualification": "Bachelor of Accounting",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2019
-                }
-              ],
-              "certifications": [
-                {
-                  "name": "Financial Analyst professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
-                }
-              ],
-              "languages": [
-                {
-                  "language": "English",
-                  "level": "Fluent"
-                },
-                {
-                  "language": "Japanese",
-                  "level": "Business"
-                }
-              ]
-            },
-            "version": 2,
-            "modifiedAt": "2026-10-01T12:34:56.000Z",
-            "recordType": "Candidate",
-            "details": {},
-            "tags": [],
-            "associations": [],
-            "warnings": [
-              "Unavailable field: Contact.MailingState",
-              "Unavailable field: Contact.currentPositionStartDate__c",
-              "Unavailable field: Contact.positionLevel__c",
-              "Unavailable field: Contact.jobType__c",
-              "Unavailable field: Contact.currentMonthlySalary__c",
-              "Unavailable field: Contact.desiredSalary__c",
-              "Unavailable field: Contact.noticePeriod__c",
-              "Unavailable field: Contact.location__c",
-              "Unavailable field: Contact.relocateTo__c",
-              "Unavailable field: Contact.highestEducationalInstitute__c",
-              "Unavailable field: Contact.educationalSpecialization__c",
-              "Unavailable field: Contact.currentPeopleManaged__c",
-              "Unavailable field: Contact.maxPeopleManaged__c",
-              "Unavailable field: Contact.status__c",
-              "Unavailable field: Contact.isDummyCandidate__c",
-              "No candidate tag associations returned"
-            ]
-          },
-          "skills": [],
-          "skillCategories": [],
-          "systems": [],
-          "industries": [],
-          "subIndustries": [],
-          "jobFunctions": [],
-          "languages": []
-        },
-        "profile": "Dana Chen works as a Financial Accountant. Financial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, SAP, Financial modelling Financial Analyst, 2019-04 to 2023-03: Documented controls, reconciled ledger balances and streamlined approval schedules. Worked with stakeholders to clarify requirements and maintain delivery documentation. Financial Analyst, 2023-04 to 2026-10: Built financial models, investigated cost variances and supported management reviews. Collaborated with colleagues on testing, issue resolution and handover. Project: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews. Project: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews. Education: Bachelor of Accounting, 2019 Training: Financial Analyst professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)"
+        "profile": "Dana Chen works as a Financial Accountant. Senior Management Accountant with 7 years of experience in cost accounting, product costing and business partnering. Focus on plant performance reporting and product cost review, with responsibility for delivery, documentation and cross-team collaboration. frameworks: Activity-based costing tools: SAP CO, Excel, Power BI, Anaplan Management Accountant, 2019-04 to 2023-03: Built activity-based cost models that exposed loss-making variants. Advised plant managers on margin improvement options. Collaborated with colleagues on reviews, issue resolution and handover. Senior Management Accountant, 2023-04 to 2026-10: Automated yield, scrap and labour efficiency reports for plant leadership. Calculated standard costs and analysed manufacturing variances. Mentored colleagues and reviewed work for quality, consistency and risk. Project: Plant performance reporting. Monthly KPI reporting for production sites. Role: Senior Management Accountant. Technologies: Activity-based costing, SAP CO, Excel, Power BI, Anaplan. Automated yield, scrap and labour efficiency reports for plant leadership. Participated in requirements, validation and delivery reviews. Project: Product cost review. Profitability analysis across several hundred product lines. Role: Senior Management Accountant. Technologies: Activity-based costing, SAP CO, Excel, Power BI, Anaplan. Built activity-based cost models that exposed loss-making variants. Presented progress and risks to stakeholders at regular checkpoints. Education: Bachelor of Business Administration, 2019 Training: Cost Accounting Practitioner Course, 2021 Training: Management Accounting Professional Training, 2026 Spoken languages: Japanese (Native), English (Conversational), Vietnamese (Conversational)"
       },
       {
         "rank": 7,
@@ -1120,6 +1336,7 @@
         "vectorScore": null,
         "lexicalRank": 5,
         "vectorRank": null,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000008",
           "name": "Empty Profile",
@@ -1127,96 +1344,149 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "finance"
+                "archetype": "tableau-bi-developer"
               },
-              "summary": "Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Results-oriented Lead BI Developer with 16 years in Tableau and Looker dashboards for operations and finance. Delivered finance self-service and clinic operations dashboard while balancing quality, cost and schedule.",
               "technicalSkills": {
-                "languages": [],
+                "languages": [
+                  "SQL",
+                  "LookML"
+                ],
                 "frameworks": [],
-                "databases": [],
+                "databases": [
+                  "Snowflake",
+                  "Amazon Redshift"
+                ],
                 "tools": [
-                  "Excel",
-                  "SAP",
-                  "Financial modelling"
+                  "Tableau",
+                  "Looker",
+                  "Alteryx",
+                  "Excel"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Cedar Services",
-                  "role": "Financial Analyst",
-                  "location": "Demo regional office",
-                  "start": "2019-04",
-                  "end": "2023-03",
+                  "employer": "Demo Granite Pharma",
+                  "role": "BI Developer",
+                  "location": "Singapore",
+                  "start": "2010-04",
+                  "end": "2014-03",
                   "responsibilities": [
-                    "Built financial models, investigated cost variances and supported management reviews.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds.",
+                    "Optimised slow dashboards with extracts and aggregate tables.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo Summit Group",
-                  "role": "Financial Analyst",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
+                  "employer": "Demo Nimbus Life Sciences",
+                  "role": "Senior BI Developer",
+                  "location": "Sao Paulo, Brazil",
+                  "start": "2014-04",
+                  "end": "2018-03",
+                  "responsibilities": [
+                    "Modelled cost centre hierarchies in LookML and trained finance users.",
+                    "Built governed data sources and certified dashboards.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Umber Biotech",
+                  "role": "Senior BI Developer",
+                  "location": "Sendai, Japan",
+                  "start": "2018-04",
+                  "end": "2022-03",
+                  "responsibilities": [
+                    "Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds.",
+                    "Optimised slow dashboards with extracts and aggregate tables.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Mosaic Life Sciences",
+                  "role": "Lead BI Developer",
+                  "location": "Taipei, Taiwan",
+                  "start": "2022-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Modelled cost centre hierarchies in LookML and trained finance users.",
+                    "Built governed data sources and certified dashboards.",
+                    "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Close process improvement",
-                  "description": "Monthly reconciliation and financial reporting controls.",
-                  "role": "Financial Analyst",
+                  "name": "Finance self-service",
+                  "description": "Profit and loss exploration for budget holders.",
+                  "role": "Lead BI Developer",
                   "technologies": [
-                    "Excel",
-                    "SAP",
-                    "Financial modelling"
+                    "SQL",
+                    "LookML",
+                    "Snowflake",
+                    "Amazon Redshift",
+                    "Tableau",
+                    "Looker",
+                    "Alteryx",
+                    "Excel"
                   ],
                   "contributions": [
-                    "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Modelled cost centre hierarchies in LookML and trained finance users.",
+                    "Documented decisions and handed over operating procedures to the support team."
                   ]
                 },
                 {
-                  "name": "Budget planning",
-                  "description": "Annual budgets and rolling forecasts across business units.",
-                  "role": "Financial Analyst",
+                  "name": "Clinic operations dashboard",
+                  "description": "Patient volumes, waiting times and staffing across clinics.",
+                  "role": "Lead BI Developer",
                   "technologies": [
-                    "Excel",
-                    "SAP",
-                    "Financial modelling"
+                    "SQL",
+                    "LookML",
+                    "Snowflake",
+                    "Amazon Redshift",
+                    "Tableau",
+                    "Looker",
+                    "Alteryx",
+                    "Excel"
                   ],
                   "contributions": [
-                    "Built financial models, investigated cost variances and supported management reviews.",
+                    "Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds.",
                     "Participated in requirements, validation and delivery reviews."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Accounting",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2019
+                  "qualification": "Master of Information Systems",
+                  "institution": "Demo Northern University",
+                  "graduationYear": 2010
+                },
+                {
+                  "qualification": "Bachelor of Information Systems",
+                  "institution": "Demo Valley College of Health Sciences",
+                  "graduationYear": 2008
                 }
               ],
               "certifications": [
                 {
-                  "name": "Financial Analyst professional training",
-                  "issuer": "Demo Learning Academy",
+                  "name": "Data Visualisation Professional Course",
+                  "issuer": "Demo Professional Standards Board",
                   "year": 2024
+                },
+                {
+                  "name": "Tableau Desktop Specialist Training",
+                  "issuer": "Demo Quality Assurance Society",
+                  "year": 2026
                 }
               ],
               "languages": [
                 {
-                  "language": "English",
-                  "level": "Business"
+                  "language": "Japanese",
+                  "level": "Native"
                 },
                 {
-                  "language": "Japanese",
+                  "language": "English",
                   "level": "Business"
                 }
               ]
@@ -1254,7 +1524,7 @@
           "jobFunctions": [],
           "languages": []
         },
-        "profile": "Candidate Empty Profile. Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, SAP, Financial modelling Financial Analyst, 2019-04 to 2023-03: Built financial models, investigated cost variances and supported management reviews. Worked with stakeholders to clarify requirements and maintain delivery documentation. Financial Analyst, 2023-04 to 2026-10: Documented controls, reconciled ledger balances and streamlined approval schedules. Collaborated with colleagues on testing, issue resolution and handover. Project: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews. Project: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews. Education: Bachelor of Accounting, 2019 Training: Financial Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Business)"
+        "profile": "Candidate Empty Profile. Results-oriented Lead BI Developer with 16 years in Tableau and Looker dashboards for operations and finance. Delivered finance self-service and clinic operations dashboard while balancing quality, cost and schedule. languages: SQL, LookML databases: Snowflake, Amazon Redshift tools: Tableau, Looker, Alteryx, Excel BI Developer, 2010-04 to 2014-03: Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds. Optimised slow dashboards with extracts and aggregate tables. Collaborated with colleagues on reviews, issue resolution and handover. Senior BI Developer, 2014-04 to 2018-03: Modelled cost centre hierarchies in LookML and trained finance users. Built governed data sources and certified dashboards. Mentored colleagues and reviewed work for quality, consistency and risk. Senior BI Developer, 2018-04 to 2022-03: Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds. Optimised slow dashboards with extracts and aggregate tables. Mentored colleagues and reviewed work for quality, consistency and risk. Lead BI Developer, 2022-04 to 2026-10: Modelled cost centre hierarchies in LookML and trained finance users. Built governed data sources and certified dashboards. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Project: Finance self-service. Profit and loss exploration for budget holders. Role: Lead BI Developer. Technologies: SQL, LookML, Snowflake, Amazon Redshift, Tableau, Looker, Alteryx, Excel. Modelled cost centre hierarchies in LookML and trained finance users. Documented decisions and handed over operating procedures to the support team. Project: Clinic operations dashboard. Patient volumes, waiting times and staffing across clinics. Role: Lead BI Developer. Technologies: SQL, LookML, Snowflake, Amazon Redshift, Tableau, Looker, Alteryx, Excel. Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds. Participated in requirements, validation and delivery reviews. Education: Master of Information Systems, 2010 Education: Bachelor of Information Systems, 2008 Training: Data Visualisation Professional Course, 2024 Training: Tableau Desktop Specialist Training, 2026 Spoken languages: Japanese (Native), English (Business)"
       },
       {
         "rank": 8,
@@ -1264,6 +1534,7 @@
         "vectorScore": 0.4,
         "lexicalRank": null,
         "vectorRank": 6,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000006",
           "name": "Sam Patel",
@@ -1272,97 +1543,146 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
                 "archetype": "operations"
               },
-              "summary": "Operations Specialist with 7 years of experience. Focus on process standardization and inventory planning, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Lead Operations Specialist with a 16-year track record in order fulfilment operations and process standardisation. Combines practical delivery on inventory planning and process standardization with stakeholder management and continuous improvement.",
               "technicalSkills": {
                 "languages": [],
-                "frameworks": [],
+                "frameworks": [
+                  "Lean",
+                  "Standard operating procedures"
+                ],
                 "databases": [],
                 "tools": [
                   "Excel",
                   "ERP",
-                  "Process mapping"
+                  "Process mapping",
+                  "Power BI"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Cedar Services",
+                  "employer": "Demo Cedar Travel",
                   "role": "Operations Specialist",
-                  "location": "Demo regional office",
-                  "start": "2019-04",
-                  "end": "2023-03",
+                  "location": "Pune, India",
+                  "start": "2010-04",
+                  "end": "2014-03",
                   "responsibilities": [
-                    "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Mapped workflows, introduced operating checklists and monitored service-level performance.",
+                    "Wrote and maintained standard operating procedures.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo Summit Group",
-                  "role": "Operations Specialist",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
-                  "end": "2026-10",
+                  "employer": "Demo Birch Entertainment",
+                  "role": "Senior Operations Specialist",
+                  "location": "Nagoya, Japan",
+                  "start": "2014-04",
+                  "end": "2018-03",
+                  "responsibilities": [
+                    "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
+                    "Monitored daily operational KPIs and resolved exceptions with partner teams.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Horizon Foods",
+                  "role": "Senior Operations Specialist",
+                  "location": "Madrid, Spain",
+                  "start": "2018-04",
+                  "end": "2022-03",
                   "responsibilities": [
                     "Mapped workflows, introduced operating checklists and monitored service-level performance.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Wrote and maintained standard operating procedures.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Onyx Brands",
+                  "role": "Lead Operations Specialist",
+                  "location": "Pune, India",
+                  "start": "2022-04",
+                  "end": "2026-10",
+                  "responsibilities": [
+                    "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
+                    "Monitored daily operational KPIs and resolved exceptions with partner teams.",
+                    "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Process standardization",
-                  "description": "Consistent order fulfilment procedures across teams.",
-                  "role": "Operations Specialist",
-                  "technologies": [
-                    "Excel",
-                    "ERP",
-                    "Process mapping"
-                  ],
-                  "contributions": [
-                    "Mapped workflows, introduced operating checklists and monitored service-level performance.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
                   "name": "Inventory planning",
                   "description": "Stock replenishment and supplier delivery coordination.",
-                  "role": "Operations Specialist",
+                  "role": "Lead Operations Specialist",
                   "technologies": [
+                    "Lean",
+                    "Standard operating procedures",
                     "Excel",
                     "ERP",
-                    "Process mapping"
+                    "Process mapping",
+                    "Power BI"
                   ],
                   "contributions": [
                     "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Documented decisions and handed over operating procedures to the support team."
+                  ]
+                },
+                {
+                  "name": "Process standardization",
+                  "description": "Consistent order fulfilment procedures across teams.",
+                  "role": "Lead Operations Specialist",
+                  "technologies": [
+                    "Lean",
+                    "Standard operating procedures",
+                    "Excel",
+                    "ERP",
+                    "Process mapping",
+                    "Power BI"
+                  ],
+                  "contributions": [
+                    "Mapped workflows, introduced operating checklists and monitored service-level performance.",
+                    "Presented progress and risks to stakeholders at regular checkpoints."
                   ]
                 }
               ],
               "education": [
                 {
                   "qualification": "Bachelor of Business Administration",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2019
+                  "institution": "Demo Metropolitan University",
+                  "graduationYear": 2010
                 }
               ],
               "certifications": [
                 {
-                  "name": "Operations Specialist professional training",
+                  "name": "Process Improvement Fundamentals",
                   "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "year": 2012
+                },
+                {
+                  "name": "Lean Operations Practitioner Course",
+                  "issuer": "Demo Learning Academy",
+                  "year": 2021
                 }
               ],
               "languages": [
+                {
+                  "language": "Spanish",
+                  "level": "Native"
+                },
                 {
                   "language": "English",
                   "level": "Business"
                 },
                 {
                   "language": "Japanese",
-                  "level": "Business"
+                  "level": "Basic"
+                },
+                {
+                  "language": "Mandarin Chinese",
+                  "level": "Basic"
                 }
               ]
             },
@@ -1399,7 +1719,7 @@
           "jobFunctions": [],
           "languages": []
         },
-        "profile": "Sam Patel works as a Operations Specialist. Operations Specialist with 7 years of experience. Focus on process standardization and inventory planning, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, ERP, Process mapping Operations Specialist, 2019-04 to 2023-03: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Worked with stakeholders to clarify requirements and maintain delivery documentation. Operations Specialist, 2023-04 to 2026-10: Mapped workflows, introduced operating checklists and monitored service-level performance. Collaborated with colleagues on testing, issue resolution and handover. Project: Process standardization. Consistent order fulfilment procedures across teams. Role: Operations Specialist. Technologies: Excel, ERP, Process mapping. Mapped workflows, introduced operating checklists and monitored service-level performance. Participated in requirements, validation and delivery reviews. Project: Inventory planning. Stock replenishment and supplier delivery coordination. Role: Operations Specialist. Technologies: Excel, ERP, Process mapping. Analyzed demand, adjusted reorder points and tracked delivery exceptions. Participated in requirements, validation and delivery reviews. Education: Bachelor of Business Administration, 2019 Training: Operations Specialist professional training, 2024 Spoken languages: English (Business), Japanese (Business)"
+        "profile": "Sam Patel works as a Operations Specialist. Lead Operations Specialist with a 16-year track record in order fulfilment operations and process standardisation. Combines practical delivery on inventory planning and process standardization with stakeholder management and continuous improvement. frameworks: Lean, Standard operating procedures tools: Excel, ERP, Process mapping, Power BI Operations Specialist, 2010-04 to 2014-03: Mapped workflows, introduced operating checklists and monitored service-level performance. Wrote and maintained standard operating procedures. Collaborated with colleagues on reviews, issue resolution and handover. Senior Operations Specialist, 2014-04 to 2018-03: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Monitored daily operational KPIs and resolved exceptions with partner teams. Mentored colleagues and reviewed work for quality, consistency and risk. Senior Operations Specialist, 2018-04 to 2022-03: Mapped workflows, introduced operating checklists and monitored service-level performance. Wrote and maintained standard operating procedures. Mentored colleagues and reviewed work for quality, consistency and risk. Lead Operations Specialist, 2022-04 to 2026-10: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Monitored daily operational KPIs and resolved exceptions with partner teams. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Project: Inventory planning. Stock replenishment and supplier delivery coordination. Role: Lead Operations Specialist. Technologies: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI. Analyzed demand, adjusted reorder points and tracked delivery exceptions. Documented decisions and handed over operating procedures to the support team. Project: Process standardization. Consistent order fulfilment procedures across teams. Role: Lead Operations Specialist. Technologies: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI. Mapped workflows, introduced operating checklists and monitored service-level performance. Presented progress and risks to stakeholders at regular checkpoints. Education: Bachelor of Business Administration, 2010 Training: Process Improvement Fundamentals, 2012 Training: Lean Operations Practitioner Course, 2021 Spoken languages: Spanish (Native), English (Business), Japanese (Basic), Mandarin Chinese (Basic)"
       }
     ]
   },

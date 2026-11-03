@@ -4,7 +4,13 @@ import { WorkerEvent } from "../../../shared/candidateConsoleContracts";
 
 const controller = new AbortController();
 let started = false;
-function send(event: WorkerEvent): void { if (process.connected) process.send?.(event); }
+/** Resolves once the IPC write is flushed; disconnecting earlier silently drops large results (beyond the pipe buffer on Windows). */
+function send(event: WorkerEvent): Promise<void> {
+  return new Promise((resolve) => {
+    if (!process.connected || !process.send) { resolve(); return; }
+    process.send(event, undefined, undefined, () => resolve());
+  });
+}
 process.on("disconnect", () => { controller.abort(); });
 process.on("message", (message: { type: string; request?: unknown }) => {
   if (message.type === "stop") { controller.abort(); return; }
@@ -16,8 +22,8 @@ process.on("message", (message: { type: string; request?: unknown }) => {
   })
     .then((result) => send({ type: "result", result, cancelled: controller.signal.aborted }))
     .catch((error) => {
-      if (controller.signal.aborted) send({ type: "result", result: {}, cancelled: true });
-      else send({ type: "error", message: error instanceof Error ? error.message.slice(0, 4000) : "Operation failed" });
+      if (controller.signal.aborted) return send({ type: "result", result: {}, cancelled: true });
+      return send({ type: "error", message: error instanceof Error ? error.message.slice(0, 4000) : "Operation failed" });
     })
     .finally(() => { if (process.connected) process.disconnect(); });
 });

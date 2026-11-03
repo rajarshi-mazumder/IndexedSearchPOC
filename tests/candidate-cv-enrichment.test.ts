@@ -6,6 +6,7 @@ import { join, resolve, sep } from "node:path";
 import { candidateFixture } from "./candidate-fixtures";
 import { consoleConfiguration } from "./console-fixtures";
 import { GenerateDemoCvForCandidateService } from "../backend/dataPreparation/application/services/generateDemoCvForCandidateService";
+import { defaultDemoCvCatalog } from "../backend/dataPreparation/application/catalog/defaultDemoCvCatalog";
 import { candidateCvProfileSchema } from "../backend/candidateData/repositories/candidateCvProfileSchema";
 import { CandidateSnapshotSerializer } from "../backend/candidateData/repositories/candidateSnapshotSerializer";
 import { CandidateDemoCvFileRepository } from "../backend/candidateData/repositories/candidateDemoCvFileRepository";
@@ -21,7 +22,7 @@ import { OpenSearchCandidateDocumentMapper } from "../backend/candidateData/mapp
 import { EmbedCandidatesTestDriver as IndexCandidates } from "./support/embedCandidatesTestDriver";
 import { DummyCandidateRepository } from "../backend/dataPreparation/infrastructure/repositories/dummyCandidateRepository";
 
-const generator = new GenerateDemoCvForCandidateService();
+const generator = new GenerateDemoCvForCandidateService(defaultDemoCvCatalog);
 const file = "batch-000001.json";
 const signal = () => new AbortController().signal;
 async function fixture(t: TestContext, count = 25) {
@@ -43,19 +44,98 @@ async function fixture(t: TestContext, count = 25) {
 test("synthetic CV generation is deterministic, varied, coherent and distinguishes Java from JavaScript", () => {
   const java = candidateFixture({ systems: ["Java"] });
   assert.deepEqual(generator.generate(java, "a"), generator.generate(java, "a"));
+  assert.deepEqual(new GenerateDemoCvForCandidateService(defaultDemoCvCatalog).generate(java, "a"), generator.generate(java, "a"));
   assert.notDeepEqual(generator.generate(java, "a"), generator.generate(java, "b"));
-  assert.equal(generator.generate(java, "a").source.archetype, "java-backend");
-  const js = generator.generate(candidateFixture({ systems: ["JavaScript"] }), "a");
-  assert.equal(js.source.archetype, "frontend");
-  assert.doesNotMatch(JSON.stringify(js), /\bJava\b/);
+  assert.equal(generator.generate(java, "a").source.generatorVersion, 2);
+  for (let i = 0; i < 60; i++) {
+    const javaCv = generator.generate(candidateFixture({ id: String(i), systems: ["Java"] }), "a");
+    assert.ok(javaCv.technicalSkills.languages.includes("Java"), javaCv.source.archetype + " must be a Java template");
+    const js = generator.generate(candidateFixture({ id: String(i), systems: ["JavaScript"] }), "a");
+    assert.ok(js.technicalSkills.languages.includes("TypeScript"), js.source.archetype + " must be a JavaScript/TypeScript template");
+    assert.doesNotMatch(JSON.stringify(js), /\bJava\b/);
+  }
   const types = new Set<string>();
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 400; i++) {
     const cv = generator.generate(candidateFixture({ id: String(i) }), "a");
     candidateCvProfileSchema.parse(cv); types.add(cv.source.archetype);
-    assert.ok(cv.employmentHistory[0].end < cv.employmentHistory[1].start);
-    assert.ok(cv.education[0].graduationYear <= Number(cv.employmentHistory[0].start.slice(0, 4)));
+    assert.ok(cv.employmentHistory.length >= 2);
+    for (let job = 1; job < cv.employmentHistory.length; job++) {
+      assert.ok(cv.employmentHistory[job - 1].end < cv.employmentHistory[job].start);
+    }
+    assert.equal(cv.employmentHistory.at(-1)!.end, "2026-10");
+    const careerStart = Number(cv.employmentHistory[0].start.slice(0, 4));
+    assert.ok(cv.education[0].graduationYear <= careerStart);
+    assert.ok(cv.certifications.every((item) => item.year > careerStart && item.year <= 2026));
   }
-  assert.equal(types.size, 7);
+  assert.ok(types.size >= 90, "Unrecognised candidates should spread across the catalog, got " + types.size);
+});
+
+test("demo CV catalog has at least 100 uniquely named archetypes that each generate schema-valid CVs", () => {
+  const names = defaultDemoCvCatalog.archetypes.map((archetype) => archetype.name);
+  assert.ok(names.length >= 100, "Catalog has " + names.length + " archetypes");
+  assert.equal(new Set(names).size, names.length, "Archetype names must be unique");
+  for (const archetype of defaultDemoCvCatalog.archetypes) {
+    assert.match(archetype.name, /^[a-z0-9]+(-[a-z0-9]+)*$/);
+    assert.ok(!archetype.match.global && !archetype.match.sticky, archetype.name + " regex must be stateless");
+    assert.ok(archetype.projects.length >= 2 && archetype.projects.length <= 4, archetype.name + " needs 2-4 projects");
+    assert.ok(archetype.duties.length > 0 && archetype.certifications.length > 0, archetype.name + " needs duties and certifications");
+    assert.ok(archetype.tools.length > 0, archetype.name + " needs tools");
+    const single = new GenerateDemoCvForCandidateService({ ...defaultDemoCvCatalog, archetypes: [archetype] });
+    for (let i = 0; i < 25; i++) {
+      const cv = single.generate(candidateFixture({ id: archetype.name + i }), "catalog");
+      candidateCvProfileSchema.parse(cv);
+      assert.equal(cv.source.archetype, archetype.name);
+    }
+  }
+});
+
+test("candidates matching several templates are spread across the strongest matches by hash", () => {
+  const javaTypes = new Set<string>(); const accountantTypes = new Set<string>(); const seedTypes = new Set<string>();
+  for (let i = 0; i < 100; i++) {
+    javaTypes.add(generator.generate(candidateFixture({ id: String(i), title: "Java Engineer" }), "a").source.archetype);
+    accountantTypes.add(generator.generate(candidateFixture({ id: String(i), title: "Accountant" }), "a").source.archetype);
+    seedTypes.add(generator.generate(candidateFixture({ title: "Cloud Engineer" }), "seed-" + i).source.archetype);
+  }
+  assert.ok(javaTypes.size >= 3, "Java evidence should select several Java templates");
+  assert.deepEqual([...accountantTypes].sort(), ["general-ledger-accountant", "management-accountant"]);
+  assert.ok(seedTypes.size >= 3, "Changing the seed should vary the template among matches");
+  const specific = candidateFixture({ title: "Python Developer", skills: ["Python", "Django"], systems: ["Celery"] });
+  for (let i = 0; i < 20; i++) {
+    assert.equal(generator.generate({ ...specific, id: String(i) }, "a").source.archetype, "python-django-backend", "More matching evidence wins");
+  }
+});
+
+test("generated CVs vary spoken languages, locations and synthetic organisations", () => {
+  const spoken = new Set<string>(); const levels = new Set<string>(); const locations = new Set<string>();
+  for (let i = 0; i < 300; i++) {
+    const cv = generator.generate(candidateFixture({ id: "sample-" + i }), "languages");
+    for (const item of cv.languages) {
+      spoken.add(item.language); levels.add(item.level);
+    }
+    for (const job of cv.employmentHistory) {
+      locations.add(job.location);
+      assert.match(job.employer, /^Demo /);
+    }
+    assert.ok(cv.education.every((item) => item.institution.startsWith("Demo ")));
+    assert.ok(cv.certifications.every((item) => item.issuer.startsWith("Demo ")));
+  }
+  const otherLanguages = [...spoken].filter((language) => !["English", "Japanese"].includes(language));
+  assert.ok(otherLanguages.length >= 10, "Expected languages beyond English and Japanese, got " + otherLanguages.join(", "));
+  for (const language of ["Mandarin Chinese", "Korean", "Vietnamese", "Spanish", "German"]) {
+    assert.ok(spoken.has(language), language + " should appear in a sample");
+  }
+  assert.ok(levels.size >= 5);
+  assert.ok(locations.size >= 30);
+  assert.ok([...locations].some((location) => location.endsWith("Japan")) && [...locations].some((location) => !location.endsWith("Japan")));
+  const translator = generator.generate(candidateFixture({ title: "Translator" }), "a");
+  assert.deepEqual(translator.languages.slice(0, 2), [{ language: "Japanese", level: "Native" }, { language: "English", level: "Fluent" }]);
+});
+
+test("stored CV schema accepts generator versions 1 and 2 only", () => {
+  const cv = generator.generate(candidateFixture(), "a");
+  candidateCvProfileSchema.parse({ ...cv, source: { ...cv.source, generatorVersion: 1 } });
+  candidateCvProfileSchema.parse(cv);
+  assert.throws(() => candidateCvProfileSchema.parse({ ...cv, source: { ...cv.source, generatorVersion: 3 } }));
 });
 
 test("preview leaves files untouched; add backs up original, preserves cursor and skips repeat writes", async (t) => {

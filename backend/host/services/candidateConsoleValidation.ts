@@ -21,7 +21,9 @@ export const operationRequestSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("embed"), configuration: consoleConfigurationSchema,
     files: z.array(batchFileNameSchema).min(1).max(1000).refine((files) => new Set(files).size === files.length, "Select each file once") }).strict(),
   z.object({ kind: z.literal("search"), configuration: consoleConfigurationSchema,
-    query: z.string().trim().min(1).max(10000), limit: z.number().int().min(1).max(100) }).strict(),
+    query: z.string().trim().min(1).max(10000), limit: z.number().int().min(1).max(100),
+    skills: z.string().trim().max(10000).optional(), languages: z.string().trim().max(10000).optional(),
+    region: z.string().trim().max(10000).optional() }).strict(),
 ]);
 
 export class CandidateConsoleValidation {

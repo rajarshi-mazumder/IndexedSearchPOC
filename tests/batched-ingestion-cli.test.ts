@@ -72,7 +72,7 @@ require.cache[require.resolve(awsPath)].exports = {OpenSearchServerlessClient: c
       close: async () => {},
       indices: {
         exists: async () => ({body:false}),
-        getMapping: async () => ({body:{[config.OPENSEARCH_INDEX]:{mappings:{_meta:{schema_version:3},properties:{enrichment:{type:'object',enabled:false}}}}}}),
+        getMapping: async () => ({body:{[config.OPENSEARCH_INDEX]:{mappings:{_meta:{schema_version:4},properties:{enrichment:{type:'object',enabled:false}}}}}}),
         create: async request => {record({operation:'create',index:request.index});return {body:{acknowledged:true}};}
       },
       bulk: async request => {

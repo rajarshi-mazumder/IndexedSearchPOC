@@ -27,10 +27,11 @@ export class CandidateConsoleOperationExecutor {
     }
     if (request.kind === "search") {
       report({ type: "progress", progress: { message: `Searching ${settings.index}` } });
-      const results = await this.operations.search(request.query, request.limit);
+      const results = await this.operations.search({ query: request.query, skills: request.skills,
+        languages: request.languages, region: request.region }, request.limit);
       return { candidates: results.map((result, index) => ({ rank: index + 1, score: result.score,
         rankingMethod: result.rankingMethod, lexicalScore: result.lexicalScore, vectorScore: result.vectorScore,
-        lexicalRank: result.lexicalRank, vectorRank: result.vectorRank,
+        lexicalRank: result.lexicalRank, vectorRank: result.vectorRank, aspectRanks: result.aspectRanks,
         candidate: result.document.candidate, profile: result.document.profile })) };
     }
     for (const [index, file] of [...request.files].sort().entries()) {

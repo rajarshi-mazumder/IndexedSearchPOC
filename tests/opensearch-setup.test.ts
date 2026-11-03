@@ -7,11 +7,21 @@ import { CANDIDATE_SCHEMA_VERSION, TITAN_DIMENSIONS, TITAN_MODEL_ID } from "../b
 import { loadOpenSearchConfig, loadOpenSearchSetupConfig } from "../backend/infrastructure/config/opensearchConfig";
 import { config, setupConfig } from "./candidate-fixtures";
 
-function setupDouble(options: { exists?: boolean; modelId?: string; dimension?: number; simulationDimension?: number; pipelineModelId?: string } = {}) {
+const EXPECTED_FIELD_MAP = {
+  searchText: "embedding", skillsText: "skillsEmbedding", languagesText: "languagesEmbedding", regionText: "regionEmbedding",
+};
+
+function setupDouble(options: { exists?: boolean; modelId?: string; dimension?: number; simulationDimension?: number; pipelineModelId?: string;
+  pipelineFieldMap?: Record<string, string>; existingMapping?: object } = {}) {
   const calls: any[] = [];
+  const properties: Record<string, object> = {};
+  for (const [text, vector] of Object.entries(EXPECTED_FIELD_MAP)) {
+    properties[text] = { type: "text" };
+    properties[vector] = { type: "knn_vector", dimension: options.dimension ?? TITAN_DIMENSIONS };
+  }
   const existing = {
     _meta: { schema_version: CANDIDATE_SCHEMA_VERSION, embedding_model: TITAN_MODEL_ID, embedding_model_id: options.modelId ?? "test-model" },
-    properties: { embedding: { type: "knn_vector", dimension: options.dimension ?? TITAN_DIMENSIONS }, searchText: { type: "text" } },
+    properties,
   };
   const client = {
     transport: { request: async (request: any) => {
@@ -19,7 +29,7 @@ function setupDouble(options: { exists?: boolean; modelId?: string; dimension?: 
       if (request.method === "GET") {
         if (!options.pipelineModelId) throw Object.assign(new Error("missing pipeline"), { statusCode: 404 });
         return { body: { [config.OPENSEARCH_INGEST_PIPELINE]: { processors: [{ text_embedding: {
-          model_id: options.pipelineModelId, field_map: { searchText: "embedding" },
+          model_id: options.pipelineModelId, field_map: options.pipelineFieldMap ?? EXPECTED_FIELD_MAP,
         } }] } } };
       }
       if (request.path.endsWith("_simulate")) {
@@ -29,7 +39,7 @@ function setupDouble(options: { exists?: boolean; modelId?: string; dimension?: 
     } },
     indices: {
       exists: async () => ({ body: options.exists ?? false }),
-      getMapping: async () => ({ body: { [config.OPENSEARCH_INDEX]: { mappings: existing } } }),
+      getMapping: async () => ({ body: { [config.OPENSEARCH_INDEX]: { mappings: options.existingMapping ?? existing } } }),
       create: async (request: any) => { calls.push({ operation: "create", ...request }); },
       putSettings: async (request: any) => { calls.push({ operation: "settings", ...request }); },
     },
@@ -44,14 +54,19 @@ test("setup verifies remote vectors and installs matching ingest, search and ind
   const simulation = calls.find((call) => call.path?.endsWith("_simulate"));
   assert.equal(simulation.body.pipeline.processors[0].text_embedding.model_id, id);
   const ingest = calls.find((call) => call.method === "PUT" && call.path.includes("_ingest"));
-  assert.deepEqual(ingest.body.processors[0].text_embedding.field_map, { searchText: "embedding" });
+  assert.deepEqual(ingest.body.processors[0].text_embedding.field_map, EXPECTED_FIELD_MAP);
+  assert.deepEqual(simulation.body.docs, [{ _source: { searchText: "Skills: TypeScript, OpenSearch" } }],
+    "Simulating without aspect texts proves the pipeline skips missing fields");
   assert.equal(ingest.body.processors[0].text_embedding.batch_size, 1);
   const search = calls.find((call) => call.method === "PUT" && call.path.includes("_search"));
   const processor = search.body.phase_results_processors[0]["normalization-processor"];
   assert.equal(processor.normalization.technique, "min_max");
   assert.deepEqual(processor.combination.parameters.weights, [0.25, 0.75]);
   const index = calls.find((call) => call.operation === "create");
-  assert.equal(index.body.mappings.properties.embedding.dimension, TITAN_DIMENSIONS);
+  for (const [text, vector] of Object.entries(EXPECTED_FIELD_MAP)) {
+    assert.deepEqual(index.body.mappings.properties[vector], { type: "knn_vector", dimension: TITAN_DIMENSIONS, space_type: "cosinesimil" });
+    assert.deepEqual(index.body.mappings.properties[text], { type: "text", index: false });
+  }
   assert.equal(index.body.mappings._meta.embedding_model_id, id);
   assert.equal(index.body.settings["index.default_pipeline"], config.OPENSEARCH_INGEST_PIPELINE);
   assert.equal(index.body.settings["index.knn.remote_index_build.enabled"], false);
@@ -81,6 +96,23 @@ test("a shared ingest pipeline cannot silently switch its embedding model", asyn
     ensure: async () => "test-model",
   }).execute(), /different embedding settings/);
   assert.equal(calls.filter((call) => call.method === "PUT").length, 0);
+});
+
+test("a single-vector ingest pipeline is not silently overwritten with aspect vectors", async () => {
+  const { client, calls } = setupDouble({ pipelineModelId: "test-model", pipelineFieldMap: { searchText: "embedding" } });
+  await assert.rejects(new OpenSearchCandidateSetup(client, setupConfig, {
+    ensure: async () => "test-model",
+  }).execute(), /different embedding settings/);
+  assert.equal(calls.filter((call) => call.method === "PUT").length, 0);
+});
+
+test("a schema version 3 index without aspect vectors is rejected", async () => {
+  const { client, calls } = setupDouble({ exists: true, existingMapping: {
+    _meta: { schema_version: 3, embedding_model: TITAN_MODEL_ID, embedding_model_id: "test-model" },
+    properties: { embedding: { type: "knn_vector", dimension: TITAN_DIMENSIONS }, searchText: { type: "text" } },
+  } });
+  await assert.rejects(new OpenSearchCandidateSetup(client, setupConfig, { ensure: async () => "test-model" }).execute(), /Incompatible candidate index/);
+  assert.deepEqual(calls, []);
 });
 
 test("invalid remote vectors stop setup before installing runtime resources", async () => {

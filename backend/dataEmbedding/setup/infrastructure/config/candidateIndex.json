@@ -27,8 +27,26 @@
       "subIndustries": { "type": "text" },
       "profile": { "type": "text" },
       "searchText": { "type": "text", "index": false },
+      "skillsText": { "type": "text", "index": false },
+      "languagesText": { "type": "text", "index": false },
+      "regionText": { "type": "text", "index": false },
       "indexedAt": { "type": "date" },
       "embedding": {
+        "type": "knn_vector",
+        "dimension": 1024,
+        "space_type": "cosinesimil"
+      },
+      "skillsEmbedding": {
+        "type": "knn_vector",
+        "dimension": 1024,
+        "space_type": "cosinesimil"
+      },
+      "languagesEmbedding": {
+        "type": "knn_vector",
+        "dimension": 1024,
+        "space_type": "cosinesimil"
+      },
+      "regionEmbedding": {
         "type": "knn_vector",
         "dimension": 1024,
         "space_type": "cosinesimil"

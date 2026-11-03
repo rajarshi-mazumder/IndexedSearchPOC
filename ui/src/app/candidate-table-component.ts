@@ -27,6 +27,7 @@ import { CandidateCvDetailsComponent } from "./batches/candidate-cv-details-comp
                 <span class="subtext">Position {{row.vectorRank}}</span>
               }
               @else { <span class="muted">Not returned</span> }
+              @for (aspect of (row.aspectRanks ?? {}) | keyvalue; track aspect.key) { <span class="subtext">{{aspect.key}} vector · position {{aspect.value}}</span> }
             } @else { <span class="muted">Not recorded</span> }</td> }
           <td><strong>{{row.candidate.name}}</strong><span class="subtext mono">{{row.candidate.id}}</span>@if (row.candidate.enrichment?.cvProfile) { <span class="status stopping">Demo CV</span> }</td>
           <td>{{row.candidate.title || '—'}}</td><td>{{row.candidate.company || '—'}}</td>

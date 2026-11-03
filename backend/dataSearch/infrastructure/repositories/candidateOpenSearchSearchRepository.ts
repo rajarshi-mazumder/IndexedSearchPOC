@@ -1,6 +1,7 @@
 import { API, Client } from "@opensearch-project/opensearch";
 import { CandidateSearchRepository } from "../../application/ports/candidateSearchRepository";
 import { CandidateSearchHit } from "../../application/models/candidateSearchHit";
+import { CandidateVectorTarget } from "../../application/models/candidateSearchAspect";
 import { CandidateIndependentSearchRequestMapping } from "../ports/candidateIndependentSearchRequestMapping";
 import { CandidateSearchResponseMapping } from "../ports/candidateSearchResponseMapping";
 
@@ -17,8 +18,8 @@ export class CandidateOpenSearchSearchRepository implements CandidateSearchRepos
     return this.responses.map(response);
   }
 
-  public async searchVector(query: string, poolSize: number): Promise<CandidateSearchHit[]> {
-    const request = this.requests.mapVector(query, poolSize);
+  public async searchVector(target: CandidateVectorTarget, query: string, poolSize: number): Promise<CandidateSearchHit[]> {
+    const request = this.requests.mapVector(target, query, poolSize);
     const response = await this.executeSearchRequest(request);
     return this.responses.map(response);
   }

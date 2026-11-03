@@ -36,6 +36,7 @@
         "vectorScore": 0.91,
         "lexicalRank": 2,
         "vectorRank": 1,
+        "aspectRanks": {},
         "candidate": {
           "id": "003000000000001",
           "name": "Aki 佐藤",
@@ -47,115 +48,143 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "java-backend"
+                "archetype": "java-enterprise-integration"
               },
-              "summary": "Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Detail-focused Senior Integration Engineer offering 11 years of experience in enterprise integration and message-based interfaces in Java, most recently on plant system integration and supplier EDI gateway. Comfortable working across international, multilingual teams.",
               "technicalSkills": {
                 "languages": [
                   "Java",
+                  "XML",
                   "SQL"
                 ],
                 "frameworks": [
-                  "Spring Boot",
-                  "JUnit"
+                  "Apache Camel",
+                  "Jakarta EE",
+                  "Spring Integration"
                 ],
                 "databases": [
-                  "PostgreSQL"
+                  "Oracle Database"
                 ],
                 "tools": [
-                  "Kafka",
-                  "Docker",
-                  "Git"
+                  "IBM MQ",
+                  "MuleSoft Anypoint",
+                  "Jenkins",
+                  "SoapUI"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Cedar Services",
-                  "role": "Backend Engineer",
-                  "location": "Demo regional office",
-                  "start": "2022-04",
-                  "end": "2023-03",
+                  "employer": "Demo Canyon Manufacturing",
+                  "role": "Integration Engineer",
+                  "location": "Austin, United States",
+                  "start": "2015-04",
+                  "end": "2019-03",
                   "responsibilities": [
-                    "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Mapped partner message formats and maintained interface specifications.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo Summit Group",
-                  "role": "Backend Engineer",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
+                  "employer": "Demo Yuzu Manufacturing",
+                  "role": "Senior Integration Engineer",
+                  "location": "Beijing, China",
+                  "start": "2019-04",
+                  "end": "2022-03",
+                  "responsibilities": [
+                    "Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails.",
+                    "Monitored integration queues and resolved failed message replays.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Aurora Electric",
+                  "role": "Senior Integration Engineer",
+                  "location": "Sendai, Japan",
+                  "start": "2022-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Mapped partner message formats and maintained interface specifications.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Payment reconciliation",
-                  "description": "Banking services matching payment events with settlement records.",
-                  "role": "Backend Engineer",
+                  "name": "Plant system integration",
+                  "description": "Real-time exchange between ERP and factory execution systems.",
+                  "role": "Senior Integration Engineer",
                   "technologies": [
                     "Java",
+                    "XML",
                     "SQL",
-                    "Spring Boot",
-                    "JUnit",
-                    "PostgreSQL",
-                    "Kafka",
-                    "Docker",
-                    "Git"
+                    "Apache Camel",
+                    "Jakarta EE",
+                    "Spring Integration",
+                    "Oracle Database",
+                    "IBM MQ",
+                    "MuleSoft Anypoint",
+                    "Jenkins",
+                    "SoapUI"
                   ],
                   "contributions": [
-                    "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
                   ]
                 },
                 {
-                  "name": "Order management",
-                  "description": "Inventory reservation and order tracking for a retail platform.",
-                  "role": "Backend Engineer",
+                  "name": "Supplier EDI gateway",
+                  "description": "Electronic order and invoice exchange with several hundred suppliers.",
+                  "role": "Senior Integration Engineer",
                   "technologies": [
                     "Java",
+                    "XML",
                     "SQL",
-                    "Spring Boot",
-                    "JUnit",
-                    "PostgreSQL",
-                    "Kafka",
-                    "Docker",
-                    "Git"
+                    "Apache Camel",
+                    "Jakarta EE",
+                    "Spring Integration",
+                    "Oracle Database",
+                    "IBM MQ",
+                    "MuleSoft Anypoint",
+                    "Jenkins",
+                    "SoapUI"
                   ],
                   "contributions": [
-                    "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
+                    "Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails.",
                     "Participated in requirements, validation and delivery reviews."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Computer Science",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2022
+                  "qualification": "Bachelor of Information Systems",
+                  "institution": "Demo Capital School of Law",
+                  "graduationYear": 2015
                 }
               ],
               "certifications": [
                 {
-                  "name": "Backend Engineer professional training",
+                  "name": "Java EE Application Developer Certificate",
                   "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "year": 2023
+                },
+                {
+                  "name": "Enterprise Integration Patterns Training",
+                  "issuer": "Demo Industry Skills Institute",
+                  "year": 2026
                 }
               ],
               "languages": [
                 {
-                  "language": "English",
-                  "level": "Fluent"
+                  "language": "Japanese",
+                  "level": "Native"
                 },
                 {
-                  "language": "Japanese",
-                  "level": "Business"
+                  "language": "English",
+                  "level": "Fluent"
                 }
               ]
             },
@@ -281,7 +310,7 @@
             }
           ]
         },
-        "profile": "Aki 佐藤 works as a Java Engineer at Example & Co. Aki 佐藤's primary skills include REST API design. Their broader areas of expertise include Software Engineering and Technology. They have experience working with Java. They are based in 東京, Japan. Languages include Japanese (Business level). Their current salary is 0. Desired role: Principal Engineer Education: Computer Science Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration. languages: Java, SQL frameworks: Spring Boot, JUnit databases: PostgreSQL tools: Kafka, Docker, Git Backend Engineer, 2022-04 to 2023-03: Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates. Worked with stakeholders to clarify requirements and maintain delivery documentation. Backend Engineer, 2023-04 to 2026-10: Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests. Collaborated with colleagues on testing, issue resolution and handover. Project: Payment reconciliation. Banking services matching payment events with settlement records. Role: Backend Engineer. Technologies: Java, SQL, Spring Boot, JUnit, PostgreSQL, Kafka, Docker, Git. Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests. Participated in requirements, validation and delivery reviews. Project: Order management. Inventory reservation and order tracking for a retail platform. Role: Backend Engineer. Technologies: Java, SQL, Spring Boot, JUnit, PostgreSQL, Kafka, Docker, Git. Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates. Participated in requirements, validation and delivery reviews. Education: Bachelor of Computer Science, 2022 Training: Backend Engineer professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)"
+        "profile": "Aki 佐藤 works as a Java Engineer at Example & Co. Aki 佐藤's primary skills include REST API design. Their broader areas of expertise include Software Engineering and Technology. They have experience working with Java. They are based in 東京, Japan. Languages include Japanese (Business level). Their current salary is 0. Desired role: Principal Engineer Education: Computer Science Detail-focused Senior Integration Engineer offering 11 years of experience in enterprise integration and message-based interfaces in Java, most recently on plant system integration and supplier EDI gateway. Comfortable working across international, multilingual teams. languages: Java, XML, SQL frameworks: Apache Camel, Jakarta EE, Spring Integration databases: Oracle Database tools: IBM MQ, MuleSoft Anypoint, Jenkins, SoapUI Integration Engineer, 2015-04 to 2019-03: Built MQ-based adapters, retry policies and reconciliation reports for production orders. Mapped partner message formats and maintained interface specifications. Collaborated with colleagues on reviews, issue resolution and handover. Senior Integration Engineer, 2019-04 to 2022-03: Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails. Monitored integration queues and resolved failed message replays. Mentored colleagues and reviewed work for quality, consistency and risk. Senior Integration Engineer, 2022-04 to 2026-10: Built MQ-based adapters, retry policies and reconciliation reports for production orders. Mapped partner message formats and maintained interface specifications. Mentored colleagues and reviewed work for quality, consistency and risk. Project: Plant system integration. Real-time exchange between ERP and factory execution systems. Role: Senior Integration Engineer. Technologies: Java, XML, SQL, Apache Camel, Jakarta EE, Spring Integration, Oracle Database, IBM MQ, MuleSoft Anypoint, Jenkins, SoapUI. Built MQ-based adapters, retry policies and reconciliation reports for production orders. Tracked issues to closure and shared lessons learned after go-live. Project: Supplier EDI gateway. Electronic order and invoice exchange with several hundred suppliers. Role: Senior Integration Engineer. Technologies: Java, XML, SQL, Apache Camel, Jakarta EE, Spring Integration, Oracle Database, IBM MQ, MuleSoft Anypoint, Jenkins, SoapUI. Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails. Participated in requirements, validation and delivery reviews. Education: Bachelor of Information Systems, 2015 Training: Java EE Application Developer Certificate, 2023 Training: Enterprise Integration Patterns Training, 2026 Spoken languages: Japanese (Native), English (Fluent)"
       }
     ]
   },

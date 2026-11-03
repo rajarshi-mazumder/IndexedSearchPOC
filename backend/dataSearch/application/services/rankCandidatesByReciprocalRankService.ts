@@ -1,38 +1,58 @@
 import { CandidateSearchHit } from "../models/candidateSearchHit";
 import { CandidateSearchResult } from "../models/candidateSearchResult";
+import { CandidateSearchBranch, CandidateSearchBranchHits } from "../models/candidateSearchBranchHits";
 import { CandidateSearchRanking } from "../ports/candidateSearchRanking";
 
-/** Equal-weight RRF. Scores order results; they are not suitability probabilities. */
+/** Equal-weight RRF over every searched branch. Scores order results; they are not suitability probabilities. */
 export class RankCandidatesByReciprocalRankService implements CandidateSearchRanking {
   private readonly rankConstant = 60;
 
-  public rank(lexicalHits: CandidateSearchHit[], vectorHits: CandidateSearchHit[], limit: number): CandidateSearchResult[] {
+  public rank(branches: CandidateSearchBranchHits[], limit: number): CandidateSearchResult[] {
     const candidates = new Map<string, CandidateSearchResult>();
-    this.addBranchHits(candidates, lexicalHits, "lexical");
-    this.addBranchHits(candidates, vectorHits, "vector");
+    const contributions = new Map<string, number>();
+    for (const { branch, hits } of branches) {
+      this.addBranchHits(candidates, contributions, branch, hits);
+    }
     const results = Array.from(candidates.values());
     for (const result of results) {
-      result.score = this.calculateContribution(result.lexicalRank) + this.calculateContribution(result.vectorRank);
+      result.score = contributions.get(result.document.salesforceId) ?? 0;
     }
     results.sort((left, right) => this.compareCandidates(left, right));
     return results.slice(0, limit);
   }
 
-  private addBranchHits(candidates: Map<string, CandidateSearchResult>, hits: CandidateSearchHit[], branch: "lexical" | "vector"): void {
+  private addBranchHits(
+    candidates: Map<string, CandidateSearchResult>,
+    contributions: Map<string, number>,
+    branch: CandidateSearchBranch,
+    hits: CandidateSearchHit[],
+  ): void {
+    const seen = new Set<string>();
     for (const [index, hit] of hits.entries()) {
       const id = hit.document.salesforceId;
+      if (seen.has(id)) {
+        continue;
+      }
+      seen.add(id);
       let candidate = candidates.get(id);
       if (!candidate) {
         candidate = this.createCandidateResult(hit);
         candidates.set(id, candidate);
       }
-      if (branch === "lexical" && candidate.lexicalRank === null) {
-        candidate.lexicalRank = index + 1;
-        candidate.lexicalScore = hit.score;
-      } else if (branch === "vector" && candidate.vectorRank === null) {
-        candidate.vectorRank = index + 1;
-        candidate.vectorScore = hit.score;
-      }
+      this.recordBranchRank(candidate, branch, index + 1, hit.score);
+      contributions.set(id, (contributions.get(id) ?? 0) + this.calculateContribution(index + 1));
+    }
+  }
+
+  private recordBranchRank(candidate: CandidateSearchResult, branch: CandidateSearchBranch, rank: number, score: number | null): void {
+    if (branch === "lexical") {
+      candidate.lexicalRank = rank;
+      candidate.lexicalScore = score;
+    } else if (branch === "overall") {
+      candidate.vectorRank = rank;
+      candidate.vectorScore = score;
+    } else {
+      candidate.aspectRanks[branch] = rank;
     }
   }
 
@@ -44,14 +64,12 @@ export class RankCandidatesByReciprocalRankService implements CandidateSearchRan
       vectorScore: null,
       lexicalRank: null,
       vectorRank: null,
+      aspectRanks: {},
       document: hit.document,
     };
   }
 
-  private calculateContribution(rank: number | null): number {
-    if (rank === null) {
-      return 0;
-    }
+  private calculateContribution(rank: number): number {
     return 1 / (this.rankConstant + rank);
   }
 

@@ -1,6 +1,6 @@
-import { CandidateSearchHit } from "../models/candidateSearchHit";
+import { CandidateSearchBranchHits } from "../models/candidateSearchBranchHits";
 import { CandidateSearchResult } from "../models/candidateSearchResult";
 
 export interface CandidateSearchRanking {
-  rank(lexicalHits: CandidateSearchHit[], vectorHits: CandidateSearchHit[], limit: number): CandidateSearchResult[];
+  rank(branches: CandidateSearchBranchHits[], limit: number): CandidateSearchResult[];
 }

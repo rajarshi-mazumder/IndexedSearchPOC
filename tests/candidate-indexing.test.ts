@@ -47,6 +47,22 @@ test("search text contains expertise and excludes identity, salary and location"
   assert.equal(factory.create(candidateFixture()), null);
 });
 
+test("aspect texts feed their own vectors and are left out when the candidate has no such data", () => {
+  const candidate = candidateFixture({
+    title: "Engineer", skills: ["TypeScript"], systems: ["OpenSearch"], location: "Osaka, Japan", salary: 100,
+    languages: [{ code: "Japanese", level: "Native" }],
+  });
+  const document = factory.create(candidate)!;
+  assert.equal(document.skillsText, "Skills: TypeScript\nSystems and technologies: OpenSearch");
+  assert.equal(document.languagesText, "Languages: Japanese (Native)");
+  assert.equal(document.regionText, "Location: Osaka, Japan");
+  assert.doesNotMatch([document.skillsText, document.languagesText, document.regionText].join("\n"), /Recovered Candidate|Engineer|100/);
+  const sparse = factory.create(candidateFixture({ title: "Engineer" }))!;
+  assert.deepEqual([sparse.skillsText, sparse.languagesText, sparse.regionText], [undefined, undefined, undefined]);
+  assert.equal("regionText" in OpenSearchCandidateDocumentMapper.toDocument(sparse), false);
+  assert.deepEqual(OpenSearchCandidateDocumentMapper.fromDocument(OpenSearchCandidateDocumentMapper.toDocument(document)), document);
+});
+
 test("full indexing submits all searchable candidates in bounded batches", async () => {
   const recording = recordingDocumentIndex();
   const candidates = Array.from({ length: 205 }, (_, i) => candidateFixture({
@@ -95,19 +111,34 @@ test("search validates input, fetches both pools, and delegates ranking through 
   const calls: unknown[] = [];
   const hits = [{ score: 0.75, document: documentFixture() }];
   const result = [{ score: 2 / 61, rankingMethod: "rrf" as const, lexicalScore: 0.75, vectorScore: 0.75,
-    lexicalRank: 1, vectorRank: 1, document: documentFixture() }];
+    lexicalRank: 1, vectorRank: 1, aspectRanks: {}, document: documentFixture() }];
   const search = new SearchCandidates({
     searchLexical: async (...args) => { calls.push(["lexical", ...args]); return hits; },
     searchVector: async (...args) => { calls.push(["vector", ...args]); return hits; },
-  }, { rank: (lexical, vector, limit) => {
-    assert.equal(lexical, hits); assert.equal(vector, hits); assert.equal(limit, 5); return result;
+  }, { rank: (branches, limit) => {
+    assert.deepEqual(branches, [{ branch: "lexical", hits }, { branch: "overall", hits }]); assert.equal(limit, 5); return result;
   } });
-  assert.deepEqual(await search.execute(" TypeScript engineer ", 5), result);
-  assert.deepEqual(calls, [["lexical", "TypeScript engineer", 50], ["vector", "TypeScript engineer", 50]]);
-  await assert.rejects(search.execute("   "));
-  await assert.rejects(search.execute("Engineer", 0));
-  await assert.rejects(search.execute("Engineer", 101));
+  assert.deepEqual(await search.execute({ query: " TypeScript engineer ", region: "  " }, 5), result);
+  assert.deepEqual(calls, [["lexical", "TypeScript engineer", 50], ["vector", "overall", "TypeScript engineer", 50]]);
+  await assert.rejects(search.execute({ query: "   " }));
+  await assert.rejects(search.execute({ query: "Engineer" }, 0));
+  await assert.rejects(search.execute({ query: "Engineer" }, 101));
   assert.equal(calls.length, 2);
+});
+
+test("search compares each given aspect text only with its own vector", async () => {
+  const calls: unknown[] = [];
+  const search = new SearchCandidates({
+    searchLexical: async (...args) => { calls.push(["lexical", ...args]); return []; },
+    searchVector: async (...args) => { calls.push(["vector", ...args]); return []; },
+  }, { rank: (branches) => {
+    assert.deepEqual(branches.map((branch) => branch.branch), ["lexical", "overall", "skills", "region"]); return [];
+  } });
+  await search.execute({ query: "Backend engineer", skills: " Kafka ", region: "East Asia" }, 10);
+  assert.deepEqual(calls, [
+    ["lexical", "Backend engineer", 50], ["vector", "overall", "Backend engineer", 50],
+    ["vector", "skills", "Kafka", 50], ["vector", "region", "East Asia", 50],
+  ]);
 });
 
 test("stopping indexing finishes the current bulk batch and does not start the next", async () => {

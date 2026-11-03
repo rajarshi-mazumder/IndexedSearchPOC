@@ -11,7 +11,7 @@ export type OperationRequest =
   | { kind: "fetch"; configuration: ConsoleConfiguration; batchSize: number; maxBatches: number; resume: boolean }
   | { kind: "setup"; configuration: ConsoleConfiguration }
   | { kind: "embed"; configuration: ConsoleConfiguration; files: string[] }
-  | { kind: "search"; configuration: ConsoleConfiguration; query: string; limit: number };
+  | { kind: "search"; configuration: ConsoleConfiguration; query: string; limit: number; skills?: string; languages?: string; region?: string };
 export interface OperationProgress {
   changed?: number;
   message: string; processed?: number; total?: number; indexed?: number; skipped?: number;
@@ -27,6 +27,7 @@ export interface ConsoleSearchResult {
   rankingMethod?: "rrf";
   lexicalScore?: number | null; vectorScore?: number | null;
   lexicalRank?: number | null; vectorRank?: number | null;
+  aspectRanks?: { skills?: number; languages?: number; region?: number };
 }
 export interface OperationResult {
   enrichment?: { changed: number; skipped: number; completedFiles: number };

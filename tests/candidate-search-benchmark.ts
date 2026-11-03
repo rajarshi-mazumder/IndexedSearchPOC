@@ -85,7 +85,7 @@ export class CandidateSearchBenchmark {
 
   private async query(mode: BenchmarkResult["mode"], query: string) {
     if (mode === "hybrid") {
-      return (await this.search.execute(query, 10)).map((hit) => ({ id: hit.document.salesforceId, score: hit.score }));
+      return (await this.search.execute({ query }, 10)).map((hit) => ({ id: hit.document.salesforceId, score: hit.score }));
     }
     const response = await this.client.search({ index: this.config.OPENSEARCH_INDEX, search_pipeline: "_none", allow_partial_search_results: false, body: {
       size: 10, _source: false,

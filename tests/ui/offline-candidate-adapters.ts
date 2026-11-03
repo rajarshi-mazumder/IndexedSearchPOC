@@ -64,7 +64,7 @@ require.cache[awsModule]!.exports = { OpenSearchServerlessClient: class {
     const read = async (): Promise<Record<string, unknown>> => { try { return JSON.parse(await readFile(path, "utf8")); } catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return {}; throw error; } };
     this.connection = {
       close: async () => {}, indices: { exists: async () => ({ body: false }), create: async () => ({ body: { acknowledged: true } }),
-        getMapping: async () => ({ body: { [config.OPENSEARCH_INDEX]: { mappings: { _meta: { schema_version: 3 }, properties: { enrichment: { type: "object", enabled: false } } } } } }) },
+        getMapping: async () => ({ body: { [config.OPENSEARCH_INDEX]: { mappings: { _meta: { schema_version: 4 }, properties: { enrichment: { type: "object", enabled: false } } } } } }) },
       bulk: async (request: { body: any[] }) => {
         await delay(100); const documents = await read();
         const items: object[] = [];

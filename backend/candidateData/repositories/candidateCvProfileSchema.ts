@@ -4,7 +4,7 @@ const text = z.string().min(1).max(4000);
 const list = z.array(text).max(50);
 const month = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
 export const candidateCvProfileSchema = z.object({
-  source: z.object({ kind: z.literal("synthetic"), generatorVersion: z.literal(1), seed: text, archetype: text }).strict(),
+  source: z.object({ kind: z.literal("synthetic"), generatorVersion: z.union([z.literal(1), z.literal(2)]), seed: text, archetype: text }).strict(),
   summary: text,
   technicalSkills: z.object({ languages: list, frameworks: list, databases: list, tools: list }).strict(),
   employmentHistory: z.array(z.object({ employer: text, role: text, location: text, start: month, end: month, responsibilities: list }).strict()
