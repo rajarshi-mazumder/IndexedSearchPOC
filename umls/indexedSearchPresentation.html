@@ -114,6 +114,8 @@ table.t tr:last-child td{border-bottom:0}
 table.t td.num{font:14px var(--mono)}
 table.t td.strong{color:var(--ink);font-weight:600}
 table.t tr.win td{background:var(--tint)}
+table.t tr.skip td{color:var(--muted);font-style:italic}
+.stack{display:flex;flex-direction:column;gap:12px;min-width:0}
 
 .ranks{list-style:none;margin:0;padding:16px;display:flex;flex-direction:column;gap:14px}
 .ranks li{display:grid;grid-template-columns:28px 110px 1fr 70px;align-items:center;gap:12px;font-size:15px}
@@ -128,6 +130,13 @@ table.t tr.win td{background:var(--tint)}
 .formula .fr span:first-child{border-bottom:2px solid var(--ink);padding:0 8px 5px}
 .formula em{font-style:normal;color:var(--accent);font-weight:650}
 .formula .lhs{color:var(--muted);font-size:18px}
+.formula .sig{font-size:30px;line-height:1;color:var(--ink)}
+.formula .cap{color:var(--muted);font-size:14px;font-family:var(--sans)}
+
+.next{margin:0 0 34px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px}
+.next h3{font:650 17px/1.2 var(--display);margin:0 0 10px}
+.next ul{margin:0;padding-left:20px;color:var(--ink-2)}
+.next li{margin:4px 0}
 
 footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
 @media print{body{background:#fff}.toolbar{display:none}.module{break-inside:avoid}}
@@ -193,12 +202,12 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font
       <button class="term clickable" type="button" data-node="set-in" data-step="set-in" data-title="Input · Titan model"><span class="kicker">Input</span><span class="tname">Titan model</span><span class="tsub">Which model to use and how to reach it</span><span class="more">Details</span></button>
       <button class="step" type="button" data-node="set-1" data-step="set-1" data-title="1 · Create ingest pipeline">
         <span class="top"><span class="num">1</span><span class="name">Create ingest pipeline</span></span>
-        <span class="desc">A rule that adds a vector to every document written</span>
+        <span class="desc">A rule that adds up to four vectors to every document written</span>
         <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
       </button>
       <button class="step" type="button" data-node="set-2" data-step="set-2" data-title="2 · Create index">
         <span class="top"><span class="num">2</span><span class="name">Create index</span></span>
-        <span class="desc">The table for candidates, with a schema for keyword and vector search</span>
+        <span class="desc">The table for candidates, with fields for keyword search and four vectors</span>
         <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
       </button>
     </div>
@@ -211,19 +220,19 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font
 
 <!-- ============================================================ 03 DATA EMBEDDING -->
 <section class="module emb" id="embedding">
-  <div class="module-head"><span class="module-num">03</span><h2>Data embedding</h2><span class="module-sub">Load candidates into OpenSearch with a vector for each one</span></div>
+  <div class="module-head"><span class="module-num">03</span><h2>Data embedding</h2><span class="module-sub">Load candidates into OpenSearch with up to four vectors each</span></div>
   <div class="diagram-shell"><div class="canvas">
     <svg class="edges" aria-hidden="true"></svg>
     <div class="grid">
       <div class="term" data-node="emb-in"><span class="kicker">Input</span><span class="tname">Batch file</span><span class="tsub">From module 01</span></div>
       <button class="step" type="button" data-node="emb-1" data-step="emb-1" data-title="1 · Build document">
         <span class="top"><span class="num">1</span><span class="name">Build document</span></span>
-        <span class="desc">Candidate → document, with a searchText summary</span>
+        <span class="desc">Candidate → document, with four texts: overall, skills, languages, region</span>
         <span class="foot"><span class="sys loc">Application</span><span class="more">Details</span></span>
       </button>
-      <button class="step" type="button" data-node="emb-2" data-step="emb-2" data-title="2 · Create vector">
-        <span class="top"><span class="num">2</span><span class="name">Create vector</span></span>
-        <span class="desc">The ingest pipeline turns searchText into a vector</span>
+      <button class="step" type="button" data-node="emb-2" data-step="emb-2" data-title="2 · Create vectors">
+        <span class="top"><span class="num">2</span><span class="name">Create vectors</span></span>
+        <span class="desc">The ingest pipeline turns each text into its own vector</span>
         <span class="foot"><span class="sys br">OpenSearch + Bedrock</span><span class="more">Details</span></span>
       </button>
       <button class="step" type="button" data-node="emb-3" data-step="emb-3" data-title="3 · Store document">
@@ -246,31 +255,44 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font
   <div class="diagram-shell"><div class="canvas">
     <svg class="edges" aria-hidden="true"></svg>
     <div class="grid">
-      <div class="term" data-node="srch-in" style="grid-column:1;grid-row:1 / 3;align-self:center"><span class="kicker">Input</span><span class="tname">Query</span><span class="tsub">“Java Spring Boot Kafka backend engineer”</span></div>
+      <button class="term clickable" type="button" data-node="srch-in" data-step="srch-in" data-title="Input · Search request" style="grid-column:1;grid-row:1 / 4;align-self:center"><span class="kicker">Input</span><span class="tname">Search request</span><span class="tsub">A query, plus optional skills, languages and region</span><span class="more">Details</span></button>
       <button class="step" type="button" data-node="srch-1" data-step="srch-1" data-title="1 · Keyword search" style="grid-column:2;grid-row:1">
         <span class="top"><span class="num">1</span><span class="name">Keyword search</span></span>
         <span class="desc">Match the query's words</span>
         <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
       </button>
-      <button class="step" type="button" data-node="srch-2" data-step="srch-2" data-title="2 · Vector search" style="grid-column:2;grid-row:2">
-        <span class="top"><span class="num">2</span><span class="name">Vector search</span></span>
-        <span class="desc">Match the query's meaning</span>
+      <button class="step" type="button" data-node="srch-2" data-step="srch-2" data-title="2 · Overall vector search" style="grid-column:2;grid-row:2">
+        <span class="top"><span class="num">2</span><span class="name">Overall vector search</span></span>
+        <span class="desc">Match the query's meaning with the whole profile</span>
         <span class="foot"><span class="sys br">OpenSearch + Bedrock</span><span class="more">Details</span></span>
       </button>
-      <button class="step" type="button" data-node="srch-3" data-step="srch-3" data-title="3 · Combine results" style="grid-column:3;grid-row:1 / 3;align-self:center">
-        <span class="top"><span class="num">3</span><span class="name">Combine results</span></span>
-        <span class="desc">Merge both rankings into one list</span>
+      <button class="step" type="button" data-node="srch-3" data-step="srch-3" data-title="3 · Aspect vector search" style="grid-column:2;grid-row:3">
+        <span class="top"><span class="num">3</span><span class="name">Aspect vector search</span></span>
+        <span class="desc">Match each optional text with its own vector</span>
+        <span class="foot"><span class="sys br">OpenSearch + Bedrock</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="srch-4" data-step="srch-4" data-title="4 · Combine results" style="grid-column:3;grid-row:1 / 4;align-self:center">
+        <span class="top"><span class="num">4</span><span class="name">Combine results</span></span>
+        <span class="desc">Merge all rankings into one list</span>
         <span class="foot"><span class="sys loc">Application</span><span class="more">Details</span></span>
       </button>
-      <div class="term" data-node="srch-out" style="grid-column:4;grid-row:1 / 3;align-self:center"><span class="kicker">Output</span><span class="tname">Ranked candidates</span><span class="tsub">Best matches first</span></div>
+      <div class="term" data-node="srch-out" style="grid-column:4;grid-row:1 / 4;align-self:center"><span class="kicker">Output</span><span class="tname">Ranked candidates</span><span class="tsub">Best matches first</span></div>
     </div>
   </div></div>
-  <p class="module-note">Both searches run at the same time against the same index.</p>
+  <p class="module-note">All searches run at the same time against the same index. An aspect that is not given is not searched.</p>
   <details class="output" id="search-output">
     <summary><span><span class="kicker">Step output</span><span class="selected-title"></span></span><span class="disclosure"></span></summary>
     <div class="output-body"></div>
   </details>
 </section>
+
+<aside class="next">
+  <h3>Next steps</h3>
+  <ul>
+    <li>Filters for hard requirements, such as “must live in Japan”. Aspect vectors only nudge the ranking; they never exclude anyone.</li>
+    <li>An LLM splits one natural-language request into the query and the aspect texts, so users type a single sentence.</li>
+  </ul>
+</aside>
 
 <footer>Fictional candidate examples. Vector values and scores are illustrative.</footer>
 </main>
@@ -356,7 +378,7 @@ Skills:      Java, SQL, Spring Boot, PostgreSQL,
 Experience:  2 roles, 2022 – 2026
 Projects:    Payment reconciliation, Order management
 Education:   Bachelor of Computer Science
-Languages:   English, Japanese</pre></div>
+Languages:   English (Fluent), Japanese (Native)</pre></div>
   </div>
 </template>
 
@@ -407,11 +429,11 @@ Languages:   English, Japanese</pre></div>
     <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Model saved in OpenSearch</span></div>
 <pre class="code" data-lang="text">model_id: &lt;model_id&gt;</pre></div>
   </div>
-  <p class="takeaway">Titan turns text into a list of 1,024 numbers (a vector). Texts with similar meaning get similar vectors. The pipeline and the search both refer to Titan by this <code>model_id</code>.</p>
+  <p class="takeaway">Titan turns text into a list of 1,024 numbers (a vector). Texts with similar meaning get similar vectors. All four vectors per candidate come from this one model. The pipeline and the search both refer to it by this <code>model_id</code>.</p>
 </template>
 
 <template id="set-1">
-  <p class="lead">An ingest pipeline is a rule saved inside OpenSearch. It runs on every document before the document is stored. Ours takes the document's <code>searchText</code> field, sends it to Titan, and saves the returned vector in a new <code>embedding</code> field.</p>
+  <p class="lead">An ingest pipeline is a rule saved inside OpenSearch. It runs on every document before the document is stored. Ours has one rule with four mappings: each text field is sent to Titan and the returned vector is saved in its own vector field.</p>
   <div class="io">
     <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">PUT /_ingest/pipeline/candidates-ingest</span></div>
 <pre class="code" data-lang="json">{
@@ -420,23 +442,36 @@ Languages:   English, Japanese</pre></div>
     {
       "text_embedding": {
         "model_id": "&lt;model_id&gt;",
-        "field_map": { "searchText": "embedding" }
+        "field_map": {
+          "searchText":    "embedding",
+          "skillsText":    "skillsEmbedding",
+          "languagesText": "languagesEmbedding",
+          "regionText":    "regionEmbedding"
+        }
       }
     }
   ]
 }</pre></div>
     <div class="arrow"></div>
     <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Pipeline candidates-ingest, saved in OpenSearch</span></div>
-<pre class="code" data-lang="text">From now on, for every document written:
-
-Arrives: { …, "searchText": "Role: Backend Engineer. Skills: Java. …" }
-Stored:  { …, "searchText": "…", "embedding": [0.0217, -0.0382, … 1,024 numbers] }</pre></div>
+      <table class="t">
+        <thead><tr><th>Text field</th><th>Vector field</th><th>Holds</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">searchText</td><td>embedding</td><td>Whole profile</td></tr>
+          <tr><td class="strong">skillsText</td><td>skillsEmbedding</td><td>Skills</td></tr>
+          <tr><td class="strong">languagesText</td><td>languagesEmbedding</td><td>Spoken languages</td></tr>
+          <tr><td class="strong">regionText</td><td>regionEmbedding</td><td>Location</td></tr>
+        </tbody>
+      </table>
+<pre class="code" data-lang="text">For every document written: up to 4 calls to Titan.
+Missing text field: skipped, no vector made.</pre>
+    </div>
   </div>
   <p class="takeaway">Our application never calls the model itself. OpenSearch does it whenever a document is written. You can view the rule at any time with <code>GET /_ingest/pipeline/candidates-ingest</code>.</p>
 </template>
 
 <template id="set-2">
-  <p class="lead">An index is the table that holds the candidates. Creating it sets the schema: each field's type decides how that field can be searched. It also attaches the ingest pipeline, so every document written here gets a vector.</p>
+  <p class="lead">An index is the table that holds the candidates. Creating it sets the schema: each field's type decides how that field can be searched. It also attaches the ingest pipeline, so every document written here gets its vectors.</p>
   <div class="io">
     <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">PUT /candidates</span></div>
 <pre class="code" data-lang="json">{
@@ -455,12 +490,18 @@ Stored:  { …, "searchText": "…", "embedding": [0.0217, -0.0382, … 1,024 nu
       "name":          { "type": "text" },
       … other fields
       "searchText":    { "type": "text", "index": false },
+      "skillsText":    { "type": "text", "index": false },
+      "languagesText": { "type": "text", "index": false },
+      "regionText":    { "type": "text", "index": false },
       "enrichment":    { "type": "object", "enabled": false },
       "embedding": {
         "type": "knn_vector",
         "dimension": 1024,
         "space_type": "cosinesimil"
-      }
+      },
+      "skillsEmbedding":    { …same as embedding },
+      "languagesEmbedding": { …same as embedding },
+      "regionEmbedding":    { …same as embedding }
     }
   }
 }</pre></div>
@@ -469,31 +510,33 @@ Stored:  { …, "searchText": "…", "embedding": [0.0217, -0.0382, … 1,024 nu
       <table class="t">
         <thead><tr><th>Field</th><th>Type</th><th>Used for</th></tr></thead>
         <tbody>
-          <tr><td class="strong">title, skills, skillCategories, systems, jobFunctions, industries, subIndustries</td><td>text</td><td>Keyword search</td></tr>
-          <tr><td class="strong">profile</td><td>text</td><td>Keyword search</td></tr>
-          <tr><td class="strong">embedding</td><td>vector, 1,024 numbers</td><td>Vector search</td></tr>
-          <tr><td class="strong">searchText</td><td>text, not searchable</td><td>Input to the vector</td></tr>
+          <tr><td class="strong">title, skills, skillCategories, systems, jobFunctions, industries, subIndustries, profile</td><td>text</td><td>Keyword search</td></tr>
+          <tr><td class="strong">embedding</td><td>vector, 1,024 numbers</td><td>Overall vector search</td></tr>
+          <tr><td class="strong">skillsEmbedding, languagesEmbedding, regionEmbedding</td><td>vector, 1,024 numbers each</td><td>Aspect vector search</td></tr>
+          <tr><td class="strong">searchText, skillsText, languagesText, regionText</td><td>text, not searchable</td><td>Input to the vectors</td></tr>
           <tr><td class="strong">salesforceId</td><td>keyword</td><td>Document ID</td></tr>
           <tr><td class="strong">name, company, location, salary, languages</td><td>text, number, list</td><td>Shown in results</td></tr>
           <tr><td class="strong">enrichment</td><td>object, not searchable</td><td>Stored CV data</td></tr>
         </tbody>
       </table>
 <pre class="code" data-lang="text">Default pipeline: candidates-ingest
-Vector search:    on</pre>
+Vector search:    on, 4 vector fields, cosine similarity</pre>
     </div>
   </div>
-  <p class="takeaway">The index is empty until module 03 writes the candidates. The vector field is sized at 1,024 numbers to match Titan's output.</p>
+  <p class="takeaway">The index is empty until module 03 writes the candidates. Every vector field is sized at 1,024 numbers to match Titan's output.</p>
 </template>
 
 <template id="emb-1">
-  <p class="lead">Turn each candidate into a document for OpenSearch. We add a field called <code>searchText</code>: one plain-text summary of the candidate's experience. This is the text that becomes the vector.</p>
+  <p class="lead">Turn each candidate into a document for OpenSearch. We add four plain-text fields. Each one describes one side of the candidate and becomes its own vector.</p>
   <div class="io">
     <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Candidate</span></div>
 <pre class="code" data-lang="json">{
   "name": "Aiko Mori",
   "title": "Backend Engineer",
+  "location": "Tokyo, Japan",
   "skills": ["Java"],
   "systems": ["Spring Boot"],
+  "languages": [{ "code": "English", "level": "Fluent" }],
   "cvProfile": { … }
 }</pre></div>
     <div class="arrow"></div>
@@ -501,36 +544,60 @@ Vector search:    on</pre>
 <pre class="code" data-lang="json">{
   "name": "Aiko Mori",
   "title": "Backend Engineer",
-  "skills": ["Java"],
-  "systems": ["Spring Boot"],
-  "searchText": "Role: Backend Engineer. Skills: Java. Systems: Spring Boot. Built Java REST APIs and Kafka consumers. Projects: payment reconciliation, order management. …"
+  "location": "Tokyo, Japan",
+  …
+  "searchText": "Role: Backend Engineer. Skills: Java. …",
+  "skillsText": "Skills: Java. Expertise: Software development. …",
+  "languagesText": "Languages: English (Fluent), Japanese (Native)",
+  "regionText": "Location: Tokyo, Japan"
 }</pre></div>
   </div>
-  <p class="takeaway">The whole document goes to OpenSearch, because the other fields are needed for keyword search and for showing results. Only <code>searchText</code> becomes the vector.</p>
+  <table class="t" style="margin-top:18px">
+    <thead><tr><th>Text</th><th>What it holds</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">searchText</td><td>The whole professional profile: role, skills, systems, job functions, industries, languages, CV. No name, location or salary.</td></tr>
+      <tr><td class="strong">skillsText</td><td>Skills, expertise, systems and the technical skills from the CV</td></tr>
+      <tr><td class="strong">languagesText</td><td>Spoken languages, each listed once</td></tr>
+      <tr><td class="strong">regionText</td><td>Where the candidate lives</td></tr>
+    </tbody>
+  </table>
+  <p class="takeaway">If a candidate has no data for one of these, that text is left out, and no vector is made for it.</p>
 </template>
 
 <template id="emb-2">
-  <p class="lead">When the document arrives, the ingest pipeline sends its <code>searchText</code> to Titan and adds the returned vector to the document.</p>
+  <p class="lead">When the document arrives, the ingest pipeline sends each of the four texts to Titan and saves each returned vector in its own field.</p>
   <div class="io">
-    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">searchText</span></div>
-<pre class="code" data-lang="text">Role: Backend Engineer. Skills: Java. Systems: Spring Boot. Built Java REST APIs and Kafka consumers. Projects: payment reconciliation, order management. …</pre></div>
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Four texts</span></div>
+<pre class="code" data-lang="text">searchText:     Role: Backend Engineer. Skills: Java. …
+skillsText:     Skills: Java. Technical skills: SQL, Kafka, …
+languagesText:  Languages: English (Fluent), Japanese (Native)
+regionText:     Location: Tokyo, Japan</pre></div>
     <div class="arrow"></div>
-    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">embedding (1,024 numbers)</span></div>
-<pre class="code" data-lang="json">[0.0217, -0.0382, 0.0094, 0.0541, … 1,020 more]</pre></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Four vectors, 1,024 numbers each</span></div>
+<pre class="code" data-lang="json">{
+  "embedding":          [0.0217, -0.0382, 0.0094, … 1,024 numbers],
+  "skillsEmbedding":    [0.0310, 0.0127, -0.0258, … 1,024 numbers],
+  "languagesEmbedding": [-0.0145, 0.0466, 0.0031, … 1,024 numbers],
+  "regionEmbedding":    [0.0089, -0.0273, 0.0412, … 1,024 numbers]
+}</pre></div>
   </div>
-  <p class="takeaway">One vector per candidate. It captures the meaning of their experience, not just the exact words.</p>
+  <p class="takeaway">One overall vector for the whole profile, plus one vector each for skills, languages and region. Each captures meaning, not just the exact words.</p>
 </template>
 
 <template id="emb-3">
-  <p class="lead">OpenSearch stores the document with its vector. The candidate can now be found by keyword search and by vector search.</p>
+  <p class="lead">OpenSearch stores the document with its vectors. The candidate can now be found by keyword search and by vector search on the whole profile or on one aspect.</p>
   <div class="io">
-    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Document + vector</span></div>
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Document + vectors</span></div>
 <pre class="code" data-lang="json">{
   "name": "Aiko Mori",
   "title": "Backend Engineer",
   "skills": ["Java"],
   "searchText": "Role: Backend Engineer. …",
-  "embedding": [0.0217, -0.0382, …]
+  …
+  "embedding": [0.0217, -0.0382, …],
+  "skillsEmbedding": [0.0310, 0.0127, …],
+  "languagesEmbedding": [-0.0145, 0.0466, …],
+  "regionEmbedding": [0.0089, -0.0273, …]
 }</pre></div>
     <div class="arrow"></div>
     <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Stored in the candidate index</span></div>
@@ -538,7 +605,8 @@ Vector search:    on</pre>
         <thead><tr><th>Field</th><th>Searchable by</th></tr></thead>
         <tbody>
           <tr><td class="strong">title, skills, systems, …</td><td>Keyword search</td></tr>
-          <tr><td class="strong">embedding</td><td>Vector search</td></tr>
+          <tr><td class="strong">embedding</td><td>Overall vector search</td></tr>
+          <tr><td class="strong">skillsEmbedding, languagesEmbedding, regionEmbedding</td><td>Aspect vector search</td></tr>
           <tr><td class="strong">name, company, …</td><td>Shown in results</td></tr>
         </tbody>
       </table>
@@ -547,8 +615,33 @@ Vector search:    on</pre>
   <p class="takeaway">Each candidate is stored under its Salesforce ID, so loading the same file again updates candidates instead of duplicating them.</p>
 </template>
 
+<template id="srch-in">
+  <p class="lead">A search has one required query and up to three optional texts: skills, languages and region. Each text that is given runs its own search. An empty one is skipped, so it adds no noise.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Search request</span></div>
+<pre class="code" data-lang="json">{
+  "query": "Java Spring Boot Kafka backend engineer",
+  "skills": "Java, Spring Boot, Kafka",
+  "region": "East Asia"
+}</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Searches that run</span></div>
+      <table class="t">
+        <thead><tr><th>Search</th><th>Text</th><th>Compared with</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Keyword</td><td>query</td><td>title, skills, systems, …</td></tr>
+          <tr><td class="strong">Overall vector</td><td>query</td><td>embedding</td></tr>
+          <tr><td class="strong">Skills vector</td><td>skills</td><td>skillsEmbedding</td></tr>
+          <tr class="skip"><td>Languages vector</td><td>not given</td><td>not searched</td></tr>
+          <tr><td class="strong">Region vector</td><td>region</td><td>regionEmbedding</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
 <template id="srch-1">
-  <p class="lead">Find candidates whose fields contain the query's words. A match in skills counts more than a match in the general profile text.</p>
+  <p class="lead">Find candidates whose fields contain the words of the query. A match in skills counts more than a match in the general profile text.</p>
   <div class="io">
     <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Query + fields searched</span></div>
 <pre class="code" data-lang="text">"Java Spring Boot Kafka backend engineer"</pre>
@@ -573,15 +666,17 @@ Vector search:    on</pre>
       </ol>
     </div>
   </div>
+  <p class="takeaway">Keyword search uses only the query. The optional texts are used by the vector searches.</p>
 </template>
 
 <template id="srch-2">
-  <p class="lead">OpenSearch turns the query into a vector using the same Titan model, then finds the candidates whose vectors are closest.</p>
+  <p class="lead">OpenSearch turns the query into a vector using the same Titan model, then finds the candidates whose overall <code>embedding</code> is closest.</p>
   <div class="io">
     <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Query</span></div>
 <pre class="code" data-lang="text">"Java Spring Boot Kafka backend engineer"
 
-→ query vector: [0.0193, -0.0411, 0.0102, … 1,024 numbers]</pre></div>
+→ query vector: [0.0193, -0.0411, 0.0102, … 1,024 numbers]
+→ compared with: embedding</pre></div>
     <div class="arrow"></div>
     <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Ranked by similarity</span></div>
       <ol class="ranks">
@@ -595,24 +690,54 @@ Vector search:    on</pre>
 </template>
 
 <template id="srch-3">
-  <p class="lead">Merge the two rankings with reciprocal rank fusion (RRF). Each candidate scores by its position in each list, so a candidate ranked well by both comes out on top.</p>
+  <p class="lead">Each optional text that was given becomes a vector and is compared only with the same aspect's vector. Here: skills and region. Languages was not given, so it is not searched.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Aspect texts</span></div>
+<pre class="code" data-lang="text">Skills:     "Java, Spring Boot, Kafka"
+            → compared with skillsEmbedding
+Region:     "East Asia"
+            → compared with regionEmbedding
+Languages:  not given → not searched</pre></div>
+    <div class="arrow"></div>
+    <div class="stack">
+      <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Skills vector ranking</span></div>
+        <ol class="ranks">
+          <li><span class="r">1</span><span class="n">Aiko Mori</span><span class="b"><i style="--w:100%"></i></span><span class="s">0.712</span></li>
+          <li><span class="r">2</span><span class="n">Mina Ito</span><span class="b"><i style="--w:93.8%"></i></span><span class="s">0.668</span></li>
+          <li><span class="r">3</span><span class="n">Ren Sato</span><span class="b"><i style="--w:90%"></i></span><span class="s">0.641</span></li>
+        </ol>
+      </div>
+      <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Region vector ranking</span></div>
+        <ol class="ranks">
+          <li><span class="r">1</span><span class="n">Aiko Mori</span><span class="b"><i style="--w:100%"></i></span><span class="s">0.583</span></li>
+          <li><span class="r">2</span><span class="n">Mina Ito</span><span class="b"><i style="--w:99.3%"></i></span><span class="s">0.579</span></li>
+          <li><span class="r">3</span><span class="n">Ren Sato</span><span class="b"><i style="--w:87.8%"></i></span><span class="s">0.512</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">“East Asia” matches Tokyo and Osaka by meaning, even though the words are different. Ren, based in Singapore, comes third.</p>
+</template>
+
+<template id="srch-4">
+  <p class="lead">Merge the rankings with reciprocal rank fusion (RRF). Every list that was searched counts equally. Each candidate scores by its position in each list, so a candidate ranked well in most lists comes out on top.</p>
   <div class="formula">
     <span class="lhs">score =</span>
-    <span class="fr"><span>1</span><span>60 + <em>keyword rank</em></span></span>
-    <span>+</span>
-    <span class="fr"><span>1</span><span>60 + <em>vector rank</em></span></span>
+    <span class="sig">Σ</span>
+    <span class="fr"><span>1</span><span>60 + <em>rank in the list</em></span></span>
+    <span class="cap">summed over every list searched · ties go to Salesforce ID</span>
   </div>
   <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Final ranking</span></div>
     <table class="t">
-      <thead><tr><th>Final</th><th>Candidate</th><th>Keyword rank</th><th>Vector rank</th><th>Score</th></tr></thead>
+      <thead><tr><th>Final</th><th>Candidate</th><th>Keyword</th><th>Overall vector</th><th>Skills vector</th><th>Region vector</th><th>Score</th></tr></thead>
       <tbody>
-        <tr class="win"><td class="num strong">1</td><td class="strong">Ren Sato</td><td class="num">2</td><td class="num">1</td><td class="num">0.03252</td></tr>
-        <tr><td class="num strong">2</td><td class="strong">Aiko Mori</td><td class="num">1</td><td class="num">3</td><td class="num">0.03227</td></tr>
-        <tr><td class="num strong">3</td><td class="strong">Mina Ito</td><td class="num">3</td><td class="num">2</td><td class="num">0.03200</td></tr>
+        <tr class="win"><td class="num strong">1</td><td class="strong">Aiko Mori</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">0.06505</td></tr>
+        <tr><td class="num strong">2</td><td class="strong">Ren Sato</td><td class="num">2</td><td class="num">1</td><td class="num">3</td><td class="num">3</td><td class="num">0.06427</td></tr>
+        <tr><td class="num strong">3</td><td class="strong">Mina Ito</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">0.06426</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="takeaway">Positions are used instead of raw scores because the two scores are on different scales (about 12 versus about 0.65).</p>
+  <p class="takeaway">The result shows each candidate's position in every list. Aspect vectors nudge the ranking; they do not exclude anyone. A hard rule like “must live in Japan” needs a filter (see next steps).</p>
 </template>
 
 <script>
@@ -621,7 +746,7 @@ Vector search:    on</pre>
     generation: [["gen-in", "gen-1"], ["gen-1", "gen-2"], ["gen-2", "gen-3"], ["gen-3", "gen-4"], ["gen-4", "gen-out"]],
     setup: [["set-in", "set-1"], ["set-1", "set-2"]],
     embedding: [["emb-in", "emb-1"], ["emb-1", "emb-2"], ["emb-2", "emb-3"], ["emb-3", "emb-out"]],
-    search: [["srch-in", "srch-1"], ["srch-in", "srch-2"], ["srch-1", "srch-3"], ["srch-2", "srch-3"], ["srch-3", "srch-out"]],
+    search: [["srch-in", "srch-1"], ["srch-in", "srch-2"], ["srch-in", "srch-3"], ["srch-1", "srch-4"], ["srch-2", "srch-4"], ["srch-3", "srch-4"], ["srch-4", "srch-out"]],
   };
   const SVG_NS = "http://www.w3.org/2000/svg";
 
