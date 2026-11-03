@@ -17,6 +17,7 @@ import { CandidateQualitySummary } from "../candidateData/services/candidateQual
 import { FetchSelectedSalesforceCandidatesIntoFileUseCase } from "../dataPreparation/application/useCases/fetchSelectedSalesforceCandidatesIntoFileUseCase";
 import { CombineSalesforceCandidateDetailsService } from "../dataPreparation/application/services/combineSalesforceCandidateDetailsService";
 import { GenerateDemoCvForCandidateService } from "../dataPreparation/application/services/generateDemoCvForCandidateService";
+import { defaultDemoCvCatalog } from "../dataPreparation/application/catalog/defaultDemoCvCatalog";
 import { ApplyDemoCvToCandidateService } from "../dataPreparation/application/services/applyDemoCvToCandidateService";
 import { PrepareCandidateFetchCheckpointService } from "../dataPreparation/application/services/prepareCandidateFetchCheckpointService";
 
@@ -53,7 +54,7 @@ function connectSalesforceBatchRepositories(directory: string, environment: Node
 export function createCandidateDemoCvUpdateContext(directory: string) {
   const catalog = new LocalCandidateBatchCatalog(dirname(directory));
   const files = new CandidateDemoCvFileRepository(catalog, basename(directory));
-  const transformer = new ApplyDemoCvToCandidateService(new GenerateDemoCvForCandidateService());
+  const transformer = new ApplyDemoCvToCandidateService(new GenerateDemoCvForCandidateService(defaultDemoCvCatalog));
   const updateCandidateDemoCvFiles = new UpdateCandidateDemoCvFilesUseCase(files, transformer, {
     allowPendingStopRequest: async () => {
       await new Promise<void>((resolve) => {

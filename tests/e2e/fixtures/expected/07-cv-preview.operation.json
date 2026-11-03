@@ -158,115 +158,143 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "java-backend"
+                "archetype": "java-enterprise-integration"
               },
-              "summary": "Backend Engineer with 4 years of experience. Focus on payment reconciliation and order management, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Detail-focused Senior Integration Engineer offering 11 years of experience in enterprise integration and message-based interfaces in Java, most recently on plant system integration and supplier EDI gateway. Comfortable working across international, multilingual teams.",
               "technicalSkills": {
                 "languages": [
                   "Java",
+                  "XML",
                   "SQL"
                 ],
                 "frameworks": [
-                  "Spring Boot",
-                  "JUnit"
+                  "Apache Camel",
+                  "Jakarta EE",
+                  "Spring Integration"
                 ],
                 "databases": [
-                  "PostgreSQL"
+                  "Oracle Database"
                 ],
                 "tools": [
-                  "Kafka",
-                  "Docker",
-                  "Git"
+                  "IBM MQ",
+                  "MuleSoft Anypoint",
+                  "Jenkins",
+                  "SoapUI"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Cedar Services",
-                  "role": "Backend Engineer",
-                  "location": "Demo regional office",
-                  "start": "2022-04",
-                  "end": "2023-03",
+                  "employer": "Demo Canyon Manufacturing",
+                  "role": "Integration Engineer",
+                  "location": "Austin, United States",
+                  "start": "2015-04",
+                  "end": "2019-03",
                   "responsibilities": [
-                    "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Mapped partner message formats and maintained interface specifications.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo Summit Group",
-                  "role": "Backend Engineer",
-                  "location": "Demo Tokyo office",
-                  "start": "2023-04",
+                  "employer": "Demo Yuzu Manufacturing",
+                  "role": "Senior Integration Engineer",
+                  "location": "Beijing, China",
+                  "start": "2019-04",
+                  "end": "2022-03",
+                  "responsibilities": [
+                    "Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails.",
+                    "Monitored integration queues and resolved failed message replays.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
+                  ]
+                },
+                {
+                  "employer": "Demo Aurora Electric",
+                  "role": "Senior Integration Engineer",
+                  "location": "Sendai, Japan",
+                  "start": "2022-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Mapped partner message formats and maintained interface specifications.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Payment reconciliation",
-                  "description": "Banking services matching payment events with settlement records.",
-                  "role": "Backend Engineer",
+                  "name": "Plant system integration",
+                  "description": "Real-time exchange between ERP and factory execution systems.",
+                  "role": "Senior Integration Engineer",
                   "technologies": [
                     "Java",
+                    "XML",
                     "SQL",
-                    "Spring Boot",
-                    "JUnit",
-                    "PostgreSQL",
-                    "Kafka",
-                    "Docker",
-                    "Git"
+                    "Apache Camel",
+                    "Jakarta EE",
+                    "Spring Integration",
+                    "Oracle Database",
+                    "IBM MQ",
+                    "MuleSoft Anypoint",
+                    "Jenkins",
+                    "SoapUI"
                   ],
                   "contributions": [
-                    "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Built MQ-based adapters, retry policies and reconciliation reports for production orders.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
                   ]
                 },
                 {
-                  "name": "Order management",
-                  "description": "Inventory reservation and order tracking for a retail platform.",
-                  "role": "Backend Engineer",
+                  "name": "Supplier EDI gateway",
+                  "description": "Electronic order and invoice exchange with several hundred suppliers.",
+                  "role": "Senior Integration Engineer",
                   "technologies": [
                     "Java",
+                    "XML",
                     "SQL",
-                    "Spring Boot",
-                    "JUnit",
-                    "PostgreSQL",
-                    "Kafka",
-                    "Docker",
-                    "Git"
+                    "Apache Camel",
+                    "Jakarta EE",
+                    "Spring Integration",
+                    "Oracle Database",
+                    "IBM MQ",
+                    "MuleSoft Anypoint",
+                    "Jenkins",
+                    "SoapUI"
                   ],
                   "contributions": [
-                    "Implemented Spring Boot services, SQL query tuning and failure recovery for stock updates.",
+                    "Implemented Camel routes for EDI and XML transformation with dead-letter handling and audit trails.",
                     "Participated in requirements, validation and delivery reviews."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Computer Science",
-                  "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2022
+                  "qualification": "Bachelor of Information Systems",
+                  "institution": "Demo Capital School of Law",
+                  "graduationYear": 2015
                 }
               ],
               "certifications": [
                 {
-                  "name": "Backend Engineer professional training",
+                  "name": "Java EE Application Developer Certificate",
                   "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "year": 2023
+                },
+                {
+                  "name": "Enterprise Integration Patterns Training",
+                  "issuer": "Demo Industry Skills Institute",
+                  "year": 2026
                 }
               ],
               "languages": [
                 {
-                  "language": "English",
-                  "level": "Fluent"
+                  "language": "Japanese",
+                  "level": "Native"
                 },
                 {
-                  "language": "Japanese",
-                  "level": "Business"
+                  "language": "English",
+                  "level": "Fluent"
                 }
               ]
             }
@@ -341,11 +369,11 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
-                "archetype": "frontend"
+                "archetype": "react-frontend"
               },
-              "summary": "Frontend Engineer with 6 years of experience. Focus on operations dashboard and customer self-service portal, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Senior Frontend Engineer bringing 7 years of hands-on work in React single-page applications. Recent highlights include customer self-service portal and design system rollout; known for clear communication and dependable follow-through.",
               "technicalSkills": {
                 "languages": [
                   "TypeScript",
@@ -354,104 +382,148 @@
                   "CSS"
                 ],
                 "frameworks": [
-                  "Angular",
-                  "RxJS"
+                  "React",
+                  "Next.js",
+                  "Redux Toolkit",
+                  "Testing Library"
                 ],
                 "databases": [],
                 "tools": [
+                  "Vite",
+                  "Storybook",
                   "Playwright",
-                  "Git",
                   "Figma"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Maple Services",
+                  "employer": "Demo Yuzu Systems",
                   "role": "Frontend Engineer",
-                  "location": "Demo regional office",
-                  "start": "2020-04",
+                  "location": "Bangkok, Thailand",
+                  "start": "2019-04",
                   "end": "2023-03",
                   "responsibilities": [
-                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Implemented themable components with visual regression tests and usage guidelines.",
+                    "Measured Core Web Vitals and fixed regressions before release.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo River Group",
-                  "role": "Frontend Engineer",
-                  "location": "Demo Tokyo office",
+                  "employer": "Demo Aurora Platforms",
+                  "role": "Senior Frontend Engineer",
+                  "location": "Manila, Philippines",
                   "start": "2023-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation.",
+                    "Built shared component libraries documented in Storybook.",
+                    "Mentored colleagues and reviewed work for quality, consistency and risk."
                   ]
                 }
               ],
               "projects": [
                 {
-                  "name": "Operations dashboard",
-                  "description": "Interactive monitoring of service queues and workload.",
-                  "role": "Frontend Engineer",
+                  "name": "Customer self-service portal",
+                  "description": "Accessible browser workflows for account servicing.",
+                  "role": "Senior Frontend Engineer",
                   "technologies": [
                     "TypeScript",
                     "JavaScript",
                     "HTML",
                     "CSS",
-                    "Angular",
-                    "RxJS",
+                    "React",
+                    "Next.js",
+                    "Redux Toolkit",
+                    "Testing Library",
+                    "Vite",
+                    "Storybook",
                     "Playwright",
-                    "Git",
                     "Figma"
                   ],
                   "contributions": [
-                    "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation.",
+                    "Documented decisions and handed over operating procedures to the support team."
                   ]
                 },
                 {
-                  "name": "Customer self-service portal",
-                  "description": "Accessible browser workflows for account servicing.",
-                  "role": "Frontend Engineer",
+                  "name": "Design system rollout",
+                  "description": "Shared UI components adopted across five product teams.",
+                  "role": "Senior Frontend Engineer",
                   "technologies": [
                     "TypeScript",
                     "JavaScript",
                     "HTML",
                     "CSS",
-                    "Angular",
-                    "RxJS",
+                    "React",
+                    "Next.js",
+                    "Redux Toolkit",
+                    "Testing Library",
+                    "Vite",
+                    "Storybook",
                     "Playwright",
-                    "Git",
                     "Figma"
                   ],
                   "contributions": [
-                    "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Implemented themable components with visual regression tests and usage guidelines.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
+                  ]
+                },
+                {
+                  "name": "Server-rendered storefront",
+                  "description": "Fast product and campaign pages for an online retailer.",
+                  "role": "Senior Frontend Engineer",
+                  "technologies": [
+                    "TypeScript",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "React",
+                    "Next.js",
+                    "Redux Toolkit",
+                    "Testing Library",
+                    "Vite",
+                    "Storybook",
+                    "Playwright",
+                    "Figma"
+                  ],
+                  "contributions": [
+                    "Migrated pages to Next.js with incremental static regeneration and image optimisation.",
+                    "Coordinated acceptance criteria with business owners and confirmed sign-off."
                   ]
                 }
               ],
               "education": [
                 {
+                  "qualification": "Master of Software Engineering",
+                  "institution": "Demo Pacific Institute of Technology",
+                  "graduationYear": 2019
+                },
+                {
                   "qualification": "Bachelor of Software Engineering",
                   "institution": "Demo Institute of Applied Studies",
-                  "graduationYear": 2020
+                  "graduationYear": 2017
                 }
               ],
               "certifications": [
                 {
-                  "name": "Frontend Engineer professional training",
-                  "issuer": "Demo Learning Academy",
-                  "year": 2024
+                  "name": "Web Accessibility Specialist Training",
+                  "issuer": "Demo Technical Certification Council",
+                  "year": 2020
+                },
+                {
+                  "name": "Frontend Performance Course",
+                  "issuer": "Demo Industry Skills Institute",
+                  "year": 2021
                 }
               ],
               "languages": [
                 {
-                  "language": "English",
-                  "level": "Business"
+                  "language": "Japanese",
+                  "level": "Native"
                 },
                 {
-                  "language": "Japanese",
-                  "level": "Conversational"
+                  "language": "English",
+                  "level": "Business"
                 }
               ]
             }
@@ -530,11 +602,11 @@
             "cvProfile": {
               "source": {
                 "kind": "synthetic",
-                "generatorVersion": 1,
+                "generatorVersion": 2,
                 "seed": "contract-seed",
                 "archetype": "data-engineering"
               },
-              "summary": "Data Engineer with 6 years of experience. Focus on warehouse ingestion and event data lake, with responsibility for delivery, documentation and cross-team collaboration.",
+              "summary": "Detail-focused Data Engineer offering 6 years of experience in batch data pipelines and cloud data lakes, most recently on customer 360 dataset and warehouse ingestion. Comfortable working across international, multilingual teams.",
               "technicalSkills": {
                 "languages": [
                   "Python",
@@ -550,34 +622,57 @@
                 "tools": [
                   "AWS S3",
                   "AWS Athena",
-                  "Airflow"
+                  "Airflow",
+                  "AWS Glue"
                 ]
               },
               "employmentHistory": [
                 {
-                  "employer": "Demo Maple Services",
+                  "employer": "Demo Cedar Retail",
                   "role": "Data Engineer",
-                  "location": "Demo regional office",
+                  "location": "Ho Chi Minh City, Vietnam",
                   "start": "2020-04",
                   "end": "2023-03",
                   "responsibilities": [
-                    "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
-                    "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                    "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
+                    "Documented datasets and lineage for analysts and data scientists.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 },
                 {
-                  "employer": "Demo River Group",
+                  "employer": "Demo Birch Lifestyle",
                   "role": "Data Engineer",
-                  "location": "Demo Tokyo office",
+                  "location": "Milan, Italy",
                   "start": "2023-04",
                   "end": "2026-10",
                   "responsibilities": [
-                    "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
-                    "Collaborated with colleagues on testing, issue resolution and handover."
+                    "Built identity matching jobs in Spark and published a governed customer table.",
+                    "Owned pipeline SLAs and on-call for daily warehouse loads.",
+                    "Collaborated with colleagues on reviews, issue resolution and handover."
                   ]
                 }
               ],
               "projects": [
+                {
+                  "name": "Customer 360 dataset",
+                  "description": "Unified customer view across stores, app and call centre.",
+                  "role": "Data Engineer",
+                  "technologies": [
+                    "Python",
+                    "SQL",
+                    "Apache Spark",
+                    "Snowflake",
+                    "PostgreSQL",
+                    "AWS S3",
+                    "AWS Athena",
+                    "Airflow",
+                    "AWS Glue"
+                  ],
+                  "contributions": [
+                    "Built identity matching jobs in Spark and published a governed customer table.",
+                    "Tracked issues to closure and shared lessons learned after go-live."
+                  ]
+                },
                 {
                   "name": "Warehouse ingestion",
                   "description": "Daily ingestion of operational data into an analytics warehouse.",
@@ -590,54 +685,54 @@
                     "PostgreSQL",
                     "AWS S3",
                     "AWS Athena",
-                    "Airflow"
+                    "Airflow",
+                    "AWS Glue"
                   ],
                   "contributions": [
                     "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
-                    "Participated in requirements, validation and delivery reviews."
-                  ]
-                },
-                {
-                  "name": "Event data lake",
-                  "description": "Partitioned event storage for customer activity reporting.",
-                  "role": "Data Engineer",
-                  "technologies": [
-                    "Python",
-                    "SQL",
-                    "Apache Spark",
-                    "Snowflake",
-                    "PostgreSQL",
-                    "AWS S3",
-                    "AWS Athena",
-                    "Airflow"
-                  ],
-                  "contributions": [
-                    "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
-                    "Participated in requirements, validation and delivery reviews."
+                    "Tracked issues to closure and shared lessons learned after go-live."
                   ]
                 }
               ],
               "education": [
                 {
-                  "qualification": "Bachelor of Computer Science",
-                  "institution": "Demo Institute of Applied Studies",
+                  "qualification": "Master of Computer Science",
+                  "institution": "Demo Eastern Polytechnic",
                   "graduationYear": 2020
+                },
+                {
+                  "qualification": "Bachelor of Computer Science",
+                  "institution": "Demo Coastal Technical College",
+                  "graduationYear": 2018
                 }
               ],
               "certifications": [
                 {
-                  "name": "Data Engineer professional training",
-                  "issuer": "Demo Learning Academy",
+                  "name": "Apache Spark Developer Certificate",
+                  "issuer": "Demo Technical Certification Council",
                   "year": 2024
+                },
+                {
+                  "name": "Data Engineering on AWS Training",
+                  "issuer": "Demo Technical Certification Council",
+                  "year": 2025
                 }
               ],
               "languages": [
                 {
+                  "language": "Dutch",
+                  "level": "Native"
+                },
+                {
                   "language": "English",
-                  "level": "Fluent"
+                  "level": "Business"
                 },
                 {
                   "language": "Japanese",
+                  "level": "Basic"
+                },
+                {
+                  "language": "Korean",
                   "level": "Conversational"
                 }
               ]

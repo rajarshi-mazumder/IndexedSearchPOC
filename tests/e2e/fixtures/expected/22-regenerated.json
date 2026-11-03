@@ -13,115 +13,173 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "another-seed",
-            "archetype": "java-backend"
+            "archetype": "java-microservices"
           },
-          "summary": "Senior Backend Engineer with 12 years of experience. Focus on employee workflow and payment reconciliation, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Detail-focused Senior Java Microservices Engineer offering 11 years of experience in event-driven Java microservices on Kubernetes, most recently on catalogue service decomposition and checkout latency reduction. Comfortable working across international, multilingual teams.",
           "technicalSkills": {
             "languages": [
               "Java",
+              "Kotlin",
               "SQL"
             ],
             "frameworks": [
               "Spring Boot",
-              "JUnit"
+              "Spring Cloud",
+              "Resilience4j",
+              "Testcontainers"
             ],
             "databases": [
-              "PostgreSQL"
+              "MySQL",
+              "Redis"
             ],
             "tools": [
               "Kafka",
-              "Docker",
-              "Git"
+              "Kubernetes",
+              "Gradle",
+              "Grafana"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Maple Services",
-              "role": "Backend Engineer",
-              "location": "Demo regional office",
-              "start": "2014-04",
-              "end": "2023-03",
+              "employer": "Demo Zephyr Digital Labs",
+              "role": "Java Microservices Engineer",
+              "location": "Kawasaki, Japan",
+              "start": "2015-04",
+              "end": "2019-03",
               "responsibilities": [
-                "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Built event-sourced Spring services with Kafka, outbox publishing and replayable projections.",
+                "Split monolith modules into independently deployable services with contract tests.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo River Group",
-              "role": "Senior Backend Engineer",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
+              "employer": "Demo Sierra Interactive",
+              "role": "Senior Java Microservices Engineer",
+              "location": "Taipei, Taiwan",
+              "start": "2019-04",
+              "end": "2022-03",
+              "responsibilities": [
+                "Profiled hot paths, added Redis caching and cut p95 latency by roughly forty percent.",
+                "Tuned JVM memory, connection pools and circuit breakers for peak campaigns.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Orchard Technologies",
+              "role": "Senior Java Microservices Engineer",
+              "location": "Seoul, South Korea",
+              "start": "2022-04",
               "end": "2026-10",
               "responsibilities": [
-                "Designed relational tables, documented REST contracts and delivered unit tests and production fixes.",
-                "Mentored colleagues and reviewed solution designs."
+                "Defined service boundaries, introduced consumer-driven contract tests and led a strangler-fig cutover.",
+                "Split monolith modules into independently deployable services with contract tests.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Employee workflow",
-              "description": "Approval workflows for recruitment and timesheet submissions.",
-              "role": "Senior Backend Engineer",
+              "name": "Catalogue service decomposition",
+              "description": "Migration of a product catalogue out of a legacy monolith.",
+              "role": "Senior Java Microservices Engineer",
               "technologies": [
                 "Java",
+                "Kotlin",
                 "SQL",
                 "Spring Boot",
-                "JUnit",
-                "PostgreSQL",
+                "Spring Cloud",
+                "Resilience4j",
+                "Testcontainers",
+                "MySQL",
+                "Redis",
                 "Kafka",
-                "Docker",
-                "Git"
+                "Kubernetes",
+                "Gradle",
+                "Grafana"
               ],
               "contributions": [
-                "Designed relational tables, documented REST contracts and delivered unit tests and production fixes.",
+                "Defined service boundaries, introduced consumer-driven contract tests and led a strangler-fig cutover.",
                 "Participated in requirements, validation and delivery reviews."
               ]
             },
             {
-              "name": "Payment reconciliation",
-              "description": "Banking services matching payment events with settlement records.",
-              "role": "Senior Backend Engineer",
+              "name": "Checkout latency reduction",
+              "description": "Performance programme for an online checkout under seasonal traffic.",
+              "role": "Senior Java Microservices Engineer",
               "technologies": [
                 "Java",
+                "Kotlin",
                 "SQL",
                 "Spring Boot",
-                "JUnit",
-                "PostgreSQL",
+                "Spring Cloud",
+                "Resilience4j",
+                "Testcontainers",
+                "MySQL",
+                "Redis",
                 "Kafka",
-                "Docker",
-                "Git"
+                "Kubernetes",
+                "Gradle",
+                "Grafana"
               ],
               "contributions": [
-                "Built Java REST APIs and Kafka consumers with idempotent processing and automated integration tests.",
-                "Participated in requirements, validation and delivery reviews."
+                "Profiled hot paths, added Redis caching and cut p95 latency by roughly forty percent.",
+                "Coordinated acceptance criteria with business owners and confirmed sign-off."
+              ]
+            },
+            {
+              "name": "Loyalty points ledger",
+              "description": "Points accrual and redemption for a multi-brand retail membership programme.",
+              "role": "Senior Java Microservices Engineer",
+              "technologies": [
+                "Java",
+                "Kotlin",
+                "SQL",
+                "Spring Boot",
+                "Spring Cloud",
+                "Resilience4j",
+                "Testcontainers",
+                "MySQL",
+                "Redis",
+                "Kafka",
+                "Kubernetes",
+                "Gradle",
+                "Grafana"
+              ],
+              "contributions": [
+                "Built event-sourced Spring services with Kafka, outbox publishing and replayable projections.",
+                "Tracked issues to closure and shared lessons learned after go-live."
               ]
             }
           ],
           "education": [
             {
-              "qualification": "Bachelor of Computer Science",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2014
+              "qualification": "Bachelor of Software Engineering",
+              "institution": "Demo Lakeside School of Business",
+              "graduationYear": 2015
             }
           ],
           "certifications": [
             {
-              "name": "Backend Engineer professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Cloud Native Microservices Certificate",
+              "issuer": "Demo Professional Standards Board",
+              "year": 2020
+            },
+            {
+              "name": "Kubernetes Application Developer Training",
+              "issuer": "Demo Quality Assurance Society",
+              "year": 2018
             }
           ],
           "languages": [
             {
-              "language": "English",
-              "level": "Business"
+              "language": "Japanese",
+              "level": "Native"
             },
             {
-              "language": "Japanese",
-              "level": "Conversational"
+              "language": "English",
+              "level": "Basic"
             }
           ]
         },
@@ -255,11 +313,11 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "another-seed",
-            "archetype": "frontend"
+            "archetype": "react-frontend"
           },
-          "summary": "Senior Frontend Engineer with 8 years of experience. Focus on customer self-service portal and operations dashboard, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Results-oriented Lead Frontend Engineer with 16 years in React single-page applications. Delivered Server-rendered storefront and customer self-service portal while balancing quality, cost and schedule.",
           "technicalSkills": {
             "languages": [
               "TypeScript",
@@ -268,104 +326,175 @@
               "CSS"
             ],
             "frameworks": [
-              "Angular",
-              "RxJS"
+              "React",
+              "Next.js",
+              "Redux Toolkit",
+              "Testing Library"
             ],
             "databases": [],
             "tools": [
+              "Vite",
+              "Storybook",
               "Playwright",
-              "Git",
               "Figma"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Harbor Services",
+              "employer": "Demo Ember Systems",
               "role": "Frontend Engineer",
-              "location": "Demo regional office",
-              "start": "2018-04",
-              "end": "2023-03",
+              "location": "Shenzhen, China",
+              "start": "2010-04",
+              "end": "2014-03",
               "responsibilities": [
-                "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Migrated pages to Next.js with incremental static regeneration and image optimisation.",
+                "Measured Core Web Vitals and fixed regressions before release.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Orchard Group",
+              "employer": "Demo Lagoon Systems",
               "role": "Senior Frontend Engineer",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
+              "location": "Kobe, Japan",
+              "start": "2014-04",
+              "end": "2018-03",
+              "responsibilities": [
+                "Implemented themable components with visual regression tests and usage guidelines.",
+                "Built shared component libraries documented in Storybook.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Sakura Data Studio",
+              "role": "Senior Frontend Engineer",
+              "location": "Osaka, Japan",
+              "start": "2018-04",
+              "end": "2022-03",
+              "responsibilities": [
+                "Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation.",
+                "Measured Core Web Vitals and fixed regressions before release.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Canyon Platforms",
+              "role": "Lead Frontend Engineer",
+              "location": "Kobe, Japan",
+              "start": "2022-04",
               "end": "2026-10",
               "responsibilities": [
-                "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                "Mentored colleagues and reviewed solution designs."
+                "Migrated pages to Next.js with incremental static regeneration and image optimisation.",
+                "Built shared component libraries documented in Storybook.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Customer self-service portal",
-              "description": "Accessible browser workflows for account servicing.",
-              "role": "Senior Frontend Engineer",
+              "name": "Server-rendered storefront",
+              "description": "Fast product and campaign pages for an online retailer.",
+              "role": "Lead Frontend Engineer",
               "technologies": [
                 "TypeScript",
                 "JavaScript",
                 "HTML",
                 "CSS",
-                "Angular",
-                "RxJS",
+                "React",
+                "Next.js",
+                "Redux Toolkit",
+                "Testing Library",
+                "Vite",
+                "Storybook",
                 "Playwright",
-                "Git",
                 "Figma"
               ],
               "contributions": [
-                "Built responsive forms and tables, integrated REST APIs and tested keyboard navigation.",
-                "Participated in requirements, validation and delivery reviews."
+                "Migrated pages to Next.js with incremental static regeneration and image optimisation.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             },
             {
-              "name": "Operations dashboard",
-              "description": "Interactive monitoring of service queues and workload.",
-              "role": "Senior Frontend Engineer",
+              "name": "Customer self-service portal",
+              "description": "Accessible browser workflows for account servicing.",
+              "role": "Lead Frontend Engineer",
               "technologies": [
                 "TypeScript",
                 "JavaScript",
                 "HTML",
                 "CSS",
-                "Angular",
-                "RxJS",
+                "React",
+                "Next.js",
+                "Redux Toolkit",
+                "Testing Library",
+                "Vite",
+                "Storybook",
                 "Playwright",
-                "Git",
                 "Figma"
               ],
               "contributions": [
-                "Implemented reusable UI components, chart filtering and browser performance improvements.",
-                "Participated in requirements, validation and delivery reviews."
+                "Built responsive React forms and tables, integrated REST APIs and tested keyboard navigation.",
+                "Documented decisions and handed over operating procedures to the support team."
+              ]
+            },
+            {
+              "name": "Design system rollout",
+              "description": "Shared UI components adopted across five product teams.",
+              "role": "Lead Frontend Engineer",
+              "technologies": [
+                "TypeScript",
+                "JavaScript",
+                "HTML",
+                "CSS",
+                "React",
+                "Next.js",
+                "Redux Toolkit",
+                "Testing Library",
+                "Vite",
+                "Storybook",
+                "Playwright",
+                "Figma"
+              ],
+              "contributions": [
+                "Implemented themable components with visual regression tests and usage guidelines.",
+                "Coordinated acceptance criteria with business owners and confirmed sign-off."
               ]
             }
           ],
           "education": [
             {
               "qualification": "Bachelor of Software Engineering",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2018
+              "institution": "Demo Central University of Sciences",
+              "graduationYear": 2010
             }
           ],
           "certifications": [
             {
-              "name": "Frontend Engineer professional training",
-              "issuer": "Demo Learning Academy",
+              "name": "Web Accessibility Specialist Training",
+              "issuer": "Demo Industry Skills Institute",
+              "year": 2016
+            },
+            {
+              "name": "Frontend Performance Course",
+              "issuer": "Demo Professional Standards Board",
               "year": 2024
             }
           ],
           "languages": [
             {
+              "language": "Spanish",
+              "level": "Native"
+            },
+            {
               "language": "English",
-              "level": "Fluent"
+              "level": "Conversational"
             },
             {
               "language": "Japanese",
-              "level": "Conversational"
+              "level": "Basic"
+            },
+            {
+              "language": "Korean",
+              "level": "Fluent"
             }
           ]
         },
@@ -425,11 +554,11 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "another-seed",
             "archetype": "data-engineering"
           },
-          "summary": "Data Engineer with 4 years of experience. Focus on event data lake and warehouse ingestion, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Results-oriented Data Engineer with 5 years in batch data pipelines and cloud data lakes. Delivered customer 360 dataset and warehouse ingestion while balancing quality, cost and schedule.",
           "technicalSkills": {
             "languages": [
               "Python",
@@ -445,37 +574,40 @@
             "tools": [
               "AWS S3",
               "AWS Athena",
-              "Airflow"
+              "Airflow",
+              "AWS Glue"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
+              "employer": "Demo Delta Travel",
               "role": "Data Engineer",
-              "location": "Demo regional office",
-              "start": "2022-04",
-              "end": "2023-03",
+              "location": "Kyoto, Japan",
+              "start": "2021-04",
+              "end": "2024-03",
               "responsibilities": [
                 "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Documented datasets and lineage for analysts and data scientists.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
+              "employer": "Demo Kestrel Brands",
               "role": "Data Engineer",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
+              "location": "Seattle, United States",
+              "start": "2024-04",
               "end": "2026-10",
               "responsibilities": [
-                "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Built identity matching jobs in Spark and published a governed customer table.",
+                "Owned pipeline SLAs and on-call for daily warehouse loads.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Event data lake",
-              "description": "Partitioned event storage for customer activity reporting.",
+              "name": "Customer 360 dataset",
+              "description": "Unified customer view across stores, app and call centre.",
               "role": "Data Engineer",
               "technologies": [
                 "Python",
@@ -485,10 +617,11 @@
                 "PostgreSQL",
                 "AWS S3",
                 "AWS Athena",
-                "Airflow"
+                "Airflow",
+                "AWS Glue"
               ],
               "contributions": [
-                "Optimized SQL transformations, file partitioning and scheduled data quality checks.",
+                "Built identity matching jobs in Spark and published a governed customer table.",
                 "Participated in requirements, validation and delivery reviews."
               ]
             },
@@ -504,36 +637,41 @@
                 "PostgreSQL",
                 "AWS S3",
                 "AWS Athena",
-                "Airflow"
+                "Airflow",
+                "AWS Glue"
               ],
               "contributions": [
                 "Created incremental ETL pipelines, schema checks and retryable jobs with lineage tracking.",
-                "Participated in requirements, validation and delivery reviews."
+                "Coordinated acceptance criteria with business owners and confirmed sign-off."
               ]
             }
           ],
           "education": [
             {
               "qualification": "Bachelor of Computer Science",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2022
+              "institution": "Demo Metropolitan University",
+              "graduationYear": 2021
             }
           ],
           "certifications": [
             {
-              "name": "Data Engineer professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Data Engineering on AWS Training",
+              "issuer": "Demo Continuing Education Centre",
+              "year": 2023
             }
           ],
           "languages": [
+            {
+              "language": "Spanish",
+              "level": "Native"
+            },
             {
               "language": "English",
               "level": "Business"
             },
             {
               "language": "Japanese",
-              "level": "Business"
+              "level": "Fluent"
             }
           ]
         },

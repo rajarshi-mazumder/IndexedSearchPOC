@@ -41,15 +41,15 @@
         "file": "batch-000002.json",
         "indexed": 3,
         "skipped": 0,
-        "hash": "a550c86ddd2299cdff28d153c6508e90fdf6fa66ee53a6b4b0f11893de3ca2cc",
-        "size": 15357
+        "hash": "153e2b6292479fb0f7b9d599a87f2e9f2c79d8a9de4fd43d851b3b851691cb54",
+        "size": 20140
       },
       {
         "file": "batch-000003.json",
         "indexed": 2,
         "skipped": 0,
-        "hash": "996c8f65b1cfa0268207e9a0b26c03ea5bcc91bb8b0f5e3581ae760c75e5ac2b",
-        "size": 10425
+        "hash": "88f1ab030c1c7204167a43902d20b399f9df64f7f11801d3df94757e8ba05399",
+        "size": 14471
       }
     ]
   },

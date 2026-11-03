@@ -10,15 +10,16 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
             "archetype": "cloud-platform"
           },
-          "summary": "Senior Platform Engineer with 10 years of experience. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Senior Platform Engineer with 8 years of experience in internal developer platforms on Kubernetes. Focus on deployment automation and service reliability, with responsibility for delivery, documentation and cross-team collaboration.",
           "technicalSkills": {
             "languages": [
               "Python",
-              "Bash"
+              "Bash",
+              "Go"
             ],
             "frameworks": [],
             "databases": [
@@ -28,30 +29,45 @@
               "AWS",
               "Terraform",
               "Kubernetes",
-              "Prometheus"
+              "Prometheus",
+              "ArgoCD"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
+              "employer": "Demo Birch Systems",
               "role": "Platform Engineer",
-              "location": "Demo regional office",
-              "start": "2016-04",
-              "end": "2023-03",
+              "location": "Dublin, Ireland",
+              "start": "2018-04",
+              "end": "2021-03",
               "responsibilities": [
-                "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Introduced ArgoCD, environment promotion rules and drift detection.",
+                "Provided golden-path templates so teams could ship services safely.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
+              "employer": "Demo Horizon Platforms",
+              "role": "Platform Engineer",
+              "location": "Warsaw, Poland",
+              "start": "2021-04",
+              "end": "2023-03",
+              "responsibilities": [
+                "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
+                "Ran platform office hours and collected feedback from product teams.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
+              ]
+            },
+            {
+              "employer": "Demo Onyx Digital Labs",
               "role": "Senior Platform Engineer",
-              "location": "Demo Tokyo office",
+              "location": "Munich, Germany",
               "start": "2023-04",
               "end": "2026-10",
               "responsibilities": [
                 "Created infrastructure modules, delivery pipelines and rollback procedures.",
-                "Mentored colleagues and reviewed solution designs."
+                "Provided golden-path templates so teams could ship services safely.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
               ]
             }
           ],
@@ -63,15 +79,17 @@
               "technologies": [
                 "Python",
                 "Bash",
+                "Go",
                 "Redis",
                 "AWS",
                 "Terraform",
                 "Kubernetes",
-                "Prometheus"
+                "Prometheus",
+                "ArgoCD"
               ],
               "contributions": [
                 "Created infrastructure modules, delivery pipelines and rollback procedures.",
-                "Participated in requirements, validation and delivery reviews."
+                "Tracked issues to closure and shared lessons learned after go-live."
               ]
             },
             {
@@ -81,36 +99,67 @@
               "technologies": [
                 "Python",
                 "Bash",
+                "Go",
                 "Redis",
                 "AWS",
                 "Terraform",
                 "Kubernetes",
-                "Prometheus"
+                "Prometheus",
+                "ArgoCD"
               ],
               "contributions": [
                 "Defined alerts, tested recovery drills and reduced recurring incidents through root cause analysis.",
-                "Participated in requirements, validation and delivery reviews."
+                "Coordinated acceptance criteria with business owners and confirmed sign-off."
+              ]
+            },
+            {
+              "name": "GitOps adoption",
+              "description": "Declarative deployments for more than one hundred services.",
+              "role": "Senior Platform Engineer",
+              "technologies": [
+                "Python",
+                "Bash",
+                "Go",
+                "Redis",
+                "AWS",
+                "Terraform",
+                "Kubernetes",
+                "Prometheus",
+                "ArgoCD"
+              ],
+              "contributions": [
+                "Introduced ArgoCD, environment promotion rules and drift detection.",
+                "Coordinated acceptance criteria with business owners and confirmed sign-off."
               ]
             }
           ],
           "education": [
             {
               "qualification": "Bachelor of Information Technology",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2016
+              "institution": "Demo Valley College of Health Sciences",
+              "graduationYear": 2018
             }
           ],
           "certifications": [
             {
-              "name": "Platform Engineer professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Kubernetes Administration Certificate",
+              "issuer": "Demo Professional Standards Board",
+              "year": 2019
+            },
+            {
+              "name": "Infrastructure as Code Practitioner Training",
+              "issuer": "Demo Quality Assurance Society",
+              "year": 2025
             }
           ],
           "languages": [
             {
+              "language": "Vietnamese",
+              "level": "Native"
+            },
+            {
               "language": "English",
-              "level": "Fluent"
+              "level": "Basic"
             },
             {
               "language": "Japanese",
@@ -158,96 +207,149 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
-            "archetype": "finance"
+            "archetype": "tableau-bi-developer"
           },
-          "summary": "Financial Analyst with 7 years of experience. Focus on close process improvement and budget planning, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Results-oriented Lead BI Developer with 16 years in Tableau and Looker dashboards for operations and finance. Delivered finance self-service and clinic operations dashboard while balancing quality, cost and schedule.",
           "technicalSkills": {
-            "languages": [],
+            "languages": [
+              "SQL",
+              "LookML"
+            ],
             "frameworks": [],
-            "databases": [],
+            "databases": [
+              "Snowflake",
+              "Amazon Redshift"
+            ],
             "tools": [
-              "Excel",
-              "SAP",
-              "Financial modelling"
+              "Tableau",
+              "Looker",
+              "Alteryx",
+              "Excel"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
-              "role": "Financial Analyst",
-              "location": "Demo regional office",
-              "start": "2019-04",
-              "end": "2023-03",
+              "employer": "Demo Granite Pharma",
+              "role": "BI Developer",
+              "location": "Singapore",
+              "start": "2010-04",
+              "end": "2014-03",
               "responsibilities": [
-                "Built financial models, investigated cost variances and supported management reviews.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds.",
+                "Optimised slow dashboards with extracts and aggregate tables.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
-              "role": "Financial Analyst",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
+              "employer": "Demo Nimbus Life Sciences",
+              "role": "Senior BI Developer",
+              "location": "Sao Paulo, Brazil",
+              "start": "2014-04",
+              "end": "2018-03",
+              "responsibilities": [
+                "Modelled cost centre hierarchies in LookML and trained finance users.",
+                "Built governed data sources and certified dashboards.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Umber Biotech",
+              "role": "Senior BI Developer",
+              "location": "Sendai, Japan",
+              "start": "2018-04",
+              "end": "2022-03",
+              "responsibilities": [
+                "Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds.",
+                "Optimised slow dashboards with extracts and aggregate tables.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Mosaic Life Sciences",
+              "role": "Lead BI Developer",
+              "location": "Taipei, Taiwan",
+              "start": "2022-04",
               "end": "2026-10",
               "responsibilities": [
-                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Modelled cost centre hierarchies in LookML and trained finance users.",
+                "Built governed data sources and certified dashboards.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Close process improvement",
-              "description": "Monthly reconciliation and financial reporting controls.",
-              "role": "Financial Analyst",
+              "name": "Finance self-service",
+              "description": "Profit and loss exploration for budget holders.",
+              "role": "Lead BI Developer",
               "technologies": [
-                "Excel",
-                "SAP",
-                "Financial modelling"
+                "SQL",
+                "LookML",
+                "Snowflake",
+                "Amazon Redshift",
+                "Tableau",
+                "Looker",
+                "Alteryx",
+                "Excel"
               ],
               "contributions": [
-                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                "Participated in requirements, validation and delivery reviews."
+                "Modelled cost centre hierarchies in LookML and trained finance users.",
+                "Documented decisions and handed over operating procedures to the support team."
               ]
             },
             {
-              "name": "Budget planning",
-              "description": "Annual budgets and rolling forecasts across business units.",
-              "role": "Financial Analyst",
+              "name": "Clinic operations dashboard",
+              "description": "Patient volumes, waiting times and staffing across clinics.",
+              "role": "Lead BI Developer",
               "technologies": [
-                "Excel",
-                "SAP",
-                "Financial modelling"
+                "SQL",
+                "LookML",
+                "Snowflake",
+                "Amazon Redshift",
+                "Tableau",
+                "Looker",
+                "Alteryx",
+                "Excel"
               ],
               "contributions": [
-                "Built financial models, investigated cost variances and supported management reviews.",
+                "Built Tableau dashboards with daily refreshes and alerts on waiting-time thresholds.",
                 "Participated in requirements, validation and delivery reviews."
               ]
             }
           ],
           "education": [
             {
-              "qualification": "Bachelor of Accounting",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2019
+              "qualification": "Master of Information Systems",
+              "institution": "Demo Northern University",
+              "graduationYear": 2010
+            },
+            {
+              "qualification": "Bachelor of Information Systems",
+              "institution": "Demo Valley College of Health Sciences",
+              "graduationYear": 2008
             }
           ],
           "certifications": [
             {
-              "name": "Financial Analyst professional training",
-              "issuer": "Demo Learning Academy",
+              "name": "Data Visualisation Professional Course",
+              "issuer": "Demo Professional Standards Board",
               "year": 2024
+            },
+            {
+              "name": "Tableau Desktop Specialist Training",
+              "issuer": "Demo Quality Assurance Society",
+              "year": 2026
             }
           ],
           "languages": [
             {
-              "language": "English",
-              "level": "Business"
+              "language": "Japanese",
+              "level": "Native"
             },
             {
-              "language": "Japanese",
+              "language": "English",
               "level": "Business"
             }
           ]

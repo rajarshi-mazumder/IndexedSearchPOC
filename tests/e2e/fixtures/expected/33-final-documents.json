@@ -444,105 +444,153 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
-            "archetype": "analytics"
+            "archetype": "product-data-analyst"
           },
-          "summary": "Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Detail-focused Lead Data Analyst offering 19 years of experience in product and customer behaviour analysis, most recently on retention cohort analysis and tracking plan overhaul. Comfortable working across international, multilingual teams.",
           "technicalSkills": {
             "languages": [
-              "SQL"
+              "SQL",
+              "Python"
             ],
-            "frameworks": [],
+            "frameworks": [
+              "pandas"
+            ],
             "databases": [
-              "SQL Server"
+              "BigQuery",
+              "PostgreSQL"
             ],
             "tools": [
-              "Qlik Sense",
-              "Power BI",
+              "Amplitude",
+              "Google Analytics",
+              "Looker Studio",
               "Excel"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Harbor Services",
-              "role": "Business Intelligence Analyst",
-              "location": "Demo regional office",
-              "start": "2021-04",
-              "end": "2023-03",
+              "employer": "Demo Nimbus Data Studio",
+              "role": "Data Analyst",
+              "location": "Chicago, United States",
+              "start": "2007-04",
+              "end": "2012-03",
               "responsibilities": [
-                "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Defined event taxonomy, validated implementations and removed duplicate events.",
+                "Maintained event tracking plans with engineers and product managers.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Orchard Group",
-              "role": "Business Intelligence Analyst",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
+              "employer": "Demo Umber Data Studio",
+              "role": "Senior Data Analyst",
+              "location": "Nagoya, Japan",
+              "start": "2012-04",
+              "end": "2017-03",
+              "responsibilities": [
+                "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                "Answered ad hoc product questions with reproducible SQL analysis.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Mosaic Technologies",
+              "role": "Lead Data Analyst",
+              "location": "Manila, Philippines",
+              "start": "2017-04",
+              "end": "2021-03",
+              "responsibilities": [
+                "Defined event taxonomy, validated implementations and removed duplicate events.",
+                "Maintained event tracking plans with engineers and product managers.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
+              ]
+            },
+            {
+              "employer": "Demo Harbor Platforms",
+              "role": "Lead Data Analyst",
+              "location": "Mexico City, Mexico",
+              "start": "2021-04",
               "end": "2026-10",
               "responsibilities": [
-                "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                "Answered ad hoc product questions with reproducible SQL analysis.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Service demand forecasting",
-              "description": "Workload forecasts for support planning.",
-              "role": "Business Intelligence Analyst",
+              "name": "Retention cohort analysis",
+              "description": "User retention trends for a language-learning app.",
+              "role": "Lead Data Analyst",
               "technologies": [
                 "SQL",
-                "SQL Server",
-                "Qlik Sense",
-                "Power BI",
+                "Python",
+                "pandas",
+                "BigQuery",
+                "PostgreSQL",
+                "Amplitude",
+                "Google Analytics",
+                "Looker Studio",
                 "Excel"
               ],
               "contributions": [
-                "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                "Participated in requirements, validation and delivery reviews."
+                "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                "Tracked issues to closure and shared lessons learned after go-live."
               ]
             },
             {
-              "name": "Revenue reporting",
-              "description": "Shared business metrics for regional sales teams.",
-              "role": "Business Intelligence Analyst",
+              "name": "Tracking plan overhaul",
+              "description": "Consistent analytics events across web and mobile.",
+              "role": "Lead Data Analyst",
               "technologies": [
                 "SQL",
-                "SQL Server",
-                "Qlik Sense",
-                "Power BI",
+                "Python",
+                "pandas",
+                "BigQuery",
+                "PostgreSQL",
+                "Amplitude",
+                "Google Analytics",
+                "Looker Studio",
                 "Excel"
               ],
               "contributions": [
-                "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                "Participated in requirements, validation and delivery reviews."
+                "Defined event taxonomy, validated implementations and removed duplicate events.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             }
           ],
           "education": [
             {
-              "qualification": "Bachelor of Statistics",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2021
+              "qualification": "Bachelor of Mathematics",
+              "institution": "Demo Riverside College of Commerce",
+              "graduationYear": 2007
             }
           ],
           "certifications": [
             {
-              "name": "Business Intelligence Analyst professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Data Analytics Professional Certificate",
+              "issuer": "Demo Continuing Education Centre",
+              "year": 2016
+            },
+            {
+              "name": "SQL for Data Analysis Course",
+              "issuer": "Demo Professional Standards Board",
+              "year": 2023
             }
           ],
           "languages": [
             {
-              "language": "English",
-              "level": "Business"
+              "language": "Japanese",
+              "level": "Native"
             },
             {
-              "language": "Japanese",
+              "language": "English",
               "level": "Conversational"
+            },
+            {
+              "language": "French",
+              "level": "Fluent"
             }
           ]
         },
@@ -579,10 +627,10 @@
       "jobFunctions": [],
       "languages": [],
       "salesforceId": "003000000000004",
-      "profile": "Morgan Lee works as a Analytics Specialist. Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration. languages: SQL databases: SQL Server tools: Qlik Sense, Power BI, Excel Business Intelligence Analyst, 2021-04 to 2023-03: Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Worked with stakeholders to clarify requirements and maintain delivery documentation. Business Intelligence Analyst, 2023-04 to 2026-10: Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Collaborated with colleagues on testing, issue resolution and handover. Project: Service demand forecasting. Workload forecasts for support planning. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Participated in requirements, validation and delivery reviews. Project: Revenue reporting. Shared business metrics for regional sales teams. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Participated in requirements, validation and delivery reviews. Education: Bachelor of Statistics, 2021 Training: Business Intelligence Analyst professional training, 2024 Spoken languages: English (Business), Japanese (Conversational)",
-      "searchText": "Role: Analytics Specialist\nBusiness Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration.\nlanguages: SQL\ndatabases: SQL Server\ntools: Qlik Sense, Power BI, Excel\nBusiness Intelligence Analyst, 2021-04 to 2023-03: Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Worked with stakeholders to clarify requirements and maintain delivery documentation.\nBusiness Intelligence Analyst, 2023-04 to 2026-10: Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Collaborated with colleagues on testing, issue resolution and handover.\nProject: Service demand forecasting. Workload forecasts for support planning. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders. Participated in requirements, validation and delivery reviews.\nProject: Revenue reporting. Shared business metrics for regional sales teams. Role: Business Intelligence Analyst. Technologies: SQL, SQL Server, Qlik Sense, Power BI, Excel. Defined KPIs, reconciled source data and designed dashboards with drill-down analysis. Participated in requirements, validation and delivery reviews.\nEducation: Bachelor of Statistics, 2021\nTraining: Business Intelligence Analyst professional training, 2024\nSpoken languages: English (Business), Japanese (Conversational)",
-      "skillsText": "Technical skills: SQL, SQL Server, Qlik Sense, Power BI, Excel",
-      "languagesText": "Languages: English (Business), Japanese (Conversational)",
+      "profile": "Morgan Lee works as a Analytics Specialist. Detail-focused Lead Data Analyst offering 19 years of experience in product and customer behaviour analysis, most recently on retention cohort analysis and tracking plan overhaul. Comfortable working across international, multilingual teams. languages: SQL, Python frameworks: pandas databases: BigQuery, PostgreSQL tools: Amplitude, Google Analytics, Looker Studio, Excel Data Analyst, 2007-04 to 2012-03: Defined event taxonomy, validated implementations and removed duplicate events. Maintained event tracking plans with engineers and product managers. Collaborated with colleagues on reviews, issue resolution and handover. Senior Data Analyst, 2012-04 to 2017-03: Built cohort queries and dashboards that informed a redesigned reminder feature. Answered ad hoc product questions with reproducible SQL analysis. Mentored colleagues and reviewed work for quality, consistency and risk. Lead Data Analyst, 2017-04 to 2021-03: Defined event taxonomy, validated implementations and removed duplicate events. Maintained event tracking plans with engineers and product managers. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Lead Data Analyst, 2021-04 to 2026-10: Built cohort queries and dashboards that informed a redesigned reminder feature. Answered ad hoc product questions with reproducible SQL analysis. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Project: Retention cohort analysis. User retention trends for a language-learning app. Role: Lead Data Analyst. Technologies: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel. Built cohort queries and dashboards that informed a redesigned reminder feature. Tracked issues to closure and shared lessons learned after go-live. Project: Tracking plan overhaul. Consistent analytics events across web and mobile. Role: Lead Data Analyst. Technologies: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel. Defined event taxonomy, validated implementations and removed duplicate events. Presented progress and risks to stakeholders at regular checkpoints. Education: Bachelor of Mathematics, 2007 Training: Data Analytics Professional Certificate, 2016 Training: SQL for Data Analysis Course, 2023 Spoken languages: Japanese (Native), English (Conversational), French (Fluent)",
+      "searchText": "Role: Analytics Specialist\nDetail-focused Lead Data Analyst offering 19 years of experience in product and customer behaviour analysis, most recently on retention cohort analysis and tracking plan overhaul. Comfortable working across international, multilingual teams.\nlanguages: SQL, Python\nframeworks: pandas\ndatabases: BigQuery, PostgreSQL\ntools: Amplitude, Google Analytics, Looker Studio, Excel\nData Analyst, 2007-04 to 2012-03: Defined event taxonomy, validated implementations and removed duplicate events. Maintained event tracking plans with engineers and product managers. Collaborated with colleagues on reviews, issue resolution and handover.\nSenior Data Analyst, 2012-04 to 2017-03: Built cohort queries and dashboards that informed a redesigned reminder feature. Answered ad hoc product questions with reproducible SQL analysis. Mentored colleagues and reviewed work for quality, consistency and risk.\nLead Data Analyst, 2017-04 to 2021-03: Defined event taxonomy, validated implementations and removed duplicate events. Maintained event tracking plans with engineers and product managers. Led a team, set priorities, coached members and coordinated with stakeholders across departments.\nLead Data Analyst, 2021-04 to 2026-10: Built cohort queries and dashboards that informed a redesigned reminder feature. Answered ad hoc product questions with reproducible SQL analysis. Led a team, set priorities, coached members and coordinated with stakeholders across departments.\nProject: Retention cohort analysis. User retention trends for a language-learning app. Role: Lead Data Analyst. Technologies: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel. Built cohort queries and dashboards that informed a redesigned reminder feature. Tracked issues to closure and shared lessons learned after go-live.\nProject: Tracking plan overhaul. Consistent analytics events across web and mobile. Role: Lead Data Analyst. Technologies: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel. Defined event taxonomy, validated implementations and removed duplicate events. Presented progress and risks to stakeholders at regular checkpoints.\nEducation: Bachelor of Mathematics, 2007\nTraining: Data Analytics Professional Certificate, 2016\nTraining: SQL for Data Analysis Course, 2023\nSpoken languages: Japanese (Native), English (Conversational), French (Fluent)",
+      "skillsText": "Technical skills: SQL, Python, pandas, BigQuery, PostgreSQL, Amplitude, Google Analytics, Looker Studio, Excel",
+      "languagesText": "Languages: Japanese (Native), English (Conversational), French (Fluent)",
       "indexedAt": "2026-10-28T00:00:00.000Z"
     },
     "003000000000005": {
@@ -592,97 +640,115 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
-            "archetype": "finance"
+            "archetype": "management-accountant"
           },
-          "summary": "Financial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Senior Management Accountant with 7 years of experience in cost accounting, product costing and business partnering. Focus on plant performance reporting and product cost review, with responsibility for delivery, documentation and cross-team collaboration.",
           "technicalSkills": {
             "languages": [],
-            "frameworks": [],
+            "frameworks": [
+              "Activity-based costing"
+            ],
             "databases": [],
             "tools": [
+              "SAP CO",
               "Excel",
-              "SAP",
-              "Financial modelling"
+              "Power BI",
+              "Anaplan"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
-              "role": "Financial Analyst",
-              "location": "Demo regional office",
+              "employer": "Demo Quartz Manufacturing",
+              "role": "Management Accountant",
+              "location": "Pune, India",
               "start": "2019-04",
               "end": "2023-03",
               "responsibilities": [
-                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Built activity-based cost models that exposed loss-making variants.",
+                "Advised plant managers on margin improvement options.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
-              "role": "Financial Analyst",
-              "location": "Demo Tokyo office",
+              "employer": "Demo Zephyr Electric",
+              "role": "Senior Management Accountant",
+              "location": "San Francisco, United States",
               "start": "2023-04",
               "end": "2026-10",
               "responsibilities": [
-                "Built financial models, investigated cost variances and supported management reviews.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Automated yield, scrap and labour efficiency reports for plant leadership.",
+                "Calculated standard costs and analysed manufacturing variances.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Budget planning",
-              "description": "Annual budgets and rolling forecasts across business units.",
-              "role": "Financial Analyst",
+              "name": "Plant performance reporting",
+              "description": "Monthly KPI reporting for production sites.",
+              "role": "Senior Management Accountant",
               "technologies": [
+                "Activity-based costing",
+                "SAP CO",
                 "Excel",
-                "SAP",
-                "Financial modelling"
+                "Power BI",
+                "Anaplan"
               ],
               "contributions": [
-                "Built financial models, investigated cost variances and supported management reviews.",
+                "Automated yield, scrap and labour efficiency reports for plant leadership.",
                 "Participated in requirements, validation and delivery reviews."
               ]
             },
             {
-              "name": "Close process improvement",
-              "description": "Monthly reconciliation and financial reporting controls.",
-              "role": "Financial Analyst",
+              "name": "Product cost review",
+              "description": "Profitability analysis across several hundred product lines.",
+              "role": "Senior Management Accountant",
               "technologies": [
+                "Activity-based costing",
+                "SAP CO",
                 "Excel",
-                "SAP",
-                "Financial modelling"
+                "Power BI",
+                "Anaplan"
               ],
               "contributions": [
-                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                "Participated in requirements, validation and delivery reviews."
+                "Built activity-based cost models that exposed loss-making variants.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             }
           ],
           "education": [
             {
-              "qualification": "Bachelor of Accounting",
+              "qualification": "Bachelor of Business Administration",
               "institution": "Demo Institute of Applied Studies",
               "graduationYear": 2019
             }
           ],
           "certifications": [
             {
-              "name": "Financial Analyst professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Cost Accounting Practitioner Course",
+              "issuer": "Demo Quality Assurance Society",
+              "year": 2021
+            },
+            {
+              "name": "Management Accounting Professional Training",
+              "issuer": "Demo Continuing Education Centre",
+              "year": 2026
             }
           ],
           "languages": [
             {
-              "language": "English",
-              "level": "Fluent"
+              "language": "Japanese",
+              "level": "Native"
             },
             {
-              "language": "Japanese",
-              "level": "Business"
+              "language": "English",
+              "level": "Conversational"
+            },
+            {
+              "language": "Vietnamese",
+              "level": "Conversational"
             }
           ]
         },
@@ -719,10 +785,10 @@
       "jobFunctions": [],
       "languages": [],
       "salesforceId": "003000000000005",
-      "profile": "Dana Chen works as a Financial Accountant. Financial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, SAP, Financial modelling Financial Analyst, 2019-04 to 2023-03: Documented controls, reconciled ledger balances and streamlined approval schedules. Worked with stakeholders to clarify requirements and maintain delivery documentation. Financial Analyst, 2023-04 to 2026-10: Built financial models, investigated cost variances and supported management reviews. Collaborated with colleagues on testing, issue resolution and handover. Project: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews. Project: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews. Education: Bachelor of Accounting, 2019 Training: Financial Analyst professional training, 2024 Spoken languages: English (Fluent), Japanese (Business)",
-      "searchText": "Role: Financial Accountant\nFinancial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration.\ntools: Excel, SAP, Financial modelling\nFinancial Analyst, 2019-04 to 2023-03: Documented controls, reconciled ledger balances and streamlined approval schedules. Worked with stakeholders to clarify requirements and maintain delivery documentation.\nFinancial Analyst, 2023-04 to 2026-10: Built financial models, investigated cost variances and supported management reviews. Collaborated with colleagues on testing, issue resolution and handover.\nProject: Budget planning. Annual budgets and rolling forecasts across business units. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Built financial models, investigated cost variances and supported management reviews. Participated in requirements, validation and delivery reviews.\nProject: Close process improvement. Monthly reconciliation and financial reporting controls. Role: Financial Analyst. Technologies: Excel, SAP, Financial modelling. Documented controls, reconciled ledger balances and streamlined approval schedules. Participated in requirements, validation and delivery reviews.\nEducation: Bachelor of Accounting, 2019\nTraining: Financial Analyst professional training, 2024\nSpoken languages: English (Fluent), Japanese (Business)",
-      "skillsText": "Technical skills: Excel, SAP, Financial modelling",
-      "languagesText": "Languages: English (Fluent), Japanese (Business)",
+      "profile": "Dana Chen works as a Financial Accountant. Senior Management Accountant with 7 years of experience in cost accounting, product costing and business partnering. Focus on plant performance reporting and product cost review, with responsibility for delivery, documentation and cross-team collaboration. frameworks: Activity-based costing tools: SAP CO, Excel, Power BI, Anaplan Management Accountant, 2019-04 to 2023-03: Built activity-based cost models that exposed loss-making variants. Advised plant managers on margin improvement options. Collaborated with colleagues on reviews, issue resolution and handover. Senior Management Accountant, 2023-04 to 2026-10: Automated yield, scrap and labour efficiency reports for plant leadership. Calculated standard costs and analysed manufacturing variances. Mentored colleagues and reviewed work for quality, consistency and risk. Project: Plant performance reporting. Monthly KPI reporting for production sites. Role: Senior Management Accountant. Technologies: Activity-based costing, SAP CO, Excel, Power BI, Anaplan. Automated yield, scrap and labour efficiency reports for plant leadership. Participated in requirements, validation and delivery reviews. Project: Product cost review. Profitability analysis across several hundred product lines. Role: Senior Management Accountant. Technologies: Activity-based costing, SAP CO, Excel, Power BI, Anaplan. Built activity-based cost models that exposed loss-making variants. Presented progress and risks to stakeholders at regular checkpoints. Education: Bachelor of Business Administration, 2019 Training: Cost Accounting Practitioner Course, 2021 Training: Management Accounting Professional Training, 2026 Spoken languages: Japanese (Native), English (Conversational), Vietnamese (Conversational)",
+      "searchText": "Role: Financial Accountant\nSenior Management Accountant with 7 years of experience in cost accounting, product costing and business partnering. Focus on plant performance reporting and product cost review, with responsibility for delivery, documentation and cross-team collaboration.\nframeworks: Activity-based costing\ntools: SAP CO, Excel, Power BI, Anaplan\nManagement Accountant, 2019-04 to 2023-03: Built activity-based cost models that exposed loss-making variants. Advised plant managers on margin improvement options. Collaborated with colleagues on reviews, issue resolution and handover.\nSenior Management Accountant, 2023-04 to 2026-10: Automated yield, scrap and labour efficiency reports for plant leadership. Calculated standard costs and analysed manufacturing variances. Mentored colleagues and reviewed work for quality, consistency and risk.\nProject: Plant performance reporting. Monthly KPI reporting for production sites. Role: Senior Management Accountant. Technologies: Activity-based costing, SAP CO, Excel, Power BI, Anaplan. Automated yield, scrap and labour efficiency reports for plant leadership. Participated in requirements, validation and delivery reviews.\nProject: Product cost review. Profitability analysis across several hundred product lines. Role: Senior Management Accountant. Technologies: Activity-based costing, SAP CO, Excel, Power BI, Anaplan. Built activity-based cost models that exposed loss-making variants. Presented progress and risks to stakeholders at regular checkpoints.\nEducation: Bachelor of Business Administration, 2019\nTraining: Cost Accounting Practitioner Course, 2021\nTraining: Management Accounting Professional Training, 2026\nSpoken languages: Japanese (Native), English (Conversational), Vietnamese (Conversational)",
+      "skillsText": "Technical skills: Activity-based costing, SAP CO, Excel, Power BI, Anaplan",
+      "languagesText": "Languages: Japanese (Native), English (Conversational), Vietnamese (Conversational)",
       "indexedAt": "2026-10-28T00:00:00.000Z"
     },
     "003000000000006": {
@@ -732,97 +798,146 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
             "archetype": "operations"
           },
-          "summary": "Operations Specialist with 7 years of experience. Focus on process standardization and inventory planning, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Lead Operations Specialist with a 16-year track record in order fulfilment operations and process standardisation. Combines practical delivery on inventory planning and process standardization with stakeholder management and continuous improvement.",
           "technicalSkills": {
             "languages": [],
-            "frameworks": [],
+            "frameworks": [
+              "Lean",
+              "Standard operating procedures"
+            ],
             "databases": [],
             "tools": [
               "Excel",
               "ERP",
-              "Process mapping"
+              "Process mapping",
+              "Power BI"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
+              "employer": "Demo Cedar Travel",
               "role": "Operations Specialist",
-              "location": "Demo regional office",
-              "start": "2019-04",
-              "end": "2023-03",
+              "location": "Pune, India",
+              "start": "2010-04",
+              "end": "2014-03",
               "responsibilities": [
-                "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Mapped workflows, introduced operating checklists and monitored service-level performance.",
+                "Wrote and maintained standard operating procedures.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
-              "role": "Operations Specialist",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
-              "end": "2026-10",
+              "employer": "Demo Birch Entertainment",
+              "role": "Senior Operations Specialist",
+              "location": "Nagoya, Japan",
+              "start": "2014-04",
+              "end": "2018-03",
+              "responsibilities": [
+                "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
+                "Monitored daily operational KPIs and resolved exceptions with partner teams.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Horizon Foods",
+              "role": "Senior Operations Specialist",
+              "location": "Madrid, Spain",
+              "start": "2018-04",
+              "end": "2022-03",
               "responsibilities": [
                 "Mapped workflows, introduced operating checklists and monitored service-level performance.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Wrote and maintained standard operating procedures.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Onyx Brands",
+              "role": "Lead Operations Specialist",
+              "location": "Pune, India",
+              "start": "2022-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
+                "Monitored daily operational KPIs and resolved exceptions with partner teams.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Process standardization",
-              "description": "Consistent order fulfilment procedures across teams.",
-              "role": "Operations Specialist",
-              "technologies": [
-                "Excel",
-                "ERP",
-                "Process mapping"
-              ],
-              "contributions": [
-                "Mapped workflows, introduced operating checklists and monitored service-level performance.",
-                "Participated in requirements, validation and delivery reviews."
-              ]
-            },
-            {
               "name": "Inventory planning",
               "description": "Stock replenishment and supplier delivery coordination.",
-              "role": "Operations Specialist",
+              "role": "Lead Operations Specialist",
               "technologies": [
+                "Lean",
+                "Standard operating procedures",
                 "Excel",
                 "ERP",
-                "Process mapping"
+                "Process mapping",
+                "Power BI"
               ],
               "contributions": [
                 "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
-                "Participated in requirements, validation and delivery reviews."
+                "Documented decisions and handed over operating procedures to the support team."
+              ]
+            },
+            {
+              "name": "Process standardization",
+              "description": "Consistent order fulfilment procedures across teams.",
+              "role": "Lead Operations Specialist",
+              "technologies": [
+                "Lean",
+                "Standard operating procedures",
+                "Excel",
+                "ERP",
+                "Process mapping",
+                "Power BI"
+              ],
+              "contributions": [
+                "Mapped workflows, introduced operating checklists and monitored service-level performance.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             }
           ],
           "education": [
             {
               "qualification": "Bachelor of Business Administration",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2019
+              "institution": "Demo Metropolitan University",
+              "graduationYear": 2010
             }
           ],
           "certifications": [
             {
-              "name": "Operations Specialist professional training",
+              "name": "Process Improvement Fundamentals",
               "issuer": "Demo Learning Academy",
-              "year": 2024
+              "year": 2012
+            },
+            {
+              "name": "Lean Operations Practitioner Course",
+              "issuer": "Demo Learning Academy",
+              "year": 2021
             }
           ],
           "languages": [
+            {
+              "language": "Spanish",
+              "level": "Native"
+            },
             {
               "language": "English",
               "level": "Business"
             },
             {
               "language": "Japanese",
-              "level": "Business"
+              "level": "Basic"
+            },
+            {
+              "language": "Mandarin Chinese",
+              "level": "Basic"
             }
           ]
         },
@@ -859,10 +974,10 @@
       "jobFunctions": [],
       "languages": [],
       "salesforceId": "003000000000006",
-      "profile": "Sam Patel works as a Operations Specialist. Operations Specialist with 7 years of experience. Focus on process standardization and inventory planning, with responsibility for delivery, documentation and cross-team collaboration. tools: Excel, ERP, Process mapping Operations Specialist, 2019-04 to 2023-03: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Worked with stakeholders to clarify requirements and maintain delivery documentation. Operations Specialist, 2023-04 to 2026-10: Mapped workflows, introduced operating checklists and monitored service-level performance. Collaborated with colleagues on testing, issue resolution and handover. Project: Process standardization. Consistent order fulfilment procedures across teams. Role: Operations Specialist. Technologies: Excel, ERP, Process mapping. Mapped workflows, introduced operating checklists and monitored service-level performance. Participated in requirements, validation and delivery reviews. Project: Inventory planning. Stock replenishment and supplier delivery coordination. Role: Operations Specialist. Technologies: Excel, ERP, Process mapping. Analyzed demand, adjusted reorder points and tracked delivery exceptions. Participated in requirements, validation and delivery reviews. Education: Bachelor of Business Administration, 2019 Training: Operations Specialist professional training, 2024 Spoken languages: English (Business), Japanese (Business)",
-      "searchText": "Role: Operations Specialist\nOperations Specialist with 7 years of experience. Focus on process standardization and inventory planning, with responsibility for delivery, documentation and cross-team collaboration.\ntools: Excel, ERP, Process mapping\nOperations Specialist, 2019-04 to 2023-03: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Worked with stakeholders to clarify requirements and maintain delivery documentation.\nOperations Specialist, 2023-04 to 2026-10: Mapped workflows, introduced operating checklists and monitored service-level performance. Collaborated with colleagues on testing, issue resolution and handover.\nProject: Process standardization. Consistent order fulfilment procedures across teams. Role: Operations Specialist. Technologies: Excel, ERP, Process mapping. Mapped workflows, introduced operating checklists and monitored service-level performance. Participated in requirements, validation and delivery reviews.\nProject: Inventory planning. Stock replenishment and supplier delivery coordination. Role: Operations Specialist. Technologies: Excel, ERP, Process mapping. Analyzed demand, adjusted reorder points and tracked delivery exceptions. Participated in requirements, validation and delivery reviews.\nEducation: Bachelor of Business Administration, 2019\nTraining: Operations Specialist professional training, 2024\nSpoken languages: English (Business), Japanese (Business)",
-      "skillsText": "Technical skills: Excel, ERP, Process mapping",
-      "languagesText": "Languages: English (Business), Japanese (Business)",
+      "profile": "Sam Patel works as a Operations Specialist. Lead Operations Specialist with a 16-year track record in order fulfilment operations and process standardisation. Combines practical delivery on inventory planning and process standardization with stakeholder management and continuous improvement. frameworks: Lean, Standard operating procedures tools: Excel, ERP, Process mapping, Power BI Operations Specialist, 2010-04 to 2014-03: Mapped workflows, introduced operating checklists and monitored service-level performance. Wrote and maintained standard operating procedures. Collaborated with colleagues on reviews, issue resolution and handover. Senior Operations Specialist, 2014-04 to 2018-03: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Monitored daily operational KPIs and resolved exceptions with partner teams. Mentored colleagues and reviewed work for quality, consistency and risk. Senior Operations Specialist, 2018-04 to 2022-03: Mapped workflows, introduced operating checklists and monitored service-level performance. Wrote and maintained standard operating procedures. Mentored colleagues and reviewed work for quality, consistency and risk. Lead Operations Specialist, 2022-04 to 2026-10: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Monitored daily operational KPIs and resolved exceptions with partner teams. Led a team, set priorities, coached members and coordinated with stakeholders across departments. Project: Inventory planning. Stock replenishment and supplier delivery coordination. Role: Lead Operations Specialist. Technologies: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI. Analyzed demand, adjusted reorder points and tracked delivery exceptions. Documented decisions and handed over operating procedures to the support team. Project: Process standardization. Consistent order fulfilment procedures across teams. Role: Lead Operations Specialist. Technologies: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI. Mapped workflows, introduced operating checklists and monitored service-level performance. Presented progress and risks to stakeholders at regular checkpoints. Education: Bachelor of Business Administration, 2010 Training: Process Improvement Fundamentals, 2012 Training: Lean Operations Practitioner Course, 2021 Spoken languages: Spanish (Native), English (Business), Japanese (Basic), Mandarin Chinese (Basic)",
+      "searchText": "Role: Operations Specialist\nLead Operations Specialist with a 16-year track record in order fulfilment operations and process standardisation. Combines practical delivery on inventory planning and process standardization with stakeholder management and continuous improvement.\nframeworks: Lean, Standard operating procedures\ntools: Excel, ERP, Process mapping, Power BI\nOperations Specialist, 2010-04 to 2014-03: Mapped workflows, introduced operating checklists and monitored service-level performance. Wrote and maintained standard operating procedures. Collaborated with colleagues on reviews, issue resolution and handover.\nSenior Operations Specialist, 2014-04 to 2018-03: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Monitored daily operational KPIs and resolved exceptions with partner teams. Mentored colleagues and reviewed work for quality, consistency and risk.\nSenior Operations Specialist, 2018-04 to 2022-03: Mapped workflows, introduced operating checklists and monitored service-level performance. Wrote and maintained standard operating procedures. Mentored colleagues and reviewed work for quality, consistency and risk.\nLead Operations Specialist, 2022-04 to 2026-10: Analyzed demand, adjusted reorder points and tracked delivery exceptions. Monitored daily operational KPIs and resolved exceptions with partner teams. Led a team, set priorities, coached members and coordinated with stakeholders across departments.\nProject: Inventory planning. Stock replenishment and supplier delivery coordination. Role: Lead Operations Specialist. Technologies: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI. Analyzed demand, adjusted reorder points and tracked delivery exceptions. Documented decisions and handed over operating procedures to the support team.\nProject: Process standardization. Consistent order fulfilment procedures across teams. Role: Lead Operations Specialist. Technologies: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI. Mapped workflows, introduced operating checklists and monitored service-level performance. Presented progress and risks to stakeholders at regular checkpoints.\nEducation: Bachelor of Business Administration, 2010\nTraining: Process Improvement Fundamentals, 2012\nTraining: Lean Operations Practitioner Course, 2021\nSpoken languages: Spanish (Native), English (Business), Japanese (Basic), Mandarin Chinese (Basic)",
+      "skillsText": "Technical skills: Lean, Standard operating procedures, Excel, ERP, Process mapping, Power BI",
+      "languagesText": "Languages: Spanish (Native), English (Business), Japanese (Basic), Mandarin Chinese (Basic)",
       "indexedAt": "2026-10-28T00:00:00.000Z"
     }
   }

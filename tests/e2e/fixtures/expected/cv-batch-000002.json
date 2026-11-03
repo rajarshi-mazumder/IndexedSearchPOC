@@ -10,105 +10,153 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
-            "archetype": "analytics"
+            "archetype": "product-data-analyst"
           },
-          "summary": "Business Intelligence Analyst with 5 years of experience. Focus on service demand forecasting and revenue reporting, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Detail-focused Lead Data Analyst offering 19 years of experience in product and customer behaviour analysis, most recently on retention cohort analysis and tracking plan overhaul. Comfortable working across international, multilingual teams.",
           "technicalSkills": {
             "languages": [
-              "SQL"
+              "SQL",
+              "Python"
             ],
-            "frameworks": [],
+            "frameworks": [
+              "pandas"
+            ],
             "databases": [
-              "SQL Server"
+              "BigQuery",
+              "PostgreSQL"
             ],
             "tools": [
-              "Qlik Sense",
-              "Power BI",
+              "Amplitude",
+              "Google Analytics",
+              "Looker Studio",
               "Excel"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Harbor Services",
-              "role": "Business Intelligence Analyst",
-              "location": "Demo regional office",
-              "start": "2021-04",
-              "end": "2023-03",
+              "employer": "Demo Nimbus Data Studio",
+              "role": "Data Analyst",
+              "location": "Chicago, United States",
+              "start": "2007-04",
+              "end": "2012-03",
               "responsibilities": [
-                "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Defined event taxonomy, validated implementations and removed duplicate events.",
+                "Maintained event tracking plans with engineers and product managers.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Orchard Group",
-              "role": "Business Intelligence Analyst",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
+              "employer": "Demo Umber Data Studio",
+              "role": "Senior Data Analyst",
+              "location": "Nagoya, Japan",
+              "start": "2012-04",
+              "end": "2017-03",
+              "responsibilities": [
+                "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                "Answered ad hoc product questions with reproducible SQL analysis.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Mosaic Technologies",
+              "role": "Lead Data Analyst",
+              "location": "Manila, Philippines",
+              "start": "2017-04",
+              "end": "2021-03",
+              "responsibilities": [
+                "Defined event taxonomy, validated implementations and removed duplicate events.",
+                "Maintained event tracking plans with engineers and product managers.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
+              ]
+            },
+            {
+              "employer": "Demo Harbor Platforms",
+              "role": "Lead Data Analyst",
+              "location": "Mexico City, Mexico",
+              "start": "2021-04",
               "end": "2026-10",
               "responsibilities": [
-                "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                "Answered ad hoc product questions with reproducible SQL analysis.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Service demand forecasting",
-              "description": "Workload forecasts for support planning.",
-              "role": "Business Intelligence Analyst",
+              "name": "Retention cohort analysis",
+              "description": "User retention trends for a language-learning app.",
+              "role": "Lead Data Analyst",
               "technologies": [
                 "SQL",
-                "SQL Server",
-                "Qlik Sense",
-                "Power BI",
+                "Python",
+                "pandas",
+                "BigQuery",
+                "PostgreSQL",
+                "Amplitude",
+                "Google Analytics",
+                "Looker Studio",
                 "Excel"
               ],
               "contributions": [
-                "Analyzed trends, validated assumptions and presented actionable forecasts to stakeholders.",
-                "Participated in requirements, validation and delivery reviews."
+                "Built cohort queries and dashboards that informed a redesigned reminder feature.",
+                "Tracked issues to closure and shared lessons learned after go-live."
               ]
             },
             {
-              "name": "Revenue reporting",
-              "description": "Shared business metrics for regional sales teams.",
-              "role": "Business Intelligence Analyst",
+              "name": "Tracking plan overhaul",
+              "description": "Consistent analytics events across web and mobile.",
+              "role": "Lead Data Analyst",
               "technologies": [
                 "SQL",
-                "SQL Server",
-                "Qlik Sense",
-                "Power BI",
+                "Python",
+                "pandas",
+                "BigQuery",
+                "PostgreSQL",
+                "Amplitude",
+                "Google Analytics",
+                "Looker Studio",
                 "Excel"
               ],
               "contributions": [
-                "Defined KPIs, reconciled source data and designed dashboards with drill-down analysis.",
-                "Participated in requirements, validation and delivery reviews."
+                "Defined event taxonomy, validated implementations and removed duplicate events.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             }
           ],
           "education": [
             {
-              "qualification": "Bachelor of Statistics",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2021
+              "qualification": "Bachelor of Mathematics",
+              "institution": "Demo Riverside College of Commerce",
+              "graduationYear": 2007
             }
           ],
           "certifications": [
             {
-              "name": "Business Intelligence Analyst professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Data Analytics Professional Certificate",
+              "issuer": "Demo Continuing Education Centre",
+              "year": 2016
+            },
+            {
+              "name": "SQL for Data Analysis Course",
+              "issuer": "Demo Professional Standards Board",
+              "year": 2023
             }
           ],
           "languages": [
             {
-              "language": "English",
-              "level": "Business"
+              "language": "Japanese",
+              "level": "Native"
             },
             {
-              "language": "Japanese",
+              "language": "English",
               "level": "Conversational"
+            },
+            {
+              "language": "French",
+              "level": "Fluent"
             }
           ]
         },
@@ -153,97 +201,115 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
-            "archetype": "finance"
+            "archetype": "management-accountant"
           },
-          "summary": "Financial Analyst with 7 years of experience. Focus on budget planning and close process improvement, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Senior Management Accountant with 7 years of experience in cost accounting, product costing and business partnering. Focus on plant performance reporting and product cost review, with responsibility for delivery, documentation and cross-team collaboration.",
           "technicalSkills": {
             "languages": [],
-            "frameworks": [],
+            "frameworks": [
+              "Activity-based costing"
+            ],
             "databases": [],
             "tools": [
+              "SAP CO",
               "Excel",
-              "SAP",
-              "Financial modelling"
+              "Power BI",
+              "Anaplan"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
-              "role": "Financial Analyst",
-              "location": "Demo regional office",
+              "employer": "Demo Quartz Manufacturing",
+              "role": "Management Accountant",
+              "location": "Pune, India",
               "start": "2019-04",
               "end": "2023-03",
               "responsibilities": [
-                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Built activity-based cost models that exposed loss-making variants.",
+                "Advised plant managers on margin improvement options.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
-              "role": "Financial Analyst",
-              "location": "Demo Tokyo office",
+              "employer": "Demo Zephyr Electric",
+              "role": "Senior Management Accountant",
+              "location": "San Francisco, United States",
               "start": "2023-04",
               "end": "2026-10",
               "responsibilities": [
-                "Built financial models, investigated cost variances and supported management reviews.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Automated yield, scrap and labour efficiency reports for plant leadership.",
+                "Calculated standard costs and analysed manufacturing variances.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Budget planning",
-              "description": "Annual budgets and rolling forecasts across business units.",
-              "role": "Financial Analyst",
+              "name": "Plant performance reporting",
+              "description": "Monthly KPI reporting for production sites.",
+              "role": "Senior Management Accountant",
               "technologies": [
+                "Activity-based costing",
+                "SAP CO",
                 "Excel",
-                "SAP",
-                "Financial modelling"
+                "Power BI",
+                "Anaplan"
               ],
               "contributions": [
-                "Built financial models, investigated cost variances and supported management reviews.",
+                "Automated yield, scrap and labour efficiency reports for plant leadership.",
                 "Participated in requirements, validation and delivery reviews."
               ]
             },
             {
-              "name": "Close process improvement",
-              "description": "Monthly reconciliation and financial reporting controls.",
-              "role": "Financial Analyst",
+              "name": "Product cost review",
+              "description": "Profitability analysis across several hundred product lines.",
+              "role": "Senior Management Accountant",
               "technologies": [
+                "Activity-based costing",
+                "SAP CO",
                 "Excel",
-                "SAP",
-                "Financial modelling"
+                "Power BI",
+                "Anaplan"
               ],
               "contributions": [
-                "Documented controls, reconciled ledger balances and streamlined approval schedules.",
-                "Participated in requirements, validation and delivery reviews."
+                "Built activity-based cost models that exposed loss-making variants.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             }
           ],
           "education": [
             {
-              "qualification": "Bachelor of Accounting",
+              "qualification": "Bachelor of Business Administration",
               "institution": "Demo Institute of Applied Studies",
               "graduationYear": 2019
             }
           ],
           "certifications": [
             {
-              "name": "Financial Analyst professional training",
-              "issuer": "Demo Learning Academy",
-              "year": 2024
+              "name": "Cost Accounting Practitioner Course",
+              "issuer": "Demo Quality Assurance Society",
+              "year": 2021
+            },
+            {
+              "name": "Management Accounting Professional Training",
+              "issuer": "Demo Continuing Education Centre",
+              "year": 2026
             }
           ],
           "languages": [
             {
-              "language": "English",
-              "level": "Fluent"
+              "language": "Japanese",
+              "level": "Native"
             },
             {
-              "language": "Japanese",
-              "level": "Business"
+              "language": "English",
+              "level": "Conversational"
+            },
+            {
+              "language": "Vietnamese",
+              "level": "Conversational"
             }
           ]
         },
@@ -288,97 +354,146 @@
         "cvProfile": {
           "source": {
             "kind": "synthetic",
-            "generatorVersion": 1,
+            "generatorVersion": 2,
             "seed": "contract-seed",
             "archetype": "operations"
           },
-          "summary": "Operations Specialist with 7 years of experience. Focus on process standardization and inventory planning, with responsibility for delivery, documentation and cross-team collaboration.",
+          "summary": "Lead Operations Specialist with a 16-year track record in order fulfilment operations and process standardisation. Combines practical delivery on inventory planning and process standardization with stakeholder management and continuous improvement.",
           "technicalSkills": {
             "languages": [],
-            "frameworks": [],
+            "frameworks": [
+              "Lean",
+              "Standard operating procedures"
+            ],
             "databases": [],
             "tools": [
               "Excel",
               "ERP",
-              "Process mapping"
+              "Process mapping",
+              "Power BI"
             ]
           },
           "employmentHistory": [
             {
-              "employer": "Demo Cedar Services",
+              "employer": "Demo Cedar Travel",
               "role": "Operations Specialist",
-              "location": "Demo regional office",
-              "start": "2019-04",
-              "end": "2023-03",
+              "location": "Pune, India",
+              "start": "2010-04",
+              "end": "2014-03",
               "responsibilities": [
-                "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
-                "Worked with stakeholders to clarify requirements and maintain delivery documentation."
+                "Mapped workflows, introduced operating checklists and monitored service-level performance.",
+                "Wrote and maintained standard operating procedures.",
+                "Collaborated with colleagues on reviews, issue resolution and handover."
               ]
             },
             {
-              "employer": "Demo Summit Group",
-              "role": "Operations Specialist",
-              "location": "Demo Tokyo office",
-              "start": "2023-04",
-              "end": "2026-10",
+              "employer": "Demo Birch Entertainment",
+              "role": "Senior Operations Specialist",
+              "location": "Nagoya, Japan",
+              "start": "2014-04",
+              "end": "2018-03",
+              "responsibilities": [
+                "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
+                "Monitored daily operational KPIs and resolved exceptions with partner teams.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Horizon Foods",
+              "role": "Senior Operations Specialist",
+              "location": "Madrid, Spain",
+              "start": "2018-04",
+              "end": "2022-03",
               "responsibilities": [
                 "Mapped workflows, introduced operating checklists and monitored service-level performance.",
-                "Collaborated with colleagues on testing, issue resolution and handover."
+                "Wrote and maintained standard operating procedures.",
+                "Mentored colleagues and reviewed work for quality, consistency and risk."
+              ]
+            },
+            {
+              "employer": "Demo Onyx Brands",
+              "role": "Lead Operations Specialist",
+              "location": "Pune, India",
+              "start": "2022-04",
+              "end": "2026-10",
+              "responsibilities": [
+                "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
+                "Monitored daily operational KPIs and resolved exceptions with partner teams.",
+                "Led a team, set priorities, coached members and coordinated with stakeholders across departments."
               ]
             }
           ],
           "projects": [
             {
-              "name": "Process standardization",
-              "description": "Consistent order fulfilment procedures across teams.",
-              "role": "Operations Specialist",
-              "technologies": [
-                "Excel",
-                "ERP",
-                "Process mapping"
-              ],
-              "contributions": [
-                "Mapped workflows, introduced operating checklists and monitored service-level performance.",
-                "Participated in requirements, validation and delivery reviews."
-              ]
-            },
-            {
               "name": "Inventory planning",
               "description": "Stock replenishment and supplier delivery coordination.",
-              "role": "Operations Specialist",
+              "role": "Lead Operations Specialist",
               "technologies": [
+                "Lean",
+                "Standard operating procedures",
                 "Excel",
                 "ERP",
-                "Process mapping"
+                "Process mapping",
+                "Power BI"
               ],
               "contributions": [
                 "Analyzed demand, adjusted reorder points and tracked delivery exceptions.",
-                "Participated in requirements, validation and delivery reviews."
+                "Documented decisions and handed over operating procedures to the support team."
+              ]
+            },
+            {
+              "name": "Process standardization",
+              "description": "Consistent order fulfilment procedures across teams.",
+              "role": "Lead Operations Specialist",
+              "technologies": [
+                "Lean",
+                "Standard operating procedures",
+                "Excel",
+                "ERP",
+                "Process mapping",
+                "Power BI"
+              ],
+              "contributions": [
+                "Mapped workflows, introduced operating checklists and monitored service-level performance.",
+                "Presented progress and risks to stakeholders at regular checkpoints."
               ]
             }
           ],
           "education": [
             {
               "qualification": "Bachelor of Business Administration",
-              "institution": "Demo Institute of Applied Studies",
-              "graduationYear": 2019
+              "institution": "Demo Metropolitan University",
+              "graduationYear": 2010
             }
           ],
           "certifications": [
             {
-              "name": "Operations Specialist professional training",
+              "name": "Process Improvement Fundamentals",
               "issuer": "Demo Learning Academy",
-              "year": 2024
+              "year": 2012
+            },
+            {
+              "name": "Lean Operations Practitioner Course",
+              "issuer": "Demo Learning Academy",
+              "year": 2021
             }
           ],
           "languages": [
+            {
+              "language": "Spanish",
+              "level": "Native"
+            },
             {
               "language": "English",
               "level": "Business"
             },
             {
               "language": "Japanese",
-              "level": "Business"
+              "level": "Basic"
+            },
+            {
+              "language": "Mandarin Chinese",
+              "level": "Basic"
             }
           ]
         },
