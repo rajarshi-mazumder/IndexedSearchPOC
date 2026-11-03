@@ -1,0 +1,41 @@
+@startuml dataPreparationSample
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam linetype polyline
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam ArrowColor #2563EB
+skinparam ArrowFontColor #475569
+skinparam ArrowFontSize 12
+skinparam ArrowThickness 1.5
+skinparam nodesep 30
+skinparam ranksep 35
+skinparam component {
+ BackgroundColor #DBEAFE
+ BorderColor #64748B
+ FontColor #0F172A
+}
+skinparam package {
+ BorderColor #94A3B8
+ FontColor #0F172A
+ FontStyle bold
+}
+
+component "Salesforce" as Input #F1F5F9
+package "Data preparation" #EFF6FF {
+ component "1. Fetch Contacts" as Fetch
+ component "2. Load related\nrecords" as Related
+ component "3. Assemble\nprofiles" as Assemble
+ component "4. Add demo CV" as Cv
+}
+component "Ready for\nembedding" as Ready #F1F5F9
+Input --> Fetch : Contacts
+Fetch --> Related : Contact profiles
+Related --> Assemble : profiles + related records
+Assemble --> Cv : candidate profiles
+Cv --> Ready : profiles + demo CV
+@enduml

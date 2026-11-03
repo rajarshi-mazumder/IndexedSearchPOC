@@ -1,0 +1,124 @@
+@startuml indexedSearchOverviewPreparation
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam linetype polyline
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam ArrowColor #2563EB
+skinparam ArrowFontColor #475569
+skinparam ArrowFontSize 12
+skinparam ArrowThickness 1.5
+skinparam nodesep 30
+skinparam ranksep 35
+skinparam component {
+ BackgroundColor #DBEAFE
+ BorderColor #64748B
+ FontColor #0F172A
+}
+skinparam package {
+ BorderColor #94A3B8
+ FontColor #0F172A
+ FontStyle bold
+}
+
+component "Salesforce" as Input #F1F5F9
+package "Data preparation" #EFF6FF {
+ component "1. Fetch Contacts" as Fetch
+ component "2. Load related\nrecords" as Related
+ component "3. Assemble\nprofiles" as Assemble
+ component "4. Add demo CV" as Cv
+}
+component "Ready for\nembedding" as Ready #F1F5F9
+Input --> Fetch : Contacts
+Fetch --> Related : Contact profiles
+Related --> Assemble : profiles + related records
+Assemble --> Cv : candidate profiles
+Cv --> Ready : profiles + demo CV
+@enduml
+
+@startuml indexedSearchOverviewEmbedding
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam linetype polyline
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam ArrowColor #7C3AED
+skinparam ArrowFontColor #475569
+skinparam ArrowFontSize 12
+skinparam ArrowThickness 1.5
+skinparam nodesep 30
+skinparam ranksep 35
+skinparam component {
+ BackgroundColor #EDE9FE
+ BorderColor #64748B
+ FontColor #0F172A
+}
+skinparam package {
+ BorderColor #94A3B8
+ FontColor #0F172A
+ FontStyle bold
+}
+
+
+component "Selected\ncandidate files" as Files #F1F5F9
+package "Embedding and indexing" #F5F3FF {
+ component "1. Prepare text\nand document" as Prepare
+ component "2. Generate vector\nBedrock Titan V2" as Embed
+ component "3. Store document\nOpenSearch Serverless" as Store
+}
+component "Searchable\ncandidate index" as Index #F1F5F9
+Files --> Prepare : candidate profiles
+Prepare --> Embed : searchText\nvia ingest pipeline
+Embed --> Store : 1,024-number vector
+Store --> Index : fields + profile + vector
+@enduml
+
+@startuml indexedSearchOverviewSearch
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam linetype polyline
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam ArrowColor #059669
+skinparam ArrowFontColor #475569
+skinparam ArrowFontSize 12
+skinparam ArrowThickness 1.5
+skinparam nodesep 30
+skinparam ranksep 100
+skinparam component {
+ BackgroundColor #D1FAE5
+ BorderColor #64748B
+ FontColor #0F172A
+}
+skinparam package {
+ BorderColor #94A3B8
+ FontColor #0F172A
+ FontStyle bold
+}
+
+
+package "Candidate search" #ECFDF5 {
+ component "1. Search query\nAngular UI" as Query
+ component "3. Vector search\nOpenSearch + Titan" as Vector
+ component "2. Keyword search\nOpenSearch" as Keyword
+ component "4. Combine ranks\nBackend RRF" as Rank
+ component "5. Show results\nAngular UI" as Results
+}
+Query --> Vector : query text
+Query --> Keyword : query text
+Vector --> Rank : vector hits + scores
+Keyword --> Rank : keyword hits + scores
+Rank --> Results : ranked candidates
+@enduml

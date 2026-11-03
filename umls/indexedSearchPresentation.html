@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candidate Search on OpenSearch</title>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#0f172a;--ink-2:#334155;--muted:#64748b;--line:#e2e8f0;--line-2:#cbd5e1;
+  --page:#f5f7fa;--paper:#ffffff;--code-bg:#f8fafc;--term:#f1f5f9;
+  --sf:#0284c7;--os:#0f172a;--br:#d97706;--loc:#64748b;
+  --tk-key:#1e3a8a;--tk-str:#047857;--tk-num:#b45309;--tk-lit:#7c3aed;--tk-dim:#94a3b8;
+  --sans:"Segoe UI Variable Text","Segoe UI",Inter,system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  --display:"Segoe UI Variable Display","Segoe UI",Inter,system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  --mono:"Cascadia Code","JetBrains Mono",Consolas,"SFMono-Regular",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+main{max-width:1440px;margin:0 auto;padding:40px 40px 48px}
+button{font:inherit}
+
+/* ---------- Page header ---------- */
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:34px}
+.eyebrow{font:700 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 40px/1.08 var(--display);letter-spacing:-.03em;margin:12px 0 10px}
+.intro{margin:0;color:var(--ink-2);font-size:17px;max-width:860px}
+.toolbar{display:flex;gap:10px;flex:none}
+.btn{background:var(--paper);border:1px solid var(--line-2);border-radius:8px;padding:9px 14px;color:var(--ink-2);cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap}
+.btn:hover{background:#eef2f7}
+.btn:focus-visible,.step:focus-visible,summary:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:3px}
+
+/* ---------- Modules ---------- */
+.module{margin:0 0 34px}
+.module.gen{--accent:#2563eb;--soft:#dbeafe;--tint:#eff6ff}
+.module.setup{--accent:#b45309;--soft:#fde68a;--tint:#fffbeb}
+.module.emb{--accent:#7c3aed;--soft:#ede9fe;--tint:#f5f3ff}
+.module.srch{--accent:#0f766e;--soft:#ccfbf1;--tint:#f0fdfa}
+.module-head{display:flex;align-items:baseline;gap:14px;margin:0 0 14px}
+.module-num{font:700 13px/1 var(--sans);background:var(--accent);color:#fff;border-radius:7px;padding:6px 9px;transform:translateY(-3px)}
+h2{font:650 24px/1.2 var(--display);letter-spacing:-.02em;margin:0}
+.module-sub{color:var(--muted);font-size:16px}
+
+/* ---------- Diagram ---------- */
+.diagram-shell{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow-x:auto;margin-bottom:12px}
+.canvas{position:relative;min-width:1100px;padding:28px 30px}
+.grid{display:grid;column-gap:46px;row-gap:22px;align-items:stretch;position:relative;z-index:1}
+.gen .grid{grid-template-columns:172px repeat(4,minmax(0,1fr)) 172px}
+.setup .grid{grid-template-columns:220px repeat(2,minmax(0,1fr));column-gap:72px}
+.emb .grid{grid-template-columns:172px repeat(3,minmax(0,1fr)) 172px}
+.srch .grid{grid-template-columns:190px minmax(0,1fr) minmax(0,1fr) 170px;column-gap:72px}
+svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;color:var(--accent);overflow:visible}
+svg.edges path{fill:none;stroke:currentColor;stroke-width:1.8;opacity:.7}
+
+.term{background:var(--term);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:118px}
+.term .kicker{color:var(--muted)}
+.term .tname{font:650 16px/1.25 var(--display);color:var(--ink)}
+.term .tsub{font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.step,.term.clickable{cursor:pointer;color:inherit;text-align:left;transition:border-color .15s,background .15s,box-shadow .15s}
+.step{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:7px;min-height:118px}
+.step:hover,.term.clickable:hover{border-color:var(--accent)}
+.step[aria-pressed=true],.term.clickable[aria-pressed=true]{background:var(--tint);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.term.clickable:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.step .top{display:flex;align-items:center;gap:10px}
+.step .num{width:26px;height:26px;border-radius:7px;background:var(--accent);color:#fff;font:700 13px/26px var(--sans);text-align:center;flex:none}
+.step .name{font:650 16px/1.2 var(--display);color:var(--ink)}
+.step .desc{font-size:13.5px;line-height:1.4;color:var(--ink-2)}
+.step .foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:auto}
+.more{margin-left:auto;font-size:12px;font-weight:600;color:var(--accent);opacity:0;transition:opacity .15s}
+.term .more{margin-left:0;margin-top:4px}
+.step:hover .more,.step[aria-pressed=true] .more,.term.clickable:hover .more,.term.clickable[aria-pressed=true] .more{opacity:1}
+
+.sys{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:3px 9px 3px 8px;white-space:nowrap;background:#fff}
+.sys::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.sys.sf{color:var(--sf)}.sys.os{color:var(--os)}.sys.br{color:var(--br)}.sys.loc{color:var(--loc)}
+
+.module-note{font-size:14px;color:var(--muted);margin:-2px 2px 12px}
+
+/* ---------- Output panel ---------- */
+.output{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+summary{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 20px;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+.kicker{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+summary .kicker{color:var(--accent);margin-right:14px}
+.selected-title{font-weight:650;font-size:15px}
+.disclosure{font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
+.disclosure::after{content:"Show output +"}
+details[open] .disclosure::after{content:"Hide output −"}
+details[open] summary{background:var(--tint);border-bottom:1px solid var(--soft)}
+.output-body{padding:22px 24px 26px}
+.lead{margin:0 0 20px;font-size:18px;color:var(--ink);max-width:1100px}
+code{font-family:var(--mono);font-size:.88em;background:var(--tint);color:var(--ink);padding:1px 5px;border-radius:5px}
+
+.io{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:12px;align-items:center}
+.io > .arrow{height:2px;background:var(--accent);position:relative;margin-right:8px}
+.io > .arrow::after{content:"";position:absolute;right:-8px;top:-6px;border-left:12px solid var(--accent);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.card{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;min-width:0}
+.card.out{border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.card-h{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--line)}
+.card-h .kicker{color:var(--muted)}
+.card.out .card-h .kicker{color:var(--accent)}
+.card-h .label{font-size:14px;font-weight:600;color:var(--ink)}
+.takeaway{margin:18px 0 0;padding:12px 16px;border-left:3px solid var(--accent);background:var(--tint);border-radius:0 10px 10px 0;font-size:15px;color:var(--ink-2)}
+
+pre.code{margin:0;padding:14px 16px;background:var(--code-bg);font:13.5px/1.6 var(--mono);color:var(--ink-2);white-space:pre-wrap;overflow-wrap:anywhere}
+pre.code .ln{display:block}
+.t-k{color:var(--tk-key)}.t-s{color:var(--tk-str)}.t-n{color:var(--tk-num)}.t-l{color:var(--tk-lit)}.t-d{color:var(--tk-dim)}
+.t-lab{color:var(--tk-key);font-weight:600}
+
+table.t{border-collapse:collapse;width:100%;font-size:15px}
+table.t th{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:11px 16px;border-bottom:1px solid var(--line)}
+table.t td{padding:11px 16px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+table.t tr:last-child td{border-bottom:0}
+table.t td.num{font:14px var(--mono)}
+table.t td.strong{color:var(--ink);font-weight:600}
+table.t tr.win td{background:var(--tint)}
+
+.ranks{list-style:none;margin:0;padding:16px;display:flex;flex-direction:column;gap:14px}
+.ranks li{display:grid;grid-template-columns:28px 110px 1fr 70px;align-items:center;gap:12px;font-size:15px}
+.ranks .r{width:26px;height:26px;border-radius:7px;background:var(--tint);color:var(--accent);font:700 13px/26px var(--sans);text-align:center}
+.ranks .n{font-weight:600}
+.ranks .b{height:9px;border-radius:5px;background:var(--line)}
+.ranks .b i{display:block;height:100%;width:var(--w);border-radius:5px;background:var(--accent);opacity:.75}
+.ranks .s{font:13.5px var(--mono);text-align:right;color:var(--ink-2)}
+
+.formula{display:flex;align-items:center;justify-content:center;gap:16px;padding:14px 20px;border-radius:12px;background:var(--tint);border:1px solid var(--soft);margin:0 0 20px;font:500 20px/1 var(--display)}
+.formula .fr{display:inline-flex;flex-direction:column;align-items:center;gap:5px;font-size:18px}
+.formula .fr span:first-child{border-bottom:2px solid var(--ink);padding:0 8px 5px}
+.formula em{font-style:normal;color:var(--accent);font-weight:650}
+.formula .lhs{color:var(--muted);font-size:18px}
+
+footer{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+@media print{body{background:#fff}.toolbar{display:none}.module{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="page-head">
+  <div>
+    <div class="eyebrow">IndexedSearch · Proposed solution</div>
+    <h1>Candidate search on OpenSearch</h1>
+    <p class="intro">Generate, set up, embed and search. Select a step to see what goes in and what comes out.</p>
+  </div>
+  <div class="toolbar">
+    <button class="btn" type="button" id="expand-all">Expand all outputs</button>
+    <button class="btn" type="button" id="collapse-all">Collapse all outputs</button>
+  </div>
+</header>
+
+<!-- ============================================================ 01 DATA GENERATION -->
+<section class="module gen" id="generation">
+  <div class="module-head"><span class="module-num">01</span><h2>Data generation</h2><span class="module-sub">Turn Salesforce records into candidate profiles</span></div>
+  <div class="diagram-shell"><div class="canvas">
+    <svg class="edges" aria-hidden="true"></svg>
+    <div class="grid">
+      <div class="term" data-node="gen-in"><span class="kicker">Input</span><span class="tname">Salesforce</span><span class="tsub">Contacts, tags, accounts</span></div>
+      <button class="step" type="button" data-node="gen-1" data-step="gen-1" data-title="1 · Fetch Contacts">
+        <span class="top"><span class="num">1</span><span class="name">Fetch Contacts</span></span>
+        <span class="desc">Read candidate Contacts from Salesforce</span>
+        <span class="foot"><span class="sys sf">Salesforce</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="gen-2" data-step="gen-2" data-title="2 · Load related records">
+        <span class="top"><span class="num">2</span><span class="name">Load related records</span></span>
+        <span class="desc">Read each candidate's tags and employer</span>
+        <span class="foot"><span class="sys sf">Salesforce</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="gen-3" data-step="gen-3" data-title="3 · Assemble candidate">
+        <span class="top"><span class="num">3</span><span class="name">Assemble candidate</span></span>
+        <span class="desc">Combine everything into one profile</span>
+        <span class="foot"><span class="sys loc">Application</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="gen-4" data-step="gen-4" data-title="4 · Add demo CV">
+        <span class="top"><span class="num">4</span><span class="name">Add demo CV</span></span>
+        <span class="desc">Add a sample CV for richer text</span>
+        <span class="foot"><span class="sys loc">Application</span><span class="more">Details</span></span>
+      </button>
+      <button class="term clickable" type="button" data-node="gen-out" data-step="gen-out" data-title="Output · Batch file"><span class="kicker">Output</span><span class="tname">Batch file</span><span class="tsub">Up to 1,000 candidates</span><span class="more">Details</span></button>
+    </div>
+  </div></div>
+  <details class="output" id="generation-output">
+    <summary><span><span class="kicker">Step output</span><span class="selected-title"></span></span><span class="disclosure"></span></summary>
+    <div class="output-body"></div>
+  </details>
+</section>
+
+<!-- ============================================================ 02 SET UP OPENSEARCH -->
+<section class="module setup" id="setup">
+  <div class="module-head"><span class="module-num">02</span><h2>Set up OpenSearch</h2><span class="module-sub">Done once: create the ingest pipeline and the index</span></div>
+  <div class="diagram-shell"><div class="canvas">
+    <svg class="edges" aria-hidden="true"></svg>
+    <div class="grid">
+      <button class="term clickable" type="button" data-node="set-in" data-step="set-in" data-title="Input · Titan model"><span class="kicker">Input</span><span class="tname">Titan model</span><span class="tsub">Which model to use and how to reach it</span><span class="more">Details</span></button>
+      <button class="step" type="button" data-node="set-1" data-step="set-1" data-title="1 · Create ingest pipeline">
+        <span class="top"><span class="num">1</span><span class="name">Create ingest pipeline</span></span>
+        <span class="desc">A rule that adds a vector to every document written</span>
+        <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="set-2" data-step="set-2" data-title="2 · Create index">
+        <span class="top"><span class="num">2</span><span class="name">Create index</span></span>
+        <span class="desc">The table for candidates, with a schema for keyword and vector search</span>
+        <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
+      </button>
+    </div>
+  </div></div>
+  <details class="output" id="setup-output">
+    <summary><span><span class="kicker">Step output</span><span class="selected-title"></span></span><span class="disclosure"></span></summary>
+    <div class="output-body"></div>
+  </details>
+</section>
+
+<!-- ============================================================ 03 DATA EMBEDDING -->
+<section class="module emb" id="embedding">
+  <div class="module-head"><span class="module-num">03</span><h2>Data embedding</h2><span class="module-sub">Load candidates into OpenSearch with a vector for each one</span></div>
+  <div class="diagram-shell"><div class="canvas">
+    <svg class="edges" aria-hidden="true"></svg>
+    <div class="grid">
+      <div class="term" data-node="emb-in"><span class="kicker">Input</span><span class="tname">Batch file</span><span class="tsub">From module 01</span></div>
+      <button class="step" type="button" data-node="emb-1" data-step="emb-1" data-title="1 · Build document">
+        <span class="top"><span class="num">1</span><span class="name">Build document</span></span>
+        <span class="desc">Candidate → document, with a searchText summary</span>
+        <span class="foot"><span class="sys loc">Application</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="emb-2" data-step="emb-2" data-title="2 · Create vector">
+        <span class="top"><span class="num">2</span><span class="name">Create vector</span></span>
+        <span class="desc">The ingest pipeline turns searchText into a vector</span>
+        <span class="foot"><span class="sys br">OpenSearch + Bedrock</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="emb-3" data-step="emb-3" data-title="3 · Store document">
+        <span class="top"><span class="num">3</span><span class="name">Store document</span></span>
+        <span class="desc">Saved for keyword and vector search</span>
+        <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
+      </button>
+      <div class="term" data-node="emb-out"><span class="kicker">Output</span><span class="tname">Candidate index</span><span class="tsub">Searchable by words and by meaning</span></div>
+    </div>
+  </div></div>
+  <details class="output" id="embedding-output">
+    <summary><span><span class="kicker">Step output</span><span class="selected-title"></span></span><span class="disclosure"></span></summary>
+    <div class="output-body"></div>
+  </details>
+</section>
+
+<!-- ============================================================ 04 DATA SEARCH -->
+<section class="module srch" id="search">
+  <div class="module-head"><span class="module-num">04</span><h2>Data search</h2><span class="module-sub">Search by words and by meaning, then combine the results</span></div>
+  <div class="diagram-shell"><div class="canvas">
+    <svg class="edges" aria-hidden="true"></svg>
+    <div class="grid">
+      <div class="term" data-node="srch-in" style="grid-column:1;grid-row:1 / 3;align-self:center"><span class="kicker">Input</span><span class="tname">Query</span><span class="tsub">“Java Spring Boot Kafka backend engineer”</span></div>
+      <button class="step" type="button" data-node="srch-1" data-step="srch-1" data-title="1 · Keyword search" style="grid-column:2;grid-row:1">
+        <span class="top"><span class="num">1</span><span class="name">Keyword search</span></span>
+        <span class="desc">Match the query's words</span>
+        <span class="foot"><span class="sys os">OpenSearch</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="srch-2" data-step="srch-2" data-title="2 · Vector search" style="grid-column:2;grid-row:2">
+        <span class="top"><span class="num">2</span><span class="name">Vector search</span></span>
+        <span class="desc">Match the query's meaning</span>
+        <span class="foot"><span class="sys br">OpenSearch + Bedrock</span><span class="more">Details</span></span>
+      </button>
+      <button class="step" type="button" data-node="srch-3" data-step="srch-3" data-title="3 · Combine results" style="grid-column:3;grid-row:1 / 3;align-self:center">
+        <span class="top"><span class="num">3</span><span class="name">Combine results</span></span>
+        <span class="desc">Merge both rankings into one list</span>
+        <span class="foot"><span class="sys loc">Application</span><span class="more">Details</span></span>
+      </button>
+      <div class="term" data-node="srch-out" style="grid-column:4;grid-row:1 / 3;align-self:center"><span class="kicker">Output</span><span class="tname">Ranked candidates</span><span class="tsub">Best matches first</span></div>
+    </div>
+  </div></div>
+  <p class="module-note">Both searches run at the same time against the same index.</p>
+  <details class="output" id="search-output">
+    <summary><span><span class="kicker">Step output</span><span class="selected-title"></span></span><span class="disclosure"></span></summary>
+    <div class="output-body"></div>
+  </details>
+</section>
+
+<footer>Fictional candidate examples. Vector values and scores are illustrative.</footer>
+</main>
+
+<!-- ============================================================ STEP DETAILS -->
+
+<template id="gen-1">
+  <p class="lead">Read the Contacts that are candidates from Salesforce, in batches of up to 1,000.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Salesforce Contact</span></div>
+<pre class="code" data-lang="text">Name:      Aiko Mori
+Title:     Backend Engineer
+Location:  Tokyo, Japan
+Account:   001000000000001
+Type:      Candidate</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Candidate (basic)</span></div>
+<pre class="code" data-lang="json">{
+  "id": "003000000000001",
+  "name": "Aiko Mori",
+  "title": "Backend Engineer",
+  "location": "Tokyo, Japan",
+  "skills": []
+}</pre></div>
+  </div>
+  <p class="takeaway">Skills are still empty. In Salesforce they live in related tag records, loaded next.</p>
+</template>
+
+<template id="gen-2">
+  <p class="lead">Load the records linked to each candidate: their tags (skills, systems, languages) and their employer.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Candidate IDs</span></div>
+<pre class="code" data-lang="text">003000000000001
+003000000000002
+…</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Tags and employer</span></div>
+<pre class="code" data-lang="text">Tags:      Java (Skill)
+             └ parent: Software development
+           Spring Boot (System)
+           English + Fluent (Language)
+Employer:  Demo Harbor Software</pre></div>
+  </div>
+</template>
+
+<template id="gen-3">
+  <p class="lead">Combine the Contact, its tags and its employer into one candidate profile. Each tag goes into the right field.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Contact + tags + employer</span></div>
+<pre class="code" data-lang="text">Aiko Mori · Backend Engineer
+Java (Skill)
+Software development (parent)
+Spring Boot (System)
+English + Fluent (Language)
+Demo Harbor Software (Employer)</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Candidate profile</span></div>
+<pre class="code" data-lang="json">{
+  "name": "Aiko Mori",
+  "title": "Backend Engineer",
+  "company": "Demo Harbor Software",
+  "skills": ["Java"],
+  "skillCategories": ["Software development"],
+  "systems": ["Spring Boot"],
+  "languages": [{ "code": "English", "level": "Fluent" }]
+}</pre></div>
+  </div>
+</template>
+
+<template id="gen-4">
+  <p class="lead">Add a sample CV based on the candidate's role and skills, so the demo has realistic experience text to search.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Candidate profile</span></div>
+<pre class="code" data-lang="text">Title:    Backend Engineer
+Skills:   Java
+Systems:  Spring Boot</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Candidate + CV</span></div>
+<pre class="code" data-lang="text">Summary:     Backend Engineer, 4 years. Payment
+             reconciliation and order management.
+Skills:      Java, SQL, Spring Boot, PostgreSQL,
+             Kafka, Docker, Git
+Experience:  2 roles, 2022 – 2026
+Projects:    Payment reconciliation, Order management
+Education:   Bachelor of Computer Science
+Languages:   English, Japanese</pre></div>
+  </div>
+</template>
+
+<template id="gen-out">
+  <p class="lead">The data at the end of module 01: a file of up to 1,000 candidate profiles, each with its Salesforce data and CV.</p>
+  <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">batch-000001.json</span></div>
+<pre class="code" data-lang="json">{
+  "candidates": [
+    {
+      "id": "003000000000001",
+      "name": "Aiko Mori",
+      "title": "Backend Engineer",
+      "company": "Demo Harbor Software",
+      "location": "Tokyo, Japan",
+      "skills": ["Java"],
+      "skillCategories": ["Software development"],
+      "systems": ["Spring Boot"],
+      "languages": [{ "code": "English", "level": "Fluent" }],
+      "enrichment": {
+        "tags": [ …original Salesforce tags ],
+        "cvProfile": {
+          "summary": "Backend Engineer with 4 years of experience. …",
+          "technicalSkills": { "languages": ["Java", "SQL"], "tools": ["Kafka", "Docker", "Git"], … },
+          "employmentHistory": [ …2 roles ],
+          "projects": [ "Payment reconciliation", "Order management" ],
+          "education": [ "Bachelor of Computer Science" ]
+        }
+      }
+    },
+    … up to 1,000 candidates
+  ]
+}</pre></div>
+</template>
+
+<template id="set-in">
+  <p class="lead">First we tell OpenSearch which embedding model to use and how to reach it: Amazon Titan Text Embeddings V2 on Bedrock. OpenSearch saves it as a model and gives it an ID.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">What we send</span></div>
+<pre class="code" data-lang="json">{
+  "service_name": "bedrock",
+  "region": "ap-northeast-1",
+  "model": "amazon.titan-embed-text-v2:0",
+  "dimensions": 1024,
+  "normalize": true,
+  "credential": { "roleArn": "arn:aws:iam::&lt;account&gt;:role/&lt;bedrock-role&gt;" }
+}</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Model saved in OpenSearch</span></div>
+<pre class="code" data-lang="text">model_id: &lt;model_id&gt;</pre></div>
+  </div>
+  <p class="takeaway">Titan turns text into a list of 1,024 numbers (a vector). Texts with similar meaning get similar vectors. The pipeline and the search both refer to Titan by this <code>model_id</code>.</p>
+</template>
+
+<template id="set-1">
+  <p class="lead">An ingest pipeline is a rule saved inside OpenSearch. It runs on every document before the document is stored. Ours takes the document's <code>searchText</code> field, sends it to Titan, and saves the returned vector in a new <code>embedding</code> field.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">PUT /_ingest/pipeline/candidates-ingest</span></div>
+<pre class="code" data-lang="json">{
+  "description": "Generate candidate vectors with Amazon Bedrock Titan V2",
+  "processors": [
+    {
+      "text_embedding": {
+        "model_id": "&lt;model_id&gt;",
+        "field_map": { "searchText": "embedding" }
+      }
+    }
+  ]
+}</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Pipeline candidates-ingest, saved in OpenSearch</span></div>
+<pre class="code" data-lang="text">From now on, for every document written:
+
+Arrives: { …, "searchText": "Role: Backend Engineer. Skills: Java. …" }
+Stored:  { …, "searchText": "…", "embedding": [0.0217, -0.0382, … 1,024 numbers] }</pre></div>
+  </div>
+  <p class="takeaway">Our application never calls the model itself. OpenSearch does it whenever a document is written. You can view the rule at any time with <code>GET /_ingest/pipeline/candidates-ingest</code>.</p>
+</template>
+
+<template id="set-2">
+  <p class="lead">An index is the table that holds the candidates. Creating it sets the schema: each field's type decides how that field can be searched. It also attaches the ingest pipeline, so every document written here gets a vector.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">PUT /candidates</span></div>
+<pre class="code" data-lang="json">{
+  "settings": {
+    "index.knn": true,
+    "index.default_pipeline": "candidates-ingest"
+  },
+  "mappings": {
+    "properties": {
+      "salesforceId":  { "type": "keyword" },
+      "title":         { "type": "text" },
+      "skills":        { "type": "text" },
+      "systems":       { "type": "text" },
+      "jobFunctions":  { "type": "text" },
+      "profile":       { "type": "text" },
+      "name":          { "type": "text" },
+      … other fields
+      "searchText":    { "type": "text", "index": false },
+      "enrichment":    { "type": "object", "enabled": false },
+      "embedding": {
+        "type": "knn_vector",
+        "dimension": 1024,
+        "space_type": "cosinesimil"
+      }
+    }
+  }
+}</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Index candidates · schema · 0 documents</span></div>
+      <table class="t">
+        <thead><tr><th>Field</th><th>Type</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">title, skills, skillCategories, systems, jobFunctions, industries, subIndustries</td><td>text</td><td>Keyword search</td></tr>
+          <tr><td class="strong">profile</td><td>text</td><td>Keyword search</td></tr>
+          <tr><td class="strong">embedding</td><td>vector, 1,024 numbers</td><td>Vector search</td></tr>
+          <tr><td class="strong">searchText</td><td>text, not searchable</td><td>Input to the vector</td></tr>
+          <tr><td class="strong">salesforceId</td><td>keyword</td><td>Document ID</td></tr>
+          <tr><td class="strong">name, company, location, salary, languages</td><td>text, number, list</td><td>Shown in results</td></tr>
+          <tr><td class="strong">enrichment</td><td>object, not searchable</td><td>Stored CV data</td></tr>
+        </tbody>
+      </table>
+<pre class="code" data-lang="text">Default pipeline: candidates-ingest
+Vector search:    on</pre>
+    </div>
+  </div>
+  <p class="takeaway">The index is empty until module 03 writes the candidates. The vector field is sized at 1,024 numbers to match Titan's output.</p>
+</template>
+
+<template id="emb-1">
+  <p class="lead">Turn each candidate into a document for OpenSearch. We add a field called <code>searchText</code>: one plain-text summary of the candidate's experience. This is the text that becomes the vector.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Candidate</span></div>
+<pre class="code" data-lang="json">{
+  "name": "Aiko Mori",
+  "title": "Backend Engineer",
+  "skills": ["Java"],
+  "systems": ["Spring Boot"],
+  "cvProfile": { … }
+}</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Document</span></div>
+<pre class="code" data-lang="json">{
+  "name": "Aiko Mori",
+  "title": "Backend Engineer",
+  "skills": ["Java"],
+  "systems": ["Spring Boot"],
+  "searchText": "Role: Backend Engineer. Skills: Java. Systems: Spring Boot. Built Java REST APIs and Kafka consumers. Projects: payment reconciliation, order management. …"
+}</pre></div>
+  </div>
+  <p class="takeaway">The whole document goes to OpenSearch, because the other fields are needed for keyword search and for showing results. Only <code>searchText</code> becomes the vector.</p>
+</template>
+
+<template id="emb-2">
+  <p class="lead">When the document arrives, the ingest pipeline sends its <code>searchText</code> to Titan and adds the returned vector to the document.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">searchText</span></div>
+<pre class="code" data-lang="text">Role: Backend Engineer. Skills: Java. Systems: Spring Boot. Built Java REST APIs and Kafka consumers. Projects: payment reconciliation, order management. …</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">embedding (1,024 numbers)</span></div>
+<pre class="code" data-lang="json">[0.0217, -0.0382, 0.0094, 0.0541, … 1,020 more]</pre></div>
+  </div>
+  <p class="takeaway">One vector per candidate. It captures the meaning of their experience, not just the exact words.</p>
+</template>
+
+<template id="emb-3">
+  <p class="lead">OpenSearch stores the document with its vector. The candidate can now be found by keyword search and by vector search.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Document + vector</span></div>
+<pre class="code" data-lang="json">{
+  "name": "Aiko Mori",
+  "title": "Backend Engineer",
+  "skills": ["Java"],
+  "searchText": "Role: Backend Engineer. …",
+  "embedding": [0.0217, -0.0382, …]
+}</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Stored in the candidate index</span></div>
+      <table class="t">
+        <thead><tr><th>Field</th><th>Searchable by</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">title, skills, systems, …</td><td>Keyword search</td></tr>
+          <tr><td class="strong">embedding</td><td>Vector search</td></tr>
+          <tr><td class="strong">name, company, …</td><td>Shown in results</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="takeaway">Each candidate is stored under its Salesforce ID, so loading the same file again updates candidates instead of duplicating them.</p>
+</template>
+
+<template id="srch-1">
+  <p class="lead">Find candidates whose fields contain the query's words. A match in skills counts more than a match in the general profile text.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Query + fields searched</span></div>
+<pre class="code" data-lang="text">"Java Spring Boot Kafka backend engineer"</pre>
+      <table class="t">
+        <thead><tr><th>Field</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">skills</td><td class="num">× 10</td></tr>
+          <tr><td class="strong">title</td><td class="num">× 8</td></tr>
+          <tr><td class="strong">job functions</td><td class="num">× 6</td></tr>
+          <tr><td class="strong">systems</td><td class="num">× 5</td></tr>
+          <tr><td class="strong">skill categories</td><td class="num">× 4</td></tr>
+          <tr><td class="strong">profile text</td><td class="num">× 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Ranked by keyword score</span></div>
+      <ol class="ranks">
+        <li><span class="r">1</span><span class="n">Aiko Mori</span><span class="b"><i style="--w:100%"></i></span><span class="s">12.07</span></li>
+        <li><span class="r">2</span><span class="n">Ren Sato</span><span class="b"><i style="--w:83.7%"></i></span><span class="s">10.10</span></li>
+        <li><span class="r">3</span><span class="n">Mina Ito</span><span class="b"><i style="--w:80.6%"></i></span><span class="s">9.73</span></li>
+      </ol>
+    </div>
+  </div>
+</template>
+
+<template id="srch-2">
+  <p class="lead">OpenSearch turns the query into a vector using the same Titan model, then finds the candidates whose vectors are closest.</p>
+  <div class="io">
+    <div class="card"><div class="card-h"><span class="kicker">Input</span><span class="label">Query</span></div>
+<pre class="code" data-lang="text">"Java Spring Boot Kafka backend engineer"
+
+→ query vector: [0.0193, -0.0411, 0.0102, … 1,024 numbers]</pre></div>
+    <div class="arrow"></div>
+    <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Ranked by similarity</span></div>
+      <ol class="ranks">
+        <li><span class="r">1</span><span class="n">Ren Sato</span><span class="b"><i style="--w:100%"></i></span><span class="s">0.652</span></li>
+        <li><span class="r">2</span><span class="n">Mina Ito</span><span class="b"><i style="--w:96.7%"></i></span><span class="s">0.631</span></li>
+        <li><span class="r">3</span><span class="n">Aiko Mori</span><span class="b"><i style="--w:95.6%"></i></span><span class="s">0.624</span></li>
+      </ol>
+    </div>
+  </div>
+  <p class="takeaway">This finds candidates who match the meaning even when they use different words, for example “keeps production services running” → Site Reliability Engineer.</p>
+</template>
+
+<template id="srch-3">
+  <p class="lead">Merge the two rankings with reciprocal rank fusion (RRF). Each candidate scores by its position in each list, so a candidate ranked well by both comes out on top.</p>
+  <div class="formula">
+    <span class="lhs">score =</span>
+    <span class="fr"><span>1</span><span>60 + <em>keyword rank</em></span></span>
+    <span>+</span>
+    <span class="fr"><span>1</span><span>60 + <em>vector rank</em></span></span>
+  </div>
+  <div class="card out"><div class="card-h"><span class="kicker">Output</span><span class="label">Final ranking</span></div>
+    <table class="t">
+      <thead><tr><th>Final</th><th>Candidate</th><th>Keyword rank</th><th>Vector rank</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr class="win"><td class="num strong">1</td><td class="strong">Ren Sato</td><td class="num">2</td><td class="num">1</td><td class="num">0.03252</td></tr>
+        <tr><td class="num strong">2</td><td class="strong">Aiko Mori</td><td class="num">1</td><td class="num">3</td><td class="num">0.03227</td></tr>
+        <tr><td class="num strong">3</td><td class="strong">Mina Ito</td><td class="num">3</td><td class="num">2</td><td class="num">0.03200</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="takeaway">Positions are used instead of raw scores because the two scores are on different scales (about 12 versus about 0.65).</p>
+</template>
+
+<script>
+(function () {
+  const EDGES = {
+    generation: [["gen-in", "gen-1"], ["gen-1", "gen-2"], ["gen-2", "gen-3"], ["gen-3", "gen-4"], ["gen-4", "gen-out"]],
+    setup: [["set-in", "set-1"], ["set-1", "set-2"]],
+    embedding: [["emb-in", "emb-1"], ["emb-1", "emb-2"], ["emb-2", "emb-3"], ["emb-3", "emb-out"]],
+    search: [["srch-in", "srch-1"], ["srch-in", "srch-2"], ["srch-1", "srch-3"], ["srch-2", "srch-3"], ["srch-3", "srch-out"]],
+  };
+  const SVG_NS = "http://www.w3.org/2000/svg";
+
+  function drawEdges(section) {
+    const canvas = section.querySelector(".canvas");
+    const svg = canvas.querySelector("svg.edges");
+    const origin = canvas.getBoundingClientRect();
+    const box = (name) => {
+      const rect = canvas.querySelector('[data-node="' + name + '"]').getBoundingClientRect();
+      const left = rect.left - origin.left, top = rect.top - origin.top;
+      return { left, right: left + rect.width, cy: top + rect.height / 2 };
+    };
+    svg.replaceChildren();
+    const defs = document.createElementNS(SVG_NS, "defs");
+    defs.innerHTML = '<marker id="head-' + section.id + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker>';
+    svg.append(defs);
+    for (const [from, to] of EDGES[section.id]) {
+      const a = box(from), b = box(to);
+      const x1 = a.right, y1 = a.cy, x2 = b.left - 2, y2 = b.cy;
+      let d;
+      if (Math.abs(y1 - y2) < 1) {
+        d = "M" + x1 + "," + y1 + " H" + x2;
+      } else {
+        const mid = (x1 + x2) / 2;
+        d = "M" + x1 + "," + y1 + " C" + mid + "," + y1 + " " + mid + "," + y2 + " " + x2 + "," + y2;
+      }
+      const path = document.createElementNS(SVG_NS, "path");
+      path.setAttribute("d", d);
+      path.setAttribute("marker-end", "url(#head-" + section.id + ")");
+      svg.append(path);
+    }
+  }
+
+  /* ---------- Code highlighting ---------- */
+  const escapeHtml = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const JSON_TOKEN = /("(?:[^"\\]|\\.)*")(\s*:)?|((?<![\w.])-?\d+(?:\.\d+)?)|\b(true|false|null)\b|(…[^\]}"]*)/g;
+
+  function highlightJson(line) {
+    let out = "", last = 0;
+    line.replace(JSON_TOKEN, (match, str, colon, num, lit, dim, offset) => {
+      out += escapeHtml(line.slice(last, offset));
+      if (str) { out += '<span class="' + (colon ? "t-k" : "t-s") + '">' + escapeHtml(str) + "</span>" + (colon ? escapeHtml(colon) : ""); }
+      else if (num) { out += '<span class="t-n">' + num + "</span>"; }
+      else if (lit) { out += '<span class="t-l">' + lit + "</span>"; }
+      else if (dim) { out += '<span class="t-d">' + escapeHtml(dim) + "</span>"; }
+      last = offset + match.length;
+      return match;
+    });
+    return out + escapeHtml(line.slice(last));
+  }
+  function highlightText(line) {
+    const label = line.match(/^([A-Za-z][A-Za-z ]*:)(.*)$/);
+    if (label) { return '<span class="t-lab">' + escapeHtml(label[1]) + "</span>" + escapeHtml(label[2]); }
+    return escapeHtml(line);
+  }
+  const HIGHLIGHTERS = { json: highlightJson, text: highlightText };
+  function highlightAll(root) {
+    for (const pre of root.querySelectorAll("pre.code")) {
+      const highlight = HIGHLIGHTERS[pre.dataset.lang] || escapeHtml;
+      const lines = pre.textContent.replace(/\n$/, "").split("\n");
+      pre.innerHTML = lines.map((line) => {
+        const hang = line.match(/^ */)[0].length + 2;
+        return '<span class="ln" style="padding-left:' + hang + 'ch;text-indent:-' + hang + 'ch">' + (highlight(line) || " ") + "</span>";
+      }).join("");
+    }
+  }
+
+  /* ---------- Step selection and output panels ---------- */
+  for (const section of document.querySelectorAll(".module")) {
+    const output = section.querySelector("details.output");
+    const body = output.querySelector(".output-body");
+    const title = output.querySelector(".selected-title");
+    const steps = Array.from(section.querySelectorAll(".step, .term.clickable"));
+
+    function select(step, open) {
+      steps.forEach((item) => item.setAttribute("aria-pressed", String(item === step)));
+      title.textContent = step.dataset.title;
+      body.replaceChildren(document.getElementById(step.dataset.step).content.cloneNode(true));
+      highlightAll(body);
+      if (open) { output.open = true; }
+    }
+
+    steps.forEach((step) => {
+      step.setAttribute("aria-controls", output.id);
+      step.addEventListener("click", () => {
+        if (step.getAttribute("aria-pressed") === "true" && output.open) { output.open = false; return; }
+        select(step, true);
+      });
+    });
+    select(steps[0], false);
+
+    drawEdges(section);
+    new ResizeObserver(() => drawEdges(section)).observe(section.querySelector(".canvas"));
+  }
+  if (document.fonts) { document.fonts.ready.then(() => document.querySelectorAll(".module").forEach(drawEdges)); }
+
+  document.getElementById("collapse-all").addEventListener("click", () => {
+    document.querySelectorAll("details.output").forEach((output) => { output.open = false; });
+  });
+  document.getElementById("expand-all").addEventListener("click", () => {
+    document.querySelectorAll("details.output").forEach((output) => { output.open = true; });
+  });
+})();
+</script>
+</body>
+</html>

@@ -12,3 +12,4 @@ __pycache__/
 *.db-shm
 *.db-wal
 /.codex-remote-attachments
+/.codex-attachments

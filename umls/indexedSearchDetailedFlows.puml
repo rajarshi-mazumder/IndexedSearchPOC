@@ -1,0 +1,509 @@
+' IndexedSearch: three independent module flows.
+' Each @startuml block renders a separate operational flow.
+' The HTML groups fetch + CV under preparation, setup + indexing under embedding.
+' Render all blocks with: java -jar plantuml.jar -charset UTF-8 -tsvg indexedSearchSystemOverview.puml
+
+@startuml indexedSearchDataGenerationFetch
+
+skinparam backgroundColor #0B1020
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #E7EDF8
+skinparam ArrowColor #A2B2CA
+skinparam ArrowFontColor #AABAD3
+skinparam ArrowFontSize 12
+skinparam activity {
+  BackgroundColor #123241
+  BorderColor #62D8EA
+  FontColor #E7EDF8
+  DiamondBackgroundColor #1C2940
+  DiamondBorderColor #8192AF
+  DiamondFontColor #E7EDF8
+  StartColor #62D8EA
+  EndColor #62D8EA
+  BarColor #62D8EA
+}
+skinparam note {
+  BackgroundColor #182237
+  BorderColor #465773
+  FontColor #B9C8DD
+  FontSize 12
+}
+skinparam partition {
+  BackgroundColor #0E1628
+  BorderColor #364761
+  FontColor #E7EDF8
+}
+
+
+start
+#1D2A3E:<b>INPUT / UI or CLI</b>
+Salesforce org, output dataset,
+batch size, max batches, resume;
+:Validate fetch request;
+#1D2A3E:Acquire dataset lock;
+#1D2A3E:Read existing checkpoint;
+:Validate resume / start rules
+and source extraction identity;
+if (New checkpoint?) then (yes)
+  #1D2A3E:Save initial checkpoint;
+endif
+while (Below batch limit,\nnot complete, not stopped?) is (yes)
+  :Report next batch starting;
+  #30271A:Authenticate / use Salesforce connection
+and inspect supported schema;
+  #30271A:Query next bounded Contact batch
+after the saved Salesforce ID;
+  -> core profiles;
+  if (Profiles returned?) then (yes)
+    #30271A:Fetch candidate TagAssociation__c records;
+    -> firstTag__c / secondTag__c IDs;
+    :Collect unique tag IDs;
+    while (Unresolved parent levels remain?) is (yes)
+      :Check hierarchy depth / size limits;
+      #30271A:Fetch Tag__c records and record types;
+      :Collect unrequested parent tag IDs;
+    endwhile (no)
+    #30271A:Fetch Account / employer details
+for unique referenced employers;
+    -> profiles + associations + tags + employers;
+    :Group associations by candidate ID;
+    :Combine source fields and relationships
+into candidate profiles;
+    :Keep missing-field / unresolved-reference
+warnings as diagnostics;
+    :Validate batch size and cursor advancement;
+    #1D2A3E:<b>Write candidate batch JSON atomically</b>
+batch-000001.json, batch-000002.json, ...;
+    :Calculate and report batch quality;
+    :Calculate next cursor, totals
+and completion state;
+    #1D2A3E:<b>Save updated checkpoint</b>
+Only after the candidate file was saved;
+    :Report committed file and progress;
+  else (no)
+    :Mark extraction complete;
+    #1D2A3E:Save completed checkpoint;
+  endif
+endwhile (no)
+#1D2A3E:Release dataset lock;
+#1D2A3E:<b>OUTPUT / host</b>
+Saved batch files + resumable checkpoint
+Fetched count, last batch, completion status;
+stop
+note right
+  Console progress and results are saved
+  in operation history. A failed batch
+  does not advance its checkpoint.
+end note
+
+@enduml
+
+@startuml indexedSearchDataGenerationCv
+
+skinparam backgroundColor #0B1020
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #E7EDF8
+skinparam ArrowColor #A2B2CA
+skinparam ArrowFontColor #AABAD3
+skinparam ArrowFontSize 12
+skinparam activity {
+  BackgroundColor #123241
+  BorderColor #62D8EA
+  FontColor #E7EDF8
+  DiamondBackgroundColor #1C2940
+  DiamondBorderColor #8192AF
+  DiamondFontColor #E7EDF8
+  StartColor #62D8EA
+  EndColor #62D8EA
+  BarColor #62D8EA
+}
+skinparam note {
+  BackgroundColor #182237
+  BorderColor #465773
+  FontColor #B9C8DD
+  FontSize 12
+}
+skinparam partition {
+  BackgroundColor #0E1628
+  BorderColor #364761
+  FontColor #E7EDF8
+}
+
+
+start
+#1D2A3E:<b>INPUT / console</b>
+Selected batch filenames, action, seed;
+#1D2A3E:Acquire dataset lock;
+:Sort selected filenames;
+if (Preview action?) then (yes)
+  :Select first file only;
+else (no)
+  :Select all requested files;
+endif
+while (Files remain and not stopped?) is (yes)
+  #1D2A3E:Read the next candidate JSON file;
+  if (Preview action?) then (yes)
+    :Select first 20 candidates;
+  else (no)
+    :Select all candidates in this file;
+  endif
+  while (Candidates remain?) is (yes)
+    :Clone the next candidate;
+    if (Remove action?) then (yes)
+      :Remove CV only when synthetic;
+      :If removed, retain cvProfileRemoved marker;
+    else (no)
+      if (CV absent, regenerate or preview?) then (yes)
+        :Select template from source evidence
+or deterministic hash fallback;
+        :Generate summary, skills, employment,
+projects, education, training and languages
+using candidate ID + seed + version;
+        :Attach synthetic CV metadata
+and clear removal marker;
+      else (no)
+        :Keep existing CV unchanged;
+      endif
+    endif
+    :Collect transformed candidate
+and changed / skipped counts;
+  endwhile (no)
+  if (Preview action?) then (yes)
+    :Collect preview results; no writes;
+  else (no)
+    if (File contains changes?) then (yes)
+      #1D2A3E:Back up original candidate file;
+      #1D2A3E:Atomically save transformed candidate JSON;
+    endif
+  endif
+  :Report file progress and totals;
+  :Allow pending Stop request;
+endwhile (no)
+#1D2A3E:Release dataset lock;
+#1D2A3E:<b>OUTPUT / console + history</b>
+Preview OR changed files + backups
+Changed, skipped and completed-file counts;
+stop
+note right
+  Preview reports zero persisted changes.
+  Modified files reach OpenSearch only
+  when the user starts embedding later.
+end note
+
+@enduml
+
+@startuml indexedSearchDataEmbeddingSetup
+
+skinparam backgroundColor #0B1020
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #E7EDF8
+skinparam ArrowColor #A2B2CA
+skinparam ArrowFontColor #AABAD3
+skinparam ArrowFontSize 12
+skinparam activity {
+  BackgroundColor #33234C
+  BorderColor #C0A0FA
+  FontColor #E7EDF8
+  DiamondBackgroundColor #1C2940
+  DiamondBorderColor #8192AF
+  DiamondFontColor #E7EDF8
+  StartColor #C0A0FA
+  EndColor #C0A0FA
+  BarColor #C0A0FA
+}
+skinparam note {
+  BackgroundColor #182237
+  BorderColor #465773
+  FontColor #B9C8DD
+  FontSize 12
+}
+skinparam partition {
+  BackgroundColor #0E1628
+  BorderColor #364761
+  FontColor #E7EDF8
+}
+
+
+start
+#1D2A3E:<b>INPUT / UI or CLI</b>
+Collection endpoint, index, pipelines,
+AWS credentials, role and model settings;
+:Validate configuration and create
+signed OpenSearch connection;
+#30271A:Read existing index mappings;
+if (Existing mappings incompatible?) then (yes)
+  #472535:Return setup error;
+  stop
+endif
+#30271A:Find configured / named remote model;
+if (Model must be registered?) then (yes)
+  #30271A:Create Bedrock connector;
+  #30271A:Register OpenSearch remote model;
+endif
+if (Existing index uses another model?) then (yes)
+  #472535:Return model compatibility error;
+  stop
+endif
+#30271A:Check existing ingest pipeline
+for compatible embedding settings;
+#30271A:Simulate remote embedding
+through the OpenSearch model;
+#30271A:Bedrock Titan V2 returns test vector;
+:Require 1,024 dimensions;
+#30271A:Install embedding ingest pipeline;
+#30271A:Install legacy search pipeline
+for compatibility;
+note right
+  Current search explicitly bypasses
+  this pipeline; its weights do not
+  control backend RRF ranking.
+end note
+if (Compatible index already exists?) then (yes)
+  #30271A:Update index default pipeline setting;
+else (no)
+  #30271A:Create index with candidate fields,
+profile, enrichment and vector mapping;
+endif
+#1D2A3E:<b>OUTPUT / host</b>
+Registered OpenSearch model ID
+Ready model, connector, pipelines and index;
+stop
+
+@enduml
+
+@startuml indexedSearchDataEmbeddingIndex
+
+skinparam backgroundColor #0B1020
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #E7EDF8
+skinparam ArrowColor #A2B2CA
+skinparam ArrowFontColor #AABAD3
+skinparam ArrowFontSize 12
+skinparam activity {
+  BackgroundColor #33234C
+  BorderColor #C0A0FA
+  FontColor #E7EDF8
+  DiamondBackgroundColor #1C2940
+  DiamondBorderColor #8192AF
+  DiamondFontColor #E7EDF8
+  StartColor #C0A0FA
+  EndColor #C0A0FA
+  BarColor #C0A0FA
+}
+skinparam note {
+  BackgroundColor #182237
+  BorderColor #465773
+  FontColor #B9C8DD
+  FontSize 12
+}
+skinparam partition {
+  BackgroundColor #0E1628
+  BorderColor #364761
+  FontColor #E7EDF8
+}
+
+
+start
+#1D2A3E:<b>INPUT / UI or CLI</b>
+Selected candidate JSON files
+Target index + ingest pipeline + model;
+:Sort selected files;
+while (Files remain and not stopped?) is (yes)
+  #1D2A3E:Validate committed file and capture fingerprint;
+  #1D2A3E:Acquire dataset lock and load candidates;
+  :Report initial candidate count;
+  while (Candidate groups remain?) is (yes)
+    if (Stop requested?) then (yes)
+      #472535:Stop after completed bulk batch;
+      :Release lock; return stopped operation
+Rerun this file to finish;
+      stop
+    endif
+    :Take next group of at most 100 candidates;
+    while (Candidates remain in group?) is (yes)
+      :Normalize candidate and deduplicate skills;
+      :Format professional details + optional CV;
+      :Generate and trim embedding searchText;
+      if (Searchable text present?) then (yes)
+        :Generate display / lexical profile;
+        :Assemble document with stable Salesforce ID,
+candidate, profile and searchText;
+        :Add indexedAt using injected clock;
+        :Append document to prepared group;
+      else (no)
+        if (CV removal marker present?) then (yes)
+          :Collect stale document ID for deletion;
+        else (no)
+          :Count candidate as skipped;
+        endif
+      endif
+    endwhile (no)
+    #30271A:Delete collected stale document IDs;
+    #30271A:Read / verify enriched index mapping when required;
+    repeat
+    #30271A:Send pending bulk upserts with selected ingest pipeline
+Use Salesforce ID as document _id;
+    #30271A:Ingest processor sends searchText
+to registered model / Bedrock connector;
+    #30271A:Bedrock Titan V2 generates
+a 1,024-dimensional document vector;
+    #30271A:Ingest processor attaches embedding;
+    #30271A:OpenSearch stores fields, profile,
+enrichment source and embedding vector;
+    if (One acknowledgement per submitted item?) then (yes)
+      :Inspect every bulk item result;
+    else (no)
+      #472535:Fail incomplete acknowledgement
+Release lock; return operation error;
+      stop
+    endif
+    if (Permanent error or retries exhausted?) then (yes)
+      #472535:Fail operation and release lock
+Some documents may already be indexed;
+      stop
+    endif
+    :Select only transient failed items for retry
+429 / 502 / 503 / 504;
+    if (Retry items remain?) then (yes)
+      :Wait 1, 2 or 4 seconds
+At most 4 total attempts;
+    endif
+    repeat while (Retry items remain?) is (yes) not (no)
+    note right
+      Successful items are never retried.
+      Delete requests use the same retry policy.
+      Re-running uses the same document IDs.
+    end note
+    :Report processed / indexed / skipped counts;
+  endwhile (no)
+  #1D2A3E:Release dataset lock;
+  #1D2A3E:Read file fingerprint again;
+  if (Source file changed?) then (yes)
+    #472535:Fail file verification; request retry;
+    stop
+  endif
+  :Return per-file result and fingerprint
+including deleted count when present;
+endwhile (no)
+#1D2A3E:<b>OUTPUT / host</b>
+Indexed documents + vectors in chosen index
+Per-file results and console operation history;
+stop
+
+@enduml
+
+@startuml indexedSearchDataSearch
+
+skinparam backgroundColor #0B1020
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #E7EDF8
+skinparam ArrowColor #A2B2CA
+skinparam ArrowFontColor #AABAD3
+skinparam ArrowFontSize 12
+skinparam activity {
+  BackgroundColor #163C33
+  BorderColor #68DEC0
+  FontColor #E7EDF8
+  DiamondBackgroundColor #1C2940
+  DiamondBorderColor #8192AF
+  DiamondFontColor #E7EDF8
+  StartColor #68DEC0
+  EndColor #68DEC0
+  BarColor #68DEC0
+}
+skinparam note {
+  BackgroundColor #182237
+  BorderColor #465773
+  FontColor #B9C8DD
+  FontSize 12
+}
+skinparam partition {
+  BackgroundColor #0E1628
+  BorderColor #364761
+  FontColor #E7EDF8
+}
+
+
+start
+#1D2A3E:<b>INPUT / UI or CLI</b>
+Query text, result limit, selected index
+Configured OpenSearch model ID;
+:Trim and validate query (1-10,000 characters)
+Validate integer result limit (1-100);
+:Calculate branch pool size
+max(requested limit x 3, 50);
+:Set both requests to bypass search pipelines
+search_pipeline = "_none"
+allow_partial_search_results = false;
+fork
+  :Build lexical multi_match request
+cross_fields; minimum_should_match = "2<30%";
+  note left
+    skills^10, title^8, jobFunctions^6,
+    systems^5, skillCategories^4, profile.
+    Profile includes optional CV text.
+  end note
+  #30271A:OpenSearch matches query against
+boosted fields and profile;
+  #30271A:Return up to pool-size lexical hits
+with original scores and source documents;
+  :Reject timeout / failed shards;
+  :Restore candidate documents
+Keep raw lexical scores and response order;
+fork again
+  :Build neural query over embedding
+Use configured model ID; k = pool size;
+  #30271A:OpenSearch sends query text through
+registered model / Bedrock connector;
+  #30271A:Bedrock Titan V2 generates
+a 1,024-dimensional query vector;
+  #30271A:OpenSearch retrieves vector neighbors
+from the selected candidate index;
+  #30271A:Return up to pool-size vector hits
+with original scores and source documents;
+  :Reject timeout / failed shards;
+  :Restore candidate documents
+Keep raw vector scores and response order;
+end fork
+if (Both requests succeeded completely?) then (yes)
+  :Merge both lists by Salesforce ID;
+else (no)
+  #472535:Fail the entire search
+Do not rank a partial branch result;
+  stop
+endif
+:Record one-based positions and raw scores
+First occurrence per branch wins;
+:Keep lexical document when present in both
+Missing branch rank / score stays null;
+:Calculate equal-weight reciprocal rank fusion
+1/(60 + lexical position) + 1/(60 + vector position)
+Missing branch contributes zero;
+:Sort by descending RRF score
+Break ties by ascending Salesforce ID;
+:Apply requested final result limit;
+#1D2A3E:Host maps result metadata
+Assign final rank 1, 2, 3, ...;
+#1D2A3E:<b>OUTPUT / Angular table or CLI</b>
+Candidate profile, rank, RRF score
+Raw lexical / vector scores + positions;
+#1D2A3E:Console saves operation and complete result
+for history and later inspection;
+stop
+note right
+  RRF is an ordering score, not confidence.
+  There is no suitability acceptance threshold
+  or reranker in the current implementation.
+end note
+
+@enduml
